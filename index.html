@@ -1,0 +1,2224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>LexLK — Sri Lanka Legal Services</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#f8f5ef;--bg2:#ffffff;--bg3:#f2ede4;--bg4:#e8e0d0;
+  --ink:#1a1510;--ink2:#2d2820;--ink3:#3d3828;
+  --gold:#b8922a;--gold2:#d4aa40;--gold-light:#f5e8c0;--gold-mid:#e8d080;
+  --text:#1a1510;--text2:#3d3520;--text3:#6b5f3a;--text4:#9a8a60;
+  --green:#2d6b45;--green-bg:#e8f4ed;--red:#8b3030;
+  --blue:#1a4a7a;--blue-bg:#e8f0f8;
+  --shadow:0 2px 16px rgba(26,21,16,0.1);
+  --shadow-lg:0 8px 40px rgba(26,21,16,0.15);
+}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;font-weight:300;}
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-thumb{background:var(--bg4);border-radius:2px;}
+
+/* DISCLAIMER */
+#disclaimer{
+  position:fixed;inset:0;background:var(--bg);
+  display:flex;align-items:center;justify-content:center;
+  z-index:999;padding:2rem;overflow-y:auto;
+}
+.disc-wrap{max-width:580px;width:100%;}
+.disc-logo{text-align:center;margin-bottom:0.3rem;}
+.disc-logo-main{font-family:'Cormorant Garamond',serif;font-size:3.4rem;font-weight:400;color:var(--ink);}
+.disc-logo-main span{color:var(--gold);}
+.disc-tagline{text-align:center;font-size:0.7rem;color:var(--text4);letter-spacing:0.18em;text-transform:uppercase;margin-bottom:2rem;}
+.disc-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:10px;padding:1.75rem;margin-bottom:1.25rem;box-shadow:var(--shadow);}
+.disc-card-title{font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:600;}
+.disc-item{display:flex;gap:0.9rem;align-items:flex-start;margin-bottom:0.8rem;}
+.disc-item:last-child{margin-bottom:0;}
+.di-icon{font-size:0.8rem;font-weight:700;flex-shrink:0;margin-top:0.15em;}
+.di-text{font-size:0.82rem;color:var(--text3);line-height:1.6;}
+.disc-btn{width:100%;background:var(--gold);color:#fff;border:none;padding:1rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;border-radius:7px;transition:background 0.2s;box-shadow:0 4px 16px rgba(184,146,42,0.35);}
+.disc-btn:hover{background:var(--gold2);}
+.disc-foot{text-align:center;margin-top:0.85rem;font-size:0.6rem;color:var(--text4);letter-spacing:0.12em;}
+
+/* APP */
+#app{display:none;flex-direction:column;min-height:100vh;}
+#app.on{display:flex;}
+
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;padding:0 1.75rem;height:60px;background:var(--bg2);border-bottom:2px solid var(--gold-mid);flex-shrink:0;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(26,21,16,0.08);}
+.hdr-logo{font-family:'Cormorant Garamond',serif;font-size:1.65rem;font-weight:400;color:var(--ink);cursor:pointer;letter-spacing:-0.01em;}
+.hdr-logo span{color:var(--gold);}
+.hdr-nav{display:flex;gap:0.15rem;}
+.nav-btn{background:none;border:none;padding:0.42rem 0.82rem;font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:400;color:var(--text3);cursor:pointer;border-radius:5px;transition:all 0.15s;display:flex;align-items:center;gap:0.35rem;}
+.nav-btn:hover{color:var(--ink);background:var(--bg3);}
+.nav-btn.active{color:var(--gold);background:var(--gold-light);font-weight:500;}
+.hdr-cta{background:var(--gold);color:#fff;border:none;padding:0.5rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.76rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:all 0.15s;box-shadow:0 2px 8px rgba(184,146,42,0.3);}
+.hdr-cta:hover{background:var(--gold2);}
+
+/* MAIN */
+.main{flex:1;overflow:hidden;display:flex;}
+.page{display:none;width:100%;height:calc(100vh - 94px);overflow-y:auto;}
+.page.on{display:flex;flex-direction:column;}
+
+/* ====== HOME PAGE ====== */
+.home-page{overflow-y:auto;}
+.hero{background:linear-gradient(135deg,#1a1208 0%,#2d2010 40%,#1a1a10 100%);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(184,146,42,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(184,146,42,0.08) 0%,transparent 50%);}
+.hero-inner{position:relative;max-width:800px;margin:0 auto;}
+.hero-eyebrow{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold2);margin-bottom:1.2rem;font-weight:500;}
+.hero-title{font-family:'Cormorant Garamond',serif;font-size:3.8rem;font-weight:400;color:#f5ede0;line-height:1.1;margin-bottom:1.2rem;}
+.hero-title span{color:var(--gold2);}
+.hero-sub{font-size:1rem;color:#a89878;line-height:1.75;max-width:600px;margin:0 auto 2.5rem;}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;}
+.hero-btn-p{background:var(--gold);color:#fff;border:none;padding:0.95rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;border-radius:6px;transition:all 0.2s;box-shadow:0 4px 20px rgba(184,146,42,0.45);}
+.hero-btn-p:hover{background:var(--gold2);transform:translateY(-1px);}
+.hero-btn-s{background:transparent;color:#d4c4a0;border:1px solid rgba(212,170,64,0.4);padding:0.95rem 2.2rem;font-family:'DM Sans',sans-serif;font-size:0.88rem;font-weight:400;cursor:pointer;border-radius:6px;transition:all 0.2s;}
+.hero-btn-s:hover{border-color:var(--gold2);color:#f5ede0;}
+
+/* SIGNATURE SERVICE BANNER */
+.sig-banner{background:linear-gradient(135deg,var(--gold) 0%,#d4a020 100%);padding:2.5rem 3rem;text-align:center;}
+.sig-banner-label{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:0.5rem;font-weight:600;}
+.sig-banner-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:600;color:#fff;margin-bottom:0.6rem;}
+.sig-banner-sub{font-size:0.9rem;color:rgba(255,255,255,0.88);line-height:1.7;max-width:680px;margin:0 auto 1.5rem;}
+.sig-banner-btn{background:#fff;color:var(--gold);border:none;padding:0.85rem 2rem;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:700;cursor:pointer;border-radius:6px;transition:all 0.2s;letter-spacing:0.04em;}
+.sig-banner-btn:hover{background:#f5f0e8;transform:translateY(-1px);}
+
+/* HOW IT WORKS */
+.how-section{padding:4rem 3rem;background:var(--bg2);}
+.section-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;text-align:center;margin-bottom:0.6rem;}
+.section-title{font-family:'Cormorant Garamond',serif;font-size:2.3rem;font-weight:400;color:var(--ink);text-align:center;margin-bottom:0.5rem;}
+.section-sub{font-size:0.85rem;color:var(--text4);text-align:center;max-width:540px;margin:0 auto 3rem;line-height:1.7;}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;max-width:1000px;margin:0 auto;}
+.step{background:var(--bg);border:1px solid var(--bg4);border-radius:10px;padding:1.75rem 1.4rem;text-align:center;position:relative;transition:all 0.2s;}
+.step:hover{border-color:var(--gold-mid);box-shadow:var(--shadow);}
+.step-num{width:40px;height:40px;background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-weight:600;color:var(--gold);margin:0 auto 1rem;}
+.step-icon{font-size:1.8rem;margin-bottom:0.75rem;}
+.step-title{font-size:0.88rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem;}
+.step-text{font-size:0.76rem;color:var(--text3);line-height:1.65;}
+.step-badge{position:absolute;top:-10px;right:12px;background:var(--green);color:#fff;font-size:0.55rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;padding:0.22rem 0.55rem;border-radius:10px;}
+.step-badge.gold{background:var(--gold);}
+.step-arrow{display:flex;align-items:center;justify-content:center;color:var(--bg4);font-size:1.4rem;padding-top:2rem;}
+
+/* LAWYER ANALYSIS HIGHLIGHT */
+.lawyer-highlight{padding:4rem 3rem;background:var(--bg3);}
+.lh-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.lh-badge-wrap{position:relative;}
+.lh-card{background:var(--bg2);border:2px solid var(--gold-mid);border-radius:14px;padding:2.5rem;box-shadow:var(--shadow-lg);}
+.lh-card-top{display:flex;align-items:center;gap:1rem;margin-bottom:1.5rem;}
+.lh-avatar{width:56px;height:56px;background:linear-gradient(135deg,var(--gold-light),var(--gold-mid));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.6rem;flex-shrink:0;}
+.lh-card-title{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ink);font-weight:600;}
+.lh-card-sub{font-size:0.7rem;color:var(--text4);}
+.lh-steps{display:flex;flex-direction:column;gap:0.85rem;}
+.lh-step{display:flex;gap:0.9rem;align-items:flex-start;}
+.lh-step-dot{width:26px;height:26px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;margin-top:0.1em;}
+.lh-step-dot.g{background:var(--green-bg);color:var(--green);}
+.lh-step-dot.gold{background:var(--gold-light);color:var(--gold);}
+.lh-step-text{font-size:0.8rem;color:var(--text3);line-height:1.6;padding-top:0.1em;}
+.lh-step-text strong{color:var(--ink);font-weight:600;}
+.lh-free-tag{background:var(--green);color:#fff;font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.22rem 0.6rem;border-radius:4px;margin-top:1.25rem;display:inline-block;}
+.lh-content-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.75rem;}
+.lh-content-title{font-family:'Cormorant Garamond',serif;font-size:2.4rem;font-weight:400;color:var(--ink);line-height:1.15;margin-bottom:1rem;}
+.lh-content-text{font-size:0.88rem;color:var(--text3);line-height:1.8;margin-bottom:1.5rem;}
+.lh-points{display:flex;flex-direction:column;gap:0.65rem;margin-bottom:2rem;}
+.lh-point{display:flex;gap:0.75rem;align-items:flex-start;font-size:0.82rem;color:var(--text3);line-height:1.55;}
+.lh-point-icon{color:var(--green);font-weight:700;flex-shrink:0;margin-top:0.05em;}
+.lh-btn{background:var(--ink);color:var(--gold-light);border:none;padding:0.9rem 2rem;font-family:'DM Sans',sans-serif;font-size:0.82rem;font-weight:500;cursor:pointer;border-radius:6px;transition:all 0.2s;letter-spacing:0.04em;}
+.lh-btn:hover{background:var(--ink2);}
+
+/* FOREIGNERS GUIDE */
+.foreigners-section{padding:4rem 3rem;background:var(--bg2);}
+.fg-inner{max-width:1000px;margin:0 auto;}
+.fg-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem;}
+.fg-card{background:var(--bg);border:1px solid var(--bg4);border-radius:10px;padding:1.5rem;transition:all 0.2s;}
+.fg-card:hover{border-color:var(--gold-mid);box-shadow:var(--shadow);transform:translateY(-2px);}
+.fg-card-icon{font-size:1.6rem;margin-bottom:0.75rem;}
+.fg-card-title{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem;}
+.fg-card-text{font-size:0.77rem;color:var(--text3);line-height:1.65;}
+.fg-lang-row{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:2rem;justify-content:center;}
+.fg-lang{background:var(--gold-light);border:1px solid var(--gold-mid);padding:0.3rem 0.8rem;border-radius:15px;font-size:0.72rem;color:var(--gold);font-weight:500;}
+
+/* SERVICES GRID */
+.services-section{padding:4rem 3rem;background:var(--bg3);}
+.sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.4rem;max-width:1000px;margin:2.5rem auto 0;}
+.sv-card{background:var(--bg2);border:1px solid var(--bg4);border-radius:10px;padding:1.75rem;transition:all 0.2s;}
+.sv-card:hover{border-color:var(--gold-mid);box-shadow:var(--shadow);}
+.sv-card-icon{font-size:1.5rem;margin-bottom:0.9rem;}
+.sv-card-title{font-size:0.92rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem;}
+.sv-card-text{font-size:0.78rem;color:var(--text3);line-height:1.65;margin-bottom:1rem;}
+.sv-card-btn{background:transparent;border:1px solid var(--bg4);color:var(--text3);padding:0.5rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.73rem;cursor:pointer;border-radius:4px;transition:all 0.15s;}
+.sv-card-btn:hover{border-color:var(--gold);color:var(--gold);}
+
+/* CONSULT CTA */
+.cta-section{padding:4rem 3rem;background:linear-gradient(135deg,#1a1208 0%,#2d2010 100%);text-align:center;}
+.cta-title{font-family:'Cormorant Garamond',serif;font-size:2.8rem;font-weight:400;color:#f5ede0;margin-bottom:0.8rem;line-height:1.15;}
+.cta-sub{font-size:0.9rem;color:#a89878;line-height:1.7;max-width:560px;margin:0 auto 2rem;}
+.cta-btn{background:var(--gold);color:#fff;border:none;padding:1.1rem 3rem;font-family:'DM Sans',sans-serif;font-size:0.9rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;cursor:pointer;border-radius:7px;transition:all 0.2s;box-shadow:0 4px 20px rgba(184,146,42,0.5);}
+.cta-btn:hover{background:var(--gold2);transform:translateY(-2px);}
+.cta-note{font-size:0.7rem;color:#6a5830;margin-top:1rem;}
+
+/* FOOTER */
+footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
+.footer-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;}
+.footer-brand .fl-logo{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:#d4b870;margin-bottom:0.5rem;}
+.footer-brand .fl-logo span{color:var(--gold2);}
+.footer-brand p{font-size:0.73rem;line-height:1.65;color:#504030;}
+.footer-col-title{font-size:0.58rem;letter-spacing:0.18em;text-transform:uppercase;color:#8a7040;font-weight:600;margin-bottom:0.9rem;}
+.footer-contact-item{display:flex;gap:0.6rem;align-items:flex-start;margin-bottom:0.6rem;font-size:0.78rem;color:#7a6840;}
+.footer-contact-name{font-weight:600;color:#a08848;}
+.footer-contact-num{color:#7a6840;}
+.footer-links{display:flex;flex-direction:column;gap:0.5rem;}
+.footer-link{font-size:0.76rem;color:#6a5830;cursor:pointer;transition:color 0.15s;text-decoration:none;background:none;border:none;text-align:left;font-family:'DM Sans',sans-serif;}
+.footer-link:hover{color:#d4b870;}
+.footer-bottom{border-top:1px solid #1a1510;margin-top:2rem;padding-top:1.5rem;max-width:1000px;margin-left:auto;margin-right:auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;}
+.footer-copy{font-size:0.65rem;color:#4a3820;}
+.footer-disc{font-size:0.62rem;color:#3a2e18;max-width:500px;text-align:right;line-height:1.5;}
+
+/* SHARED */
+.sb-label{font-size:0.59rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text4);margin-bottom:0.3rem;font-weight:500;}
+.btn-p{width:100%;background:var(--gold);color:#fff;border:none;padding:0.78rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:all 0.15s;opacity:0.3;pointer-events:none;}
+.btn-p.on{opacity:1;pointer-events:all;}
+.btn-p.on:hover{background:var(--gold2);}
+.btn-g{width:100%;background:transparent;color:var(--text4);border:1px solid var(--bg4);padding:0.58rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;cursor:pointer;border-radius:5px;transition:all 0.15s;display:none;}
+.btn-g.on{display:block;}
+.btn-g:hover{border-color:var(--bg3);color:var(--text3);}
+.sb-hr{border:none;border-top:1px solid var(--bg4);}
+.form-group{display:flex;flex-direction:column;gap:0.35rem;}
+.form-label{font-size:0.59rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--text4);font-weight:500;}
+.form-select,.form-input,.form-textarea{background:var(--bg);border:1px solid var(--bg4);border-radius:4px;padding:0.62rem 0.8rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;outline:none;transition:border-color 0.15s;font-weight:300;}
+.form-select{cursor:pointer;}
+.form-select option{background:var(--bg2);}
+.form-textarea{resize:vertical;min-height:80px;}
+.form-select:focus,.form-input:focus,.form-textarea:focus{border-color:var(--gold);}
+
+/* CHAT SHARED */
+.msg{margin-bottom:1rem;animation:fu 0.22s ease;}
+@keyframes fu{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.msg-u{display:flex;justify-content:flex-end;}
+.msg-u-b{background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:4px 4px 0 4px;padding:0.58rem 0.85rem;max-width:60%;font-size:0.79rem;color:var(--text2);font-style:italic;}
+.msg-a{display:flex;gap:0.75rem;align-items:flex-start;}
+.msg-av{width:26px;height:26px;flex-shrink:0;background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:3px;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:0.75rem;color:var(--gold);margin-top:2px;}
+.msg-body{flex:1;background:var(--bg2);border:1px solid var(--bg4);border-radius:0 4px 4px 4px;padding:0.95rem 1.15rem;box-shadow:0 1px 4px rgba(26,21,16,0.06);}
+.r-warn{background:#fff8e8;border:1px solid #e8d080;border-radius:4px;padding:0.62rem 0.85rem;margin-top:0.9rem;font-size:0.76rem;color:#8a6820;line-height:1.65;}
+.r-verify{font-size:0.75rem;color:#a08840;font-style:italic;line-height:1.6;padding-left:0.7rem;border-left:2px solid var(--gold-mid);margin:0.2rem 0;}
+.r-head{font-family:'Cormorant Garamond',serif;font-size:0.82rem;font-weight:600;color:var(--gold);letter-spacing:0.08em;text-transform:uppercase;margin-top:1rem;margin-bottom:0.3rem;padding-bottom:0.22rem;border-bottom:1px solid var(--bg4);}
+.r-head:first-child{margin-top:0;}
+.r-body{font-size:0.81rem;color:var(--text2);line-height:1.72;}
+.r-indent{padding-left:1rem;}
+.r-gap{height:0.35em;}
+.dots{display:flex;gap:0.28rem;padding:0.25rem 0;}
+.dot{width:5px;height:5px;background:var(--gold-mid);border-radius:50%;animation:pu 1.4s ease-in-out infinite;display:inline-block;}
+.dot:nth-child(2){animation-delay:.2s;}.dot:nth-child(3){animation-delay:.4s;}
+@keyframes pu{0%,80%,100%{opacity:0.25;transform:scale(0.7);}40%{opacity:1;transform:scale(1);}}
+.input-bar{border-top:1px solid var(--bg4);padding:0.8rem 1.75rem;display:flex;gap:0.55rem;background:var(--bg2);flex-shrink:0;}
+.chat-inp{flex:1;background:var(--bg);border:1px solid var(--bg4);border-radius:5px;padding:0.65rem 0.88rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:300;outline:none;resize:none;transition:border-color 0.15s;}
+.chat-inp::placeholder{color:var(--text4);}
+.chat-inp:focus{border-color:var(--gold);}
+.chat-inp:disabled{opacity:0.4;}
+.send-btn{background:var(--bg3);border:1px solid var(--bg4);color:var(--text4);padding:0.65rem 1.05rem;cursor:pointer;border-radius:5px;font-size:0.9rem;transition:all 0.15s;opacity:0.3;pointer-events:none;}
+.send-btn.on{opacity:1;pointer-events:all;background:var(--gold);border-color:var(--gold);color:#fff;}
+.send-btn.on:hover{background:var(--gold2);}
+
+/* ANALYSE PAGE */
+.a-layout{display:flex;width:100%;height:100%;}
+.sidebar{width:272px;min-width:272px;border-right:1px solid var(--bg4);background:var(--bg2);display:flex;flex-direction:column;padding:1.4rem;gap:1rem;overflow-y:auto;}
+.dropzone{border:2px dashed var(--bg4);border-radius:8px;padding:1.6rem 1rem;text-align:center;cursor:pointer;transition:all 0.2s;}
+.dropzone:hover,.dropzone.over{border-color:var(--gold);background:var(--gold-light);}
+.dz-icon{font-size:1.8rem;opacity:0.4;margin-bottom:0.5rem;}
+.dz-text{font-size:0.76rem;color:var(--text4);line-height:1.5;}
+.dz-sub{font-size:0.63rem;color:var(--text4);opacity:0.7;margin-top:0.22rem;}
+#fi{display:none;}
+.file-card{background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:6px;padding:0.75rem 0.9rem;display:none;}
+.file-card.on{display:block;}
+.fc-name{font-size:0.76rem;color:var(--gold);font-weight:600;word-break:break-all;margin-bottom:0.18rem;}
+.fc-size{font-size:0.62rem;color:var(--text4);}
+.cap-row{display:flex;align-items:flex-start;gap:0.5rem;font-size:0.71rem;color:var(--text3);line-height:1.45;margin-bottom:0.18rem;}
+.cap-ok{color:var(--green);font-weight:700;}.cap-no{color:var(--red);font-weight:700;}
+.vlist{font-size:0.65rem;color:var(--text4);line-height:1.8;}
+.sb-foot{font-size:0.57rem;color:var(--text4);line-height:1.5;margin-top:auto;padding-top:0.4rem;}
+.chat-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.chat-scroll{flex:1;overflow-y:auto;padding:1.75rem;}
+.empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.7rem;opacity:0.35;}
+.empty-glyph{font-family:'Cormorant Garamond',serif;font-size:3.5rem;color:var(--gold);}
+.empty-title{font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--text3);font-style:italic;}
+.empty-sub{font-size:0.68rem;color:var(--text4);}
+
+/* LAWYER REVIEW PANEL on analyse page */
+.lawyer-review-strip{background:linear-gradient(135deg,var(--green-bg),#d8f0e5);border:1px solid #a0d8b8;border-radius:8px;padding:1rem 1.2rem;margin:0 1.75rem 1rem;display:flex;align-items:center;gap:1rem;}
+.lrs-icon{font-size:1.4rem;flex-shrink:0;}
+.lrs-text{flex:1;font-size:0.76rem;color:var(--green);line-height:1.55;}
+.lrs-text strong{font-weight:600;color:#1d5435;}
+.lrs-btn{background:var(--green);color:#fff;border:none;padding:0.52rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;border-radius:4px;white-space:nowrap;transition:all 0.15s;flex-shrink:0;}
+.lrs-btn:hover{background:#1d5435;}
+
+/* DRAFT PAGE */
+.d-layout{display:flex;width:100%;height:100%;}
+.d-left{width:300px;min-width:300px;border-right:1px solid var(--bg4);background:var(--bg2);padding:1.5rem;overflow-y:auto;display:flex;flex-direction:column;gap:0.95rem;}
+.d-right{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+.d-scroll{flex:1;overflow-y:auto;padding:1.75rem;}
+.d-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.7rem;opacity:0.35;}
+.draft-out{background:var(--bg2);border:1px solid var(--bg4);border-radius:6px;padding:1.5rem;font-family:'Cormorant Garamond',serif;font-size:0.95rem;color:var(--text2);line-height:1.85;white-space:pre-wrap;}
+.d-actions{display:flex;gap:0.7rem;padding:0.9rem 1.75rem;border-top:1px solid var(--bg4);background:var(--bg2);flex-shrink:0;display:none;}
+.act-btn{background:var(--bg3);border:1px solid var(--bg4);color:var(--text3);padding:0.58rem 1.1rem;font-family:'DM Sans',sans-serif;font-size:0.74rem;cursor:pointer;border-radius:4px;transition:all 0.15s;}
+.act-btn:hover{border-color:var(--gold);color:var(--gold);}
+.act-btn.p{background:var(--gold);color:#fff;border-color:var(--gold);font-weight:600;}
+.act-btn.p:hover{background:var(--gold2);}
+
+/* ASK PAGE */
+.q-layout{width:100%;height:100%;display:flex;flex-direction:column;}
+.q-scroll{flex:1;overflow-y:auto;padding:1.75rem 3rem;}
+.q-input-wrap{border-top:1px solid var(--bg4);padding:1.1rem 3rem;background:var(--bg2);flex-shrink:0;}
+.q-row{display:flex;gap:0.7rem;align-items:flex-end;}
+#ask-inp{flex:1;background:var(--bg);border:1px solid var(--bg4);border-radius:6px;padding:0.82rem 1rem;color:var(--text);font-family:'DM Sans',sans-serif;font-size:0.83rem;font-weight:300;outline:none;resize:none;transition:border-color 0.15s;min-height:50px;}
+#ask-inp::placeholder{color:var(--text4);}
+#ask-inp:focus{border-color:var(--gold);}
+#ask-send{background:var(--gold);color:#fff;border:none;padding:0.82rem 1.4rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;border-radius:6px;transition:all 0.15s;white-space:nowrap;}
+#ask-send:hover{background:var(--gold2);}
+.q-disc{font-size:0.6rem;color:var(--text4);text-align:center;margin-top:0.5rem;}
+.q-empty{height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;}
+.q-empty-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;color:var(--ink);font-weight:300;text-align:center;line-height:1.3;}
+.q-empty-sub{font-size:0.78rem;color:var(--text4);text-align:center;max-width:460px;line-height:1.7;}
+.chips{display:flex;flex-wrap:wrap;gap:0.55rem;justify-content:center;max-width:580px;margin-top:0.3rem;}
+.chip{background:var(--bg2);border:1px solid var(--bg4);padding:0.48rem 0.88rem;border-radius:20px;font-size:0.72rem;color:var(--text3);cursor:pointer;transition:all 0.15s;}
+.chip:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-light);}
+
+/* LAWYERS PAGE */
+.l-layout{width:100%;height:100%;overflow-y:auto;padding:2rem 2.5rem;}
+.l-hdr{margin-bottom:1.75rem;}
+.l-title{font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:400;color:var(--ink);margin-bottom:0.35rem;}
+.l-sub{font-size:0.8rem;color:var(--text4);max-width:580px;line-height:1.6;}
+.l-filters{display:flex;gap:0.6rem;margin-bottom:1.5rem;flex-wrap:wrap;}
+.f-btn{background:var(--bg2);border:1px solid var(--bg4);padding:0.42rem 0.95rem;border-radius:20px;font-size:0.72rem;color:var(--text3);cursor:pointer;transition:all 0.15s;font-family:'DM Sans',sans-serif;}
+.f-btn:hover,.f-btn.active{border-color:var(--gold);color:var(--gold);background:var(--gold-light);}
+.l-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:1.1rem;}
+.lc{background:var(--bg2);border:1px solid var(--bg4);border-radius:10px;padding:1.4rem;transition:all 0.2s;}
+.lc:hover{border-color:var(--gold-mid);transform:translateY(-2px);box-shadow:var(--shadow);}
+.lc-top{display:flex;gap:0.9rem;align-items:flex-start;margin-bottom:0.9rem;}
+.lc-av{width:46px;height:46px;border-radius:8px;flex-shrink:0;background:var(--gold-light);border:1px solid var(--gold-mid);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold);}
+.lc-name{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:0.18rem;}
+.lc-title{font-size:0.71rem;color:var(--text4);}
+.lc-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.9rem;}
+.lc-tag{background:var(--bg3);border:1px solid var(--bg4);padding:0.18rem 0.5rem;border-radius:3px;font-size:0.63rem;color:var(--text4);}
+.lc-meta{display:flex;gap:1.2rem;margin-bottom:0.9rem;}
+.lc-stat{font-size:0.7rem;color:var(--text4);}
+.lc-stat strong{color:var(--ink2);font-weight:600;}
+.lc-book{width:100%;background:var(--gold);color:#fff;border:none;padding:0.62rem;font-family:'DM Sans',sans-serif;font-size:0.73rem;font-weight:600;letter-spacing:0.05em;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:all 0.15s;}
+.lc-book:hover{background:var(--gold2);}
+.lc-free{text-align:center;font-size:0.6rem;color:var(--green);margin-top:0.35rem;font-weight:500;}
+
+/* CONSULT PAGE */
+.c-layout{width:100%;height:100%;overflow-y:auto;padding:2rem 2.5rem;}
+.c-hero{background:linear-gradient(135deg,#1a1208 0%,#2d2010 100%);border-radius:12px;padding:2.25rem;margin-bottom:1.75rem;display:flex;justify-content:space-between;align-items:center;gap:2rem;}
+.ch-eyebrow{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold2);margin-bottom:0.4rem;font-weight:600;}
+.ch-title{font-family:'Cormorant Garamond',serif;font-size:2rem;font-weight:400;color:#f5ede0;margin-bottom:0.5rem;line-height:1.2;}
+.ch-desc{font-size:0.8rem;color:#a08868;line-height:1.7;max-width:460px;}
+.ch-badge{background:rgba(184,146,42,0.15);border:1px solid rgba(184,146,42,0.35);border-radius:10px;padding:1.25rem 1.75rem;text-align:center;flex-shrink:0;}
+.ch-badge-main{font-family:'Cormorant Garamond',serif;font-size:2.4rem;color:var(--gold2);font-weight:300;line-height:1;}
+.ch-badge-sub{font-size:0.65rem;color:#a08848;letter-spacing:0.1em;text-transform:uppercase;margin-top:0.25rem;}
+.c-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;max-width:860px;}
+.c-section{background:var(--bg2);border:1px solid var(--bg4);border-radius:10px;padding:1.6rem;}
+.c-sec-title{font-family:'Cormorant Garamond',serif;font-size:1.1rem;color:var(--ink);margin-bottom:1.1rem;}
+.c-form{display:flex;flex-direction:column;gap:0.9rem;}
+.c-row{display:grid;grid-template-columns:1fr 1fr;gap:0.7rem;}
+.time-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:0.45rem;}
+.ts{background:var(--bg);border:1px solid var(--bg4);padding:0.48rem;text-align:center;border-radius:4px;font-size:0.71rem;color:var(--text3);cursor:pointer;transition:all 0.15s;}
+.ts:hover,.ts.active{border-color:var(--gold);color:var(--gold);background:var(--gold-light);}
+.c-benefits{display:flex;flex-direction:column;gap:0.7rem;}
+.cbi{display:flex;gap:0.7rem;align-items:flex-start;}
+.cbi-icon{color:var(--green);font-size:0.84rem;flex-shrink:0;margin-top:0.1em;font-weight:700;}
+.cbi-text{font-size:0.78rem;color:var(--text3);line-height:1.55;}
+.c-submit{width:100%;background:var(--gold);color:#fff;border:none;padding:0.9rem;font-family:'DM Sans',sans-serif;font-size:0.84rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;border-radius:5px;transition:all 0.2s;margin-top:0.4rem;box-shadow:0 3px 12px rgba(184,146,42,0.3);}
+.c-submit:hover{background:var(--gold2);}
+
+/* MODAL */
+#modal{display:none;position:fixed;inset:0;background:rgba(26,21,16,0.6);backdrop-filter:blur(4px);z-index:500;align-items:center;justify-content:center;padding:2rem;}
+#modal.on{display:flex;}
+.modal-box{background:var(--bg2);border:1px solid var(--bg4);border-radius:12px;padding:2rem;width:100%;max-width:480px;box-shadow:var(--shadow-lg);}
+.modal-title{font-family:'Cormorant Garamond',serif;font-size:1.4rem;color:var(--ink);margin-bottom:0.25rem;}
+.modal-sub{font-size:0.76rem;color:var(--text4);margin-bottom:1.4rem;}
+.modal-btns{display:flex;gap:0.7rem;margin-top:1rem;}
+.m-cancel{flex:1;background:transparent;color:var(--text3);border:1px solid var(--bg4);padding:0.72rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;cursor:pointer;border-radius:4px;}
+.m-confirm{flex:2;background:var(--gold);color:#fff;border:none;padding:0.72rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;font-weight:600;cursor:pointer;border-radius:4px;}
+.m-confirm:hover{background:var(--gold2);}
+
+/* REQUEST DOCUMENTS PAGE */
+.rd-cat{background:var(--bg2);border:2px solid var(--bg4);border-radius:10px;padding:1.25rem;cursor:pointer;transition:all 0.2s;}
+.rd-cat:hover{border-color:var(--gold-mid);box-shadow:var(--shadow);transform:translateY(-2px);}
+.rd-cat.selected{border-color:var(--green);background:var(--green-bg);}
+.rd-cat-icon{font-size:1.6rem;margin-bottom:0.6rem;}
+.rd-cat-title{font-size:0.86rem;font-weight:600;color:var(--ink);margin-bottom:0.4rem;}
+.rd-cat-list{font-size:0.7rem;color:var(--text4);line-height:1.6;}
+.rd-cat.selected .rd-cat-title{color:var(--green);}
+.rd-cat.selected .rd-cat-list{color:#2d5a3d;}
+
+/* TOAST */
+#toast{position:fixed;bottom:1.75rem;right:1.75rem;background:var(--ink);border:1px solid var(--green);border-radius:8px;padding:0.85rem 1.1rem;font-size:0.78rem;color:#d4f0e0;z-index:999;display:none;animation:slideIn 0.3s ease;}
+@keyframes slideIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+
+
+/* LANGUAGE BAR */
+#lang-bar{background:var(--ink2);padding:0.38rem 1.75rem;display:flex;align-items:center;gap:0.5rem;flex-wrap:wrap;border-bottom:1px solid var(--ink3);flex-shrink:0;}
+.lang-label{font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:#6a5a40;font-weight:500;margin-right:0.2rem;}
+.lang-btn{background:transparent;border:1px solid transparent;color:#7a6a50;padding:0.22rem 0.55rem;font-family:'DM Sans',sans-serif;font-size:0.68rem;cursor:pointer;border-radius:12px;transition:all 0.15s;white-space:nowrap;}
+.lang-btn:hover{color:var(--gold-mid);border-color:rgba(212,170,64,0.3);}
+.lang-btn.active{background:rgba(184,146,42,0.18);border-color:rgba(184,146,42,0.45);color:var(--gold2);font-weight:600;}
+@media(max-width:768px){#lang-bar{padding:0.38rem 0.8rem;gap:0.3rem;}.lang-btn{font-size:0.62rem;padding:0.18rem 0.4rem;}}
+
+/* HAMBURGER MENU */
+.hdr-hamburger{display:none;background:none;border:none;cursor:pointer;padding:0.4rem;flex-direction:column;gap:5px;align-items:center;justify-content:center;}
+.hdr-hamburger span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all 0.2s;}
+#mobile-menu{display:none;position:fixed;top:60px;left:0;right:0;background:var(--bg2);border-bottom:2px solid var(--gold-mid);z-index:99;padding:0.75rem 1rem;box-shadow:0 8px 24px rgba(26,21,16,0.12);}
+#mobile-menu.open{display:flex;flex-direction:column;gap:0.25rem;}
+.mob-nav-btn{background:none;border:none;padding:0.72rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:400;color:var(--text2);cursor:pointer;border-radius:6px;transition:all 0.15s;text-align:left;width:100%;}
+.mob-nav-btn:hover{background:var(--bg3);color:var(--ink);}
+.mob-nav-btn.active{background:var(--gold-light);color:var(--gold);font-weight:600;}
+.mob-cta-btn{background:var(--gold);color:#fff;border:none;padding:0.82rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.85rem;font-weight:600;cursor:pointer;border-radius:6px;margin-top:0.4rem;text-align:left;width:100%;}
+
+/* Responsive */
+@media(max-width:768px){
+  /* Header */
+  .hdr{padding:0 1rem;}
+  .hdr-nav{display:none;}
+  .hdr-cta{display:none;}
+  .hdr-hamburger{display:flex;}
+
+  /* Hero */
+  .hero{padding:3rem 1.5rem 2.5rem;}
+  .hero-title{font-size:2.2rem;line-height:1.15;}
+  .hero-sub{font-size:0.88rem;}
+  .hero-btns{flex-direction:column;align-items:center;}
+  .hero-btn-p,.hero-btn-s{width:100%;max-width:340px;text-align:center;}
+
+  /* Signature banner */
+  .sig-banner{padding:2rem 1.5rem;}
+  .sig-banner-title{font-size:1.55rem;line-height:1.2;}
+  .sig-banner-sub{font-size:0.82rem;}
+
+  /* How it works */
+  .how-section{padding:2.5rem 1.5rem;}
+  .steps{grid-template-columns:1fr !important;}
+  .section-title{font-size:1.8rem;}
+
+  /* Lawyer highlight */
+  .lawyer-highlight{padding:2.5rem 1.5rem;}
+  .lh-inner{grid-template-columns:1fr;}
+  .lh-content-title{font-size:1.9rem;}
+
+  /* Foreigners */
+  .foreigners-section{padding:2.5rem 1.5rem;}
+  .fg-grid{grid-template-columns:1fr 1fr;}
+
+  /* Services */
+  .services-section{padding:2.5rem 1.5rem;}
+  .sv-grid{grid-template-columns:1fr;}
+
+  /* CTA */
+  .cta-section{padding:2.5rem 1.5rem;}
+  .cta-title{font-size:2rem;}
+
+  /* Footer */
+  footer{padding:2rem 1.5rem;}
+  .footer-inner{grid-template-columns:1fr;}
+  .footer-bottom{flex-direction:column;text-align:center;}
+  .footer-disc{text-align:center;}
+
+  /* Consult */
+  .c-layout{padding:1.5rem 1rem;}
+  .c-hero{flex-direction:column;padding:1.5rem;}
+  .ch-badge{align-self:flex-start;}
+  .c-grid{grid-template-columns:1fr;}
+
+  /* Lawyers */
+  .l-layout{padding:1.5rem 1rem;}
+
+  /* Analyse */
+  .a-layout{flex-direction:column;}
+  .sidebar{width:100%;min-width:unset;border-right:none;border-bottom:1px solid var(--bg4);max-height:280px;overflow-y:auto;}
+
+  /* Draft */
+  .d-layout{flex-direction:column;}
+  .d-left{width:100%;min-width:unset;border-right:none;border-bottom:1px solid var(--bg4);}
+
+  /* Q&A */
+  .q-scroll{padding:1rem 1rem;}
+  .q-input-wrap{padding:0.75rem 1rem;}
+
+  /* General */
+  .page{height:auto;min-height:calc(100vh - 94px);}
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER -->
+<div id="disclaimer">
+  <div class="disc-wrap">
+    <div class="disc-logo"><div class="disc-logo-main"><span>Lex</span>LK</div></div>
+    <div class="disc-tagline" id="disc-tagline">Professional Legal Services · Sri Lanka · Complimentary &amp; Paid</div>
+    <div class="disc-card">
+      <div class="disc-card-title" id="disc-notice">Important Notice — Please Read Before Proceeding</div>
+      <div class="disc-item"><span class="di-icon" style="color:var(--green)">✓</span><span class="di-text"><strong id="disc-item1-title">Complimentary Attorney Document Review</strong> — <span id="disc-item1-text">Submit any legal document and a qualified Sri Lankan attorney will conduct a personal review and deliver written professional feedback within 2–4 hours via WhatsApp or email, at no charge.</span></span></div>
+      <div class="disc-item"><span class="di-icon" style="color:var(--green)">✓</span><span class="di-text"><strong id="disc-item2-title">Instant AI-Assisted Analysis</strong> — <span id="disc-item2-text">Receive immediate AI-generated insights covering key facts, identified legal issues, relevant statutes and strategic recommendations.</span></span></div>
+      <div class="disc-item"><span class="di-icon" style="color:var(--green)">✓</span><span class="di-text"><strong id="disc-item3-title">Complimentary Initial Consultation</strong> — <span id="disc-item3-text">Schedule a complimentary 30-minute consultation with a qualified Sri Lankan attorney. No engagement obligation.</span></span></div>
+      <div class="disc-item"><span class="di-icon" style="color:var(--green)">✓</span><span class="di-text"><strong id="disc-item4-title">Inclusive Access</strong> — <span id="disc-item4-text">Our services are available to Sri Lankan nationals, foreign nationals, expatriates, investors and visitors alike.</span></span></div>
+      <div class="disc-item"><span class="di-icon" style="color:#c8880a">⚠</span><span class="di-text" id="disc-warning">AI-generated analysis is for informational purposes only and does not constitute legal advice. All legal authorities must be independently verified by a qualified attorney prior to reliance in any legal proceedings.</span></div>
+    </div>
+    <button class="disc-btn" id="disc-btn" onclick="startApp()">I Acknowledge &amp; Accept — Enter LexLK</button>
+    <div class="disc-foot" id="disc-foot">Complimentary &amp; Paid Services Available · Sri Lanka Jurisdiction · No Undisclosed Charges</div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- LANGUAGE BAR -->
+  <div id="lang-bar">
+    <span class="lang-label">🌐 Language:</span>
+    <button class="lang-btn active" onclick="setLang('en')" id="lb-en">🇬🇧 English</button>
+    <button class="lang-btn" onclick="setLang('si')" id="lb-si">🇱🇰 සිංහල</button>
+    <button class="lang-btn" onclick="setLang('ta')" id="lb-ta">🇱🇰 தமிழ்</button>
+    <button class="lang-btn" onclick="setLang('fr')" id="lb-fr">🇫🇷 Français</button>
+    <button class="lang-btn" onclick="setLang('de')" id="lb-de">🇩🇪 Deutsch</button>
+    <button class="lang-btn" onclick="setLang('zh')" id="lb-zh">🇨🇳 中文</button>
+    <button class="lang-btn" onclick="setLang('ja')" id="lb-ja">🇯🇵 日本語</button>
+    <button class="lang-btn" onclick="setLang('ko')" id="lb-ko">🇰🇷 한국어</button>
+    <button class="lang-btn" onclick="setLang('ar')" id="lb-ar">🇸🇦 العربية</button>
+    <button class="lang-btn" onclick="setLang('ru')" id="lb-ru">🇷🇺 Русский</button>
+  </div>
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="hdr-logo" onclick="showPage('home');closeMobileMenu()"><span>Lex</span>LK</div>
+    <div class="hdr-nav">
+      <button class="nav-btn active" id="nav-home" onclick="showPage('home')">🏠 Home</button>
+      <button class="nav-btn" id="nav-analyse" onclick="showPage('analyse')">⚖ Analyse</button>
+      <button class="nav-btn" id="nav-draft" onclick="showPage('draft')">✍ Draft</button>
+      <button class="nav-btn" id="nav-ask" onclick="showPage('ask')">💬 Legal Q&amp;A</button>
+      <button class="nav-btn" id="nav-lawyers" onclick="showPage('lawyers')">👤 Find a Lawyer</button>
+      <button class="nav-btn" id="nav-reqdoc" onclick="showPage('reqdoc')">📋 Request Documents</button>
+    </div>
+    <button class="hdr-cta" id="hdr-consult-btn" onclick="showPage('consult')">📅 Schedule Consultation</button>
+    <button class="hdr-hamburger" id="hamburger" onclick="toggleMobileMenu()" aria-label="Open navigation">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <!-- MOBILE MENU -->
+  <div id="mobile-menu">
+    <button class="mob-nav-btn" id="mob-home" onclick="showPage('home');closeMobileMenu()">🏠 Home</button>
+    <button class="mob-nav-btn" id="mob-analyse" onclick="showPage('analyse');closeMobileMenu()">⚖ Document Analysis</button>
+    <button class="mob-nav-btn" id="mob-draft" onclick="showPage('draft');closeMobileMenu()">✍ Document Drafting</button>
+    <button class="mob-nav-btn" id="mob-qa" onclick="showPage('ask');closeMobileMenu()">💬 Legal Q&amp;A</button>
+    <button class="mob-nav-btn" id="mob-lawyers" onclick="showPage('lawyers');closeMobileMenu()">👤 Find an Attorney</button>
+    <button class="mob-nav-btn" id="mob-reqdoc" onclick="showPage('reqdoc');closeMobileMenu()">📋 Request Legal Documents</button>
+    <button class="mob-cta-btn" id="mob-consult" onclick="showPage('consult');closeMobileMenu()">📅 Schedule Complimentary Consultation</button>
+  </div>
+
+  <div class="main">
+
+    <!-- HOME PAGE -->
+    <div class="page on" id="page-home" style="flex-direction:column;overflow-y:auto;height:calc(100vh - 94px);">
+
+      <!-- HERO -->
+      <div class="hero">
+        <div class="hero-inner">
+          <div class="hero-eyebrow" id="hero-eyebrow">Sri Lanka's Premier Legal Services Platform</div>
+          <div class="hero-title" id="hero-title">Professional Legal Assistance.<br/><span>Accessible to All.</span></div>
+          <div class="hero-sub" id="hero-sub">Submit your legal documents and receive immediate AI-assisted analysis alongside a complimentary personal review by a qualified Sri Lankan attorney — delivered directly to your WhatsApp or email within 2–4 hours.</div>
+          <div class="hero-btns">
+            <button class="hero-btn-p" id="hero-btn1" onclick="showPage('analyse')">⚖ Submit Documents for Analysis</button>
+            <button class="hero-btn-s" id="hero-btn2" onclick="showPage('consult')">📅 Schedule Complimentary Consultation</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- SIGNATURE SERVICE BANNER -->
+      <div class="sig-banner">
+        <div class="sig-banner-label" id="sig-label">🌟 Our Signature Service — Complimentary</div>
+        <div class="sig-banner-title" id="sig-title">Qualified Attorney. Professional Feedback. At No Charge.</div>
+        <div class="sig-banner-sub" id="sig-sub">Unlike any other platform in Sri Lanka, LexLK provides a genuine attorney review of your submitted documents at absolutely no charge. A qualified Sri Lankan attorney personally examines your matter and delivers detailed written professional feedback via WhatsApp or email within 2–4 hours.</div>
+        <button class="sig-banner-btn" id="sig-btn" onclick="showPage('analyse')">Submit Your Documents Now →</button>
+      </div>
+
+      <!-- HOW IT WORKS -->
+      <div class="how-section">
+        <div class="section-label" id="steps-label">Our Process</div>
+        <div class="section-title" id="steps-title">Three Steps to Legal Clarity</div>
+        <div class="section-sub" id="steps-sub">From submission to expert guidance — our process is straightforward, efficient and designed around your needs.</div>
+        <div class="steps" style="grid-template-columns:repeat(3,1fr);">
+          <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-icon">📄</div>
+            <div class="step-title" id="step1-title">Submit Your Document</div>
+            <div class="step-badge gold" id="step1-badge">Complimentary</div>
+            <div class="step-text" id="step1-text">Upload any court document, judgment, petition, contract or legal notice. Accepted formats include PDF, image and plain text. Our AI delivers an immediate analysis covering key facts, legal issues, relevant statutes, strengths and areas of concern.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-icon">👨‍⚖️</div>
+            <div class="step-title" id="step2-title">Choose Your Level of Review</div>
+            <div class="step-badge" id="step2-badge">2–4 hrs · Complimentary</div>
+            <div class="step-text" id="step2-text">Select from two complimentary options: <strong>Document Review Only</strong> — a qualified attorney delivers written professional feedback to your WhatsApp or email within 2–4 hours; or <strong>All-Inclusive Consultation</strong> — attorney feedback plus a complimentary 30-minute consultation to discuss your matter in full.</div>
+          </div>
+          <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-icon">⚖️</div>
+            <div class="step-title" id="step3-title">Proceed with Confidence</div>
+            <div class="step-badge" id="step3-badge">Paid · Professional</div>
+            <div class="step-text" id="step3-text">Should you require further legal assistance — court representation, document drafting and authentication, notarisation or formal legal opinion — our network of qualified Sri Lankan attorneys is available to assist. Fee schedules are provided transparently and in advance.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LAWYER ANALYSIS HIGHLIGHT -->
+      <div class="lawyer-highlight">
+        <div class="lh-inner">
+          <div class="lh-content">
+            <div class="lh-content-label">Our Distinguishing Service</div>
+            <div class="lh-content-title">An Unparalleled Standard of Service.</div>
+            <div class="lh-content-text">While other platforms limit their service to AI-generated responses, LexLK provides a substantively higher standard of assistance. Every document submitted is reviewed by a qualified Sri Lankan attorney who delivers personalised, professionally written feedback — at no charge to you.</div>
+            <div class="lh-points">
+              <div class="lh-point"><span class="lh-point-icon">✓</span>Personal review conducted by a qualified Sri Lankan attorney</div>
+              <div class="lh-point"><span class="lh-point-icon">✓</span>Detailed written professional feedback tailored to your specific matter</div>
+              <div class="lh-point"><span class="lh-point-icon">✓</span>Delivered to your WhatsApp or email within 2–4 hours</div>
+              <div class="lh-point"><span class="lh-point-icon">✓</span>Complimentary — no fees, no subscriptions, no obligation</div>
+              <div class="lh-point"><span class="lh-point-icon">✓</span>Available to all — Sri Lankan nationals, foreign nationals and expatriates</div>
+              <div class="lh-point"><span class="lh-point-icon">✓</span>Elect a complimentary 30-minute consultation to discuss your matter further</div>
+            </div>
+            <button class="lh-btn" onclick="showPage('analyse')">Submit a Document Now →</button>
+          </div>
+          <div class="lh-badge-wrap">
+            <div class="lh-card">
+              <div class="lh-card-top">
+                <div class="lh-avatar">👨‍⚖️</div>
+                <div>
+                  <div class="lh-card-title">Attorney Review Process</div>
+                  <div class="lh-card-sub">What occurs after submission</div>
+                </div>
+              </div>
+              <div class="lh-steps">
+                <div class="lh-step">
+                  <div class="lh-step-dot gold">1</div>
+                  <div class="lh-step-text">You submit your document and provide your contact details (WhatsApp / email)</div>
+                </div>
+                <div class="lh-step">
+                  <div class="lh-step-dot gold">2</div>
+                  <div class="lh-step-text"><strong>Instant AI-assisted analysis</strong> — key facts, legal issues, figures and dates are identified immediately</div>
+                </div>
+                <div class="lh-step">
+                  <div class="lh-step-dot gold">3</div>
+                  <div class="lh-step-text">Your document is referred to a qualified Sri Lankan attorney for personal review</div>
+                </div>
+                <div class="lh-step">
+                  <div class="lh-step-dot g">4</div>
+                  <div class="lh-step-text"><strong>Within 2–4 hours</strong>, the attorney delivers detailed written professional feedback directly to you</div>
+                </div>
+                <div class="lh-step">
+                  <div class="lh-step-dot g">5</div>
+                  <div class="lh-step-text">Optionally elect a complimentary 30-minute consultation to discuss your matter in full</div>
+                </div>
+              </div>
+              <span class="lh-free-tag">✓ Complimentary</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- FOREIGNERS GUIDE -->
+      <div class="foreigners-section">
+        <div class="fg-inner">
+          <div class="section-label">For Everyone In Sri Lanka</div>
+          <div class="section-title">Services for Foreign Nationals &amp; Visitors</div>
+          <div class="section-sub">Whether you are a visitor, expatriate, investor or long-term resident — LexLK is here to help you understand your legal rights and obligations under Sri Lankan law.</div>
+          <div class="fg-grid">
+            <div class="fg-card">
+              <div class="fg-card-icon">🛂</div>
+              <div class="fg-card-title">Visa & Immigration</div>
+              <div class="fg-card-text">Questions about visa extensions, overstays, residency permits and work visas in Sri Lanka. Our lawyers can guide you through the process.</div>
+            </div>
+            <div class="fg-card">
+              <div class="fg-card-icon">🏠</div>
+              <div class="fg-card-title">Property & Rentals</div>
+              <div class="fg-card-text">Rental disputes, property purchases, leasehold restrictions for foreigners and land ownership regulations under Sri Lankan law.</div>
+            </div>
+            <div class="fg-card">
+              <div class="fg-card-icon">💼</div>
+              <div class="fg-card-title">Business & Employment</div>
+              <div class="fg-card-text">Starting a business, employment contracts, work permit issues, BOI regulations and commercial disputes for foreign nationals.</div>
+            </div>
+            <div class="fg-card">
+              <div class="fg-card-icon">👨‍👩‍👧</div>
+              <div class="fg-card-title">Family Matters</div>
+              <div class="fg-card-text">Marriage, divorce, child custody and adoption matters involving foreign nationals in Sri Lanka. Cross-border family law guidance.</div>
+            </div>
+            <div class="fg-card">
+              <div class="fg-card-icon">⚖️</div>
+              <div class="fg-card-title">Court Matters & Disputes</div>
+              <div class="fg-card-text">If you are involved in a court case or legal dispute as a foreign national, we can help you understand your rights and find the right lawyer.</div>
+            </div>
+            <div class="fg-card">
+              <div class="fg-card-icon">🆘</div>
+              <div class="fg-card-title">Emergency Legal Help</div>
+              <div class="fg-card-text">Arrested, detained or in an urgent legal situation? Our lawyers provide emergency guidance and can connect you with the right help immediately.</div>
+            </div>
+          </div>
+          <div class="fg-lang-row">
+            <span class="fg-lang">🇬🇧 English</span>
+            <span class="fg-lang">🇱🇰 Sinhala</span>
+            <span class="fg-lang">🇮🇳 Tamil</span>
+            <span class="fg-lang">🇩🇪 German</span>
+            <span class="fg-lang">🇫🇷 French</span>
+            <span class="fg-lang">🇨🇳 Chinese</span>
+            <span class="fg-lang">🇯🇵 Japanese</span>
+            <span class="fg-lang">🇰🇷 Korean</span>
+          </div>
+          <div style="text-align:center;margin-top:0.6rem;font-size:0.7rem;color:var(--text4);">Our lawyers work in multiple languages. Interpreter assistance available on request.</div>
+        </div>
+      </div>
+
+      <!-- SERVICES -->
+      <div class="services-section">
+        <div style="max-width:1000px;margin:0 auto;">
+          <div class="section-label">All Services</div>
+          <div class="section-title">Everything You Need</div>
+          <div class="sv-grid">
+            <div class="sv-card">
+              <div class="sv-card-icon">📄</div>
+              <div class="sv-card-title">Document Analysis</div>
+              <div class="sv-card-text">Submit any legal document for immediate AI-assisted analysis and complimentary attorney review. Receive key facts, identified legal issues, strengths and professional recommendations.</div>
+              <button class="sv-card-btn" onclick="showPage('analyse')">Analyse Now →</button>
+            </div>
+            <div class="sv-card" style="border-color:var(--gold-mid);">
+              <div class="sv-card-icon">✍️</div>
+              <div style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;"><div class="sv-card-title" style="margin-bottom:0;">Document Drafting</div><span style="background:var(--gold-light);border:1px solid var(--gold-mid);color:var(--gold);font-size:0.55rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.18rem 0.45rem;border-radius:3px;">Paid Service</span></div>
+              <div class="sv-card-text">AI-assisted drafting of petitions, affidavits, motions and complaints structured for Sri Lankan courts. Choose between a draft copy for your review, or a court-ready document authenticated by a notary or advocate.</div>
+              <button class="sv-card-btn" onclick="showPage('draft')">View Drafting Services →</button>
+            </div>
+            <div class="sv-card">
+              <div class="sv-card-icon">💬</div>
+              <div class="sv-card-title">Legal Q&A</div>
+              <div class="sv-card-text">Ask any question about Sri Lankan law — civil, criminal, family, property, immigration. Get clear, cited answers instantly.</div>
+              <button class="sv-card-btn" onclick="showPage('ask')">Ask a Question →</button>
+            </div>
+            <div class="sv-card">
+              <div class="sv-card-icon">👤</div>
+              <div class="sv-card-title">Find a Lawyer</div>
+              <div class="sv-card-text">Browse qualified Sri Lankan attorneys by area of law. All offer a free initial consultation. No commission, no hidden fees.</div>
+              <button class="sv-card-btn" onclick="showPage('lawyers')">Find a Lawyer →</button>
+            </div>
+            <div class="sv-card">
+              <div class="sv-card-icon">📅</div>
+              <div class="sv-card-title">Free Consultation</div>
+              <div class="sv-card-text">Book a free 30-minute consultation with a qualified attorney. Understand your rights and decide your next steps with confidence.</div>
+              <button class="sv-card-btn" onclick="showPage('consult')">Book Free →</button>
+            </div>
+            <div class="sv-card" style="background:var(--gold-light);border-color:var(--gold-mid);">
+              <div class="sv-card-icon">🌟</div>
+              <div class="sv-card-title" style="color:var(--gold);">Complimentary Attorney Feedback</div>
+              <div class="sv-card-text" style="color:var(--text2);">Our signature service. Submit any legal document and a qualified attorney will deliver personalised written professional feedback within 2–4 hours — at no charge.</div>
+              <button class="sv-card-btn" style="border-color:var(--gold);color:var(--gold);" onclick="showPage('analyse')">Request Complimentary Feedback →</button>
+            </div>
+            <div class="sv-card">
+              <div class="sv-card-icon">📋</div>
+              <div class="sv-card-title">Request Legal Documents</div>
+              <div class="sv-card-text">Request certified copies of official Sri Lankan legal documents — deeds, transfer deed, land plans, tax records, survey plans, title certificates and more. Our attorneys handle the entire retrieval process on your behalf.</div>
+              <button class="sv-card-btn" onclick="showPage('reqdoc')">Request Documents →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <div class="cta-title" id="cta-title">Ready to Obtain Expert Legal Assistance?</div>
+        <div class="cta-sub" id="cta-sub">Submit your document today and receive immediate AI-assisted analysis together with a complimentary personal review from a qualified Sri Lankan attorney — at no charge.</div>
+        <button class="cta-btn" id="cta-btn" onclick="showPage('consult')">📅 Schedule Your Complimentary Consultation</button>
+        <div class="cta-note"><span id="cta-note">Or</span> <span style="color:var(--gold2);cursor:pointer;text-decoration:underline;" onclick="showPage('analyse')" id="cta-note2">submit a document for complimentary attorney review →</span></div>
+      </div>
+
+      <!-- FOOTER -->
+      <footer>
+        <div class="footer-inner">
+          <div class="footer-brand">
+            <div class="fl-logo"><span>Lex</span>LK</div>
+            <p id="footer-tagline">Sri Lanka's professional legal services platform. Immediate AI-assisted analysis and complimentary attorney document review — available to all in Sri Lanka.</p>
+          </div>
+          <div>
+            <div class="footer-col-title" id="footer-contact-col">Contact &amp; Founders</div>
+            <div class="footer-contact-item">
+              <div>
+                <div class="footer-contact-name">Elmo</div>
+                <div class="footer-contact-num">📞 +94 77 362 2211</div>
+              </div>
+            </div>
+            <div class="footer-contact-item">
+              <div>
+                <div class="footer-contact-name">Rukshan</div>
+                <div class="footer-contact-num">📞 +94 71 769 8609</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="footer-col-title" id="footer-services-col">Services</div>
+            <div class="footer-links">
+              <button class="footer-link" onclick="showPage('analyse')">Document Analysis</button>
+              <button class="footer-link" onclick="showPage('draft')">Draft Legal Documents</button>
+              <button class="footer-link" onclick="showPage('ask')">Legal Q&amp;A</button>
+              <button class="footer-link" onclick="showPage('lawyers')">Find a Lawyer</button>
+              <button class="footer-link" onclick="showPage('consult')">Free Consultation</button>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <div class="footer-copy" id="footer-copy">© 2025 LexLK. All rights reserved. Founded by Elmo &amp; Rukshan. Unauthorised reproduction of any content or branding is strictly prohibited.</div>
+          <div class="footer-disc" id="footer-disc-text">LexLK provides AI-assisted legal information and facilitates access to independent Sri Lankan attorneys. Nothing on this platform constitutes legal advice. Users must independently verify all legal authorities. LexLK assumes no liability for reliance on platform content.</div>
+        </div>
+      </footer>
+
+    </div><!-- end home page -->
+
+    <!-- ANALYSE PAGE -->
+    <div class="page" id="page-analyse">
+      <div class="a-layout" style="height:100%;">
+        <div class="sidebar">
+          <div>
+            <div class="sb-label">Submit Document</div>
+            <div class="dropzone" id="dz" onclick="document.getElementById('fi').click()" ondragover="dzO(event)" ondragleave="dzL()" ondrop="dzD(event)">
+              <div class="dz-icon">⚖</div>
+              <div class="dz-text">Drop your document here or click to select</div>
+              <div class="dz-sub">PDF · Image · Text</div>
+            </div>
+            <input type="file" id="fi" accept=".pdf,.jpg,.jpeg,.png,.txt" onchange="loadFile(this.files[0])"/>
+            <div class="file-card" id="fc"><div class="fc-name" id="fcn"></div><div class="fc-size" id="fcs"></div></div>
+          </div>
+          <button class="btn-p" id="btn-an" onclick="doAnalyse()">⚡ Initiate Analysis</button>
+          <button class="btn-g" id="btn-cl" onclick="clearAll()">Clear &amp; Reset</button>
+          <hr class="sb-hr"/>
+          <div style="background:var(--green-bg);border:1px solid #a0d8b8;border-radius:7px;padding:0.9rem;">
+            <div style="font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.4rem;">👨‍⚖️ Complimentary Attorney Review</div>
+            <div style="font-size:0.74rem;color:#2d5a3d;line-height:1.6;">Following AI-assisted analysis, a qualified Sri Lankan attorney will personally review your document and deliver professional written feedback to your WhatsApp or email within <strong>2–4 hours</strong>, at no charge.</div>
+          </div>
+          <hr class="sb-hr"/>
+          <div>
+            <div class="sb-label">Reliable Sources</div>
+            <div class="cap-row"><span class="cap-ok">✓</span> CPC (Chapter 101)</div>
+            <div class="cap-row"><span class="cap-ok">✓</span> Civil Law Ordinance Ch.79</div>
+            <div class="cap-row"><span class="cap-ok">✓</span> Evidence Ordinance</div>
+            <div class="cap-row"><span class="cap-ok">✓</span> Constitution of Sri Lanka</div>
+            <div class="cap-row"><span class="cap-ok">✓</span> Common law principles</div>
+          </div>
+          <hr class="sb-hr"/>
+          <div>
+            <div class="sb-label">Will NOT Invent</div>
+            <div class="cap-row"><span class="cap-no">✕</span> Case citations</div>
+            <div class="cap-row"><span class="cap-no">✕</span> Gazette numbers</div>
+            <div class="cap-row"><span class="cap-no">✕</span> Unverified section numbers</div>
+          </div>
+          <hr class="sb-hr"/>
+          <div><div class="sb-label">Verify Citations At</div><div class="vlist">lawnet.gov.lk<br/>supremecourt.lk<br/>courtofappeal.lk<br/>Government Printer</div></div>
+          <div class="sb-foot">Not legal advice. Consult a qualified Sri Lankan attorney.</div>
+        </div>
+        <div class="chat-panel">
+          <div class="chat-scroll" id="cs">
+            <div class="empty" id="ce"><div class="empty-glyph">⚖</div><div class="empty-title">Submit a document to commence</div><div class="empty-sub">Judgments · Petitions · Affidavits · Decrees · Formal Complaints</div></div>
+          </div>
+          <div class="lawyer-review-strip" id="lrs" style="display:none;">
+            <div class="lrs-icon">👨‍⚖️</div>
+            <div class="lrs-text"><strong>Request a complimentary attorney review of this document.</strong> Provide your WhatsApp number or email address and a qualified Sri Lankan attorney will deliver professional written feedback within 2–4 hours — at no charge.</div>
+            <button class="lrs-btn" onclick="showLawyerReviewModal()">Request Attorney Review</button>
+          </div>
+          <div class="input-bar">
+            <textarea class="chat-inp" id="qi" rows="1" placeholder="Upload a document first…" disabled oninput="chkQ()" onkeydown="qKey(event)"></textarea>
+            <button class="send-btn" id="sb" onclick="doQSend()">→</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- DRAFT PAGE -->
+    <div class="page" id="page-draft">
+      <div class="d-layout" style="height:100%;">
+        <div class="d-left">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--ink);font-weight:600;">Legal Document Drafting</div>
+          <div style="background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:7px;padding:0.85rem;margin-bottom:0.1rem;">
+            <div style="font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:0.35rem;">Paid Professional Service</div>
+            <div style="font-size:0.75rem;color:var(--text2);line-height:1.6;">Document drafting is a professional paid service. Select your required service tier below. Fee schedules will be confirmed prior to engagement.</div>
+          </div>
+          <div class="form-group">
+            <div class="form-label">Service Tier</div>
+            <select class="form-select" id="dservice" onchange="updateDraftTier(this.value)" style="border-color:var(--gold-mid);">
+              <option value="">Select service tier…</option>
+              <option value="draft">AI Draft Only — Self-Review Copy</option>
+              <option value="legalready">Court-Ready — Professionally Reviewed &amp; Endorsed by Attorney</option>
+              <option value="notarised">Court-Ready with Notarisation — Authenticated by Notary / Advocate</option>
+            </select>
+          </div>
+          <div id="dservice-info" style="display:none;font-size:0.74rem;line-height:1.6;padding:0.75rem;border-radius:5px;border:1px solid var(--bg4);color:var(--text3);background:var(--bg3);"></div>
+          <div class="form-group"><div class="form-label">Document Type</div>
+            <select class="form-select" id="dt"><option value="">Select type…</option><option value="petition">Petition to Court</option><option value="affidavit">Affidavit</option><option value="complaint">Formal Complaint</option><option value="jsc">JSC Complaint</option><option value="appeal">Appeal Petition</option><option value="letter">Letter Before Action</option><option value="objection">Objection / Response</option><option value="motion">Motion to Court</option></select></div>
+          <div class="form-group"><div class="form-label">Your Name</div><input class="form-input" id="dn" placeholder="e.g. Elmo Richard Pereira"/></div>
+          <div class="form-group"><div class="form-label">Other Party</div><input class="form-input" id="do" placeholder="e.g. Mahaththage Don Dharmasiri"/></div>
+          <div class="form-group"><div class="form-label">Court / Authority</div>
+            <select class="form-select" id="dc"><option value="">Select…</option><option>Mahara District Court</option><option>Colombo District Court</option><option>Kandy District Court</option><option>Galle District Court</option><option>Court of Appeal</option><option>Supreme Court</option><option>Judicial Service Commission</option><option>Other</option></select></div>
+          <div class="form-group"><div class="form-label">Case Number</div><input class="form-input" id="dcase" placeholder="e.g. 11/MS"/></div>
+          <div class="form-group"><div class="form-label">Key Facts</div><textarea class="form-textarea" id="df" placeholder="Describe the facts, dates and amounts…"></textarea></div>
+          <div class="form-group"><div class="form-label">Relief Sought</div><textarea class="form-textarea" id="dr" placeholder="What do you want the court to do?"></textarea></div>
+          <button class="btn-p on" id="btn-draft" onclick="doDraft()">Generate Draft Document</button>
+        </div>
+        <div class="d-right">
+          <div class="d-scroll" id="ds"><div class="d-empty"><div class="empty-glyph">✍</div><div class="empty-title">Fill the form and generate</div><div class="empty-sub" style="font-size:0.7rem;color:var(--text4);text-align:center;">Your document will appear here</div></div></div>
+          <div class="d-actions" id="da">
+            <button class="act-btn" onclick="cpDraft()">Copy to Clipboard</button>
+            <button class="act-btn" onclick="doDraft()">Regenerate</button>
+            <button class="act-btn p" onclick="showPage('consult')">Engage Attorney for Court-Ready Version →</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ASK PAGE -->
+    <div class="page" id="page-ask">
+      <div class="q-layout">
+        <div class="q-scroll" id="qs">
+          <div class="q-empty" id="qe">
+            <div class="q-empty-title">Submit a Sri Lankan<br/>Legal Enquiry</div>
+            <div class="q-empty-sub">Substantive responses grounded in Sri Lankan statute and case law. Citations are provided only where verified. Where authority is uncertain, the appropriate registry or source is identified. Available to all — including foreign nationals.</div>
+            <div class="chips">
+              <div class="chip" onclick="askChip(this)">What is the interest cap under Civil Law Ordinance?</div>
+              <div class="chip" onclick="askChip(this)">Can a judge alter a final decree?</div>
+              <div class="chip" onclick="askChip(this)">What is functus officio?</div>
+              <div class="chip" onclick="askChip(this)">How do I file a Court of Appeal appeal?</div>
+              <div class="chip" onclick="askChip(this)">What are the rights of foreigners in Sri Lanka?</div>
+              <div class="chip" onclick="askChip(this)">What is natural justice in Sri Lankan law?</div>
+              <div class="chip" onclick="askChip(this)">Can a foreigner own property in Sri Lanka?</div>
+              <div class="chip" onclick="askChip(this)">What does audi alteram partem mean?</div>
+            </div>
+          </div>
+        </div>
+        <div class="q-input-wrap">
+          <div class="q-row">
+            <textarea id="ask-inp" rows="1" placeholder="Ask a question about Sri Lankan law…" oninput="this.style.height='auto';this.style.height=this.scrollHeight+'px';" onkeydown="askKey(event)"></textarea>
+            <button id="ask-send" onclick="doAsk()">Ask →</button>
+          </div>
+          <div class="q-disc">Informational only. Verify with a qualified Sri Lankan attorney before taking legal action.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LAWYERS PAGE -->
+    <div class="page" id="page-lawyers">
+      <div class="l-layout">
+        <div class="l-hdr">
+          <div class="l-title">Engage a Qualified Sri Lankan Attorney</div>
+          <div class="l-sub">Connect with qualified attorneys best suited to your matter. The initial consultation is always complimentary — no engagement obligation. Foreign nationals and non-Sinhala speakers are accommodated.</div>
+        </div>
+        <div class="l-filters">
+          <button class="f-btn active" onclick="fLaw(this,'all')">All Areas</button>
+          <button class="f-btn" onclick="fLaw(this,'civil')">Civil Law</button>
+          <button class="f-btn" onclick="fLaw(this,'criminal')">Criminal</button>
+          <button class="f-btn" onclick="fLaw(this,'family')">Family Law</button>
+          <button class="f-btn" onclick="fLaw(this,'commercial')">Commercial</button>
+          <button class="f-btn" onclick="fLaw(this,'property')">Property</button>
+          <button class="f-btn" onclick="fLaw(this,'labour')">Labour</button>
+          <button class="f-btn" onclick="fLaw(this,'immigration')">Immigration</button>
+        </div>
+        <div class="l-grid" id="lg"></div>
+      </div>
+    </div>
+
+    <!-- CONSULT PAGE -->
+    <div class="page" id="page-consult">
+      <div class="c-layout">
+        <div class="c-hero">
+          <div>
+            <div class="ch-eyebrow" id="consult-eyebrow">Complimentary Initial Consultation</div>
+            <div class="ch-title" id="consult-title">Consult a Qualified<br/>Sri Lankan Attorney</div>
+            <div class="ch-desc">Schedule a complimentary 30-minute consultation with a qualified Sri Lankan attorney. Gain clarity on your legal position and determine your next steps with professional guidance. Available to Sri Lankan nationals and foreign nationals alike.</div>
+          </div>
+          <div class="ch-badge"><div class="ch-badge-main">Free</div><div class="ch-badge-sub">30 minute<br/>consultation</div></div>
+        </div>
+        <div class="c-grid">
+          <div class="c-section">
+            <div class="c-sec-title">Book Your Consultation</div>
+            <div class="c-form">
+              <div class="c-row">
+                <div class="form-group"><div class="form-label">First Name</div><input class="form-input" id="cfn" placeholder="Your name"/></div>
+                <div class="form-group"><div class="form-label">Last Name</div><input class="form-input" id="cln" placeholder="Last name"/></div>
+              </div>
+              <div class="form-group"><div class="form-label">WhatsApp / Mobile</div><input class="form-input" id="cph" placeholder="+94 7X XXX XXXX or international"/></div>
+              <div class="form-group"><div class="form-label">Email Address</div><input class="form-input" id="cem" placeholder="your@email.com"/></div>
+              <div class="form-group"><div class="form-label">Nationality</div><select class="form-select" id="cnat"><option value="">Select…</option><option>Sri Lankan</option><option>Other — Foreigner / Expatriate</option></select></div>
+              <div class="form-group"><div class="form-label">Area of Law</div>
+                <select class="form-select" id="car"><option value="">Select…</option><option>Civil Law / Court Cases</option><option>Family Law / Divorce</option><option>Property / Land Disputes</option><option>Criminal Law</option><option>Commercial / Business</option><option>Labour / Employment</option><option>Immigration / Visa</option><option>Other</option></select></div>
+              <div class="form-group"><div class="form-label">Preferred Date</div><input class="form-input" id="cdt" type="date"/></div>
+              <div class="form-group"><div class="form-label">Preferred Time</div>
+                <div class="time-slots">
+                  <div class="ts" onclick="selTime(this)">9:00 AM</div><div class="ts" onclick="selTime(this)">10:00 AM</div><div class="ts" onclick="selTime(this)">11:00 AM</div>
+                  <div class="ts" onclick="selTime(this)">2:00 PM</div><div class="ts" onclick="selTime(this)">3:00 PM</div><div class="ts" onclick="selTime(this)">4:00 PM</div>
+                </div>
+              </div>
+              <div class="form-group"><div class="form-label">Brief Description</div><textarea class="form-textarea" id="cdesc" placeholder="Briefly describe your legal situation…"></textarea></div>
+              <button class="c-submit" id="consult-submit-btn" onclick="bookConsult()">📅 Schedule Complimentary Consultation</button>
+            </div>
+          </div>
+          <div class="c-section">
+            <div class="c-sec-title">What to Expect</div>
+            <div class="c-benefits">
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Complimentary</strong> — no fees, no hidden charges, no obligation to engage the attorney</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">30 minutes</strong> dedicated to a thorough review of your rights and circumstances</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Qualified Sri Lankan attorneys</strong> with demonstrated experience in your area of law</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Video call, telephone or WhatsApp</strong> — conducted remotely at your convenience</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Strictly confidential</strong> — protected by attorney-client privilege</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Foreign nationals &amp; expatriates welcome</strong> — English-speaking attorneys available</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Defined next steps</strong> — conclude the consultation with a clear understanding of your options and associated costs</span></div>
+            </div>
+            <hr style="border:none;border-top:1px solid var(--bg4);margin:1.25rem 0;"/>
+            <div style="background:var(--green-bg);border:1px solid #a0d8b8;border-radius:8px;padding:1.1rem;margin-bottom:1rem;">
+              <div style="font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--green);font-weight:700;margin-bottom:0.4rem;">🌟 Also Available — Complimentary</div>
+              <div style="font-size:0.78rem;color:#2d5a3d;line-height:1.6;">Submit any legal document and receive a <strong>personalised written review from a qualified attorney</strong> delivered to your WhatsApp or email within 2–4 hours — at no charge.</div>
+              <button style="margin-top:0.75rem;background:var(--green);color:#fff;border:none;padding:0.52rem 1rem;font-family:'DM Sans',sans-serif;font-size:0.72rem;font-weight:600;cursor:pointer;border-radius:4px;" onclick="showPage('analyse')">Submit for Complimentary Attorney Review →</button>
+            </div>
+            <div style="padding:0.9rem;background:var(--bg3);border-radius:6px;font-size:0.72rem;color:var(--text4);line-height:1.6;">
+              LexLK facilitates engagement between clients and independent Sri Lankan attorneys. Attorneys determine their own fee schedules for services beyond the complimentary consultation. LexLK neither accepts commissions nor guarantees legal outcomes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REQUEST LEGAL DOCUMENTS PAGE -->
+    <div class="page" id="page-reqdoc">
+      <div class="c-layout">
+
+        <!-- PAGE HERO -->
+        <div class="c-hero" style="background:linear-gradient(135deg,#0d1a0a 0%,#152810 50%,#0a1a1a 100%);">
+          <div>
+            <div class="ch-eyebrow" id="reqdoc-eyebrow" style="color:#7dd4a0;">Official Document Retrieval Service</div>
+            <div class="ch-title" id="reqdoc-title">Request Certified<br/>Legal Documents</div>
+            <div class="ch-desc" style="color:#8aaa90;">Our attorneys retrieve certified copies of official Sri Lankan legal documents on your behalf — from government registries, courts, survey departments and municipal authorities. We handle the paperwork so you don't have to.</div>
+          </div>
+          <div class="ch-badge" style="background:rgba(45,107,69,0.2);border:1px solid rgba(45,107,69,0.4);">
+            <div class="ch-badge-main" style="color:#7dd4a0;font-size:1.6rem;">Paid</div>
+            <div class="ch-badge-sub" style="color:#4a8060;">Professional<br/>Service</div>
+          </div>
+        </div>
+
+        <!-- DOCUMENT CATEGORIES -->
+        <div style="margin-bottom:1.5rem;">
+          <div style="font-size:0.6rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:0.5rem;">Available Document Categories</div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:0.9rem;">
+
+            <div class="rd-cat" onclick="selectCategory('property')" id="cat-property">
+              <div class="rd-cat-icon">🏘️</div>
+              <div class="rd-cat-title">Property &amp; Land Documents</div>
+              <div class="rd-cat-list">Certified Deed · Transfer Deed · Land Plan / Survey Plan · Title Certificate · Cadastral Map · Encumbrance Certificate · Lot Plan</div>
+            </div>
+
+            <div class="rd-cat" onclick="selectCategory('tax')" id="cat-tax">
+              <div class="rd-cat-icon">🧾</div>
+              <div class="rd-cat-title">Tax &amp; Revenue Documents</div>
+              <div class="rd-cat-list">Assessment Extract · Property Tax Receipt · Rates Certificate · Valuation Report · Revenue Licence · Income Tax Clearance</div>
+            </div>
+
+            <div class="rd-cat" onclick="selectCategory('civil')" id="cat-civil">
+              <div class="rd-cat-icon">⚖️</div>
+              <div class="rd-cat-title">Court &amp; Civil Records</div>
+              <div class="rd-cat-list">Certified Court Order · Decree Nisi / Absolute · Judgment Copy · Case Extract · Certificate of No Appeal · Probate Documents</div>
+            </div>
+
+            <div class="rd-cat" onclick="selectCategory('personal')" id="cat-personal">
+              <div class="rd-cat-icon">🪪</div>
+              <div class="rd-cat-title">Personal &amp; Civil Status</div>
+              <div class="rd-cat-list">Birth Certificate · Marriage Certificate · Death Certificate · Divorce Certificate · Name Change Gazette · Police Clearance</div>
+            </div>
+
+            <div class="rd-cat" onclick="selectCategory('business')" id="cat-business">
+              <div class="rd-cat-icon">🏢</div>
+              <div class="rd-cat-title">Business &amp; Commercial</div>
+              <div class="rd-cat-list">Company Registration Extract · Business Name Certificate · BOI Certificate · Trademark Certificate · Tax Identification Certificate</div>
+            </div>
+
+            <div class="rd-cat" onclick="selectCategory('other')" id="cat-other">
+              <div class="rd-cat-icon">📁</div>
+              <div class="rd-cat-title">Other Official Documents</div>
+              <div class="rd-cat-list">Any other certified or official document from a Sri Lankan government authority, registry or court — specify your requirement below.</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- REQUEST FORM + INFO GRID -->
+        <div class="c-grid" style="max-width:100%;">
+          <div class="c-section">
+            <div class="c-sec-title">Submit Your Document Request</div>
+            <div class="c-form">
+
+              <div class="c-row">
+                <div class="form-group">
+                  <div class="form-label">Full Name</div>
+                  <input class="form-input" id="rd-name" placeholder="Your full legal name"/>
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Nationality</div>
+                  <select class="form-select" id="rd-nat">
+                    <option value="">Select…</option>
+                    <option>Sri Lankan</option>
+                    <option>Foreign National / Expatriate</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="c-row">
+                <div class="form-group">
+                  <div class="form-label">WhatsApp / Mobile</div>
+                  <input class="form-input" id="rd-phone" placeholder="+94 7X XXX XXXX"/>
+                </div>
+                <div class="form-group">
+                  <div class="form-label">Email Address</div>
+                  <input class="form-input" id="rd-email" placeholder="your@email.com"/>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Document Category</div>
+                <select class="form-select" id="rd-category" onchange="updateDocList(this.value)">
+                  <option value="">Select category…</option>
+                  <option value="property">Property &amp; Land Documents</option>
+                  <option value="tax">Tax &amp; Revenue Documents</option>
+                  <option value="civil">Court &amp; Civil Records</option>
+                  <option value="personal">Personal &amp; Civil Status Documents</option>
+                  <option value="business">Business &amp; Commercial Documents</option>
+                  <option value="other">Other Official Documents</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Specific Document Required</div>
+                <select class="form-select" id="rd-doctype">
+                  <option value="">Select category first…</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Number of Certified Copies</div>
+                <select class="form-select" id="rd-copies">
+                  <option value="1">1 Copy</option>
+                  <option value="2">2 Copies</option>
+                  <option value="3">3 Copies</option>
+                  <option value="5">5 Copies</option>
+                  <option value="other">Other — specify below</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Property / Case / Reference Details</div>
+                <textarea class="form-textarea" id="rd-details" placeholder="Provide all relevant details to identify the document — e.g. property address, survey plan number, lot number, case number, deed number, date of registration, names of parties, district, divisional secretariat, etc."></textarea>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Purpose of Request</div>
+                <select class="form-select" id="rd-purpose">
+                  <option value="">Select…</option>
+                  <option>Court Proceedings</option>
+                  <option>Property Transaction / Conveyancing</option>
+                  <option>Bank / Financial Institution Requirement</option>
+                  <option>Immigration / Visa Application</option>
+                  <option>Personal Records</option>
+                  <option>Business / Commercial Use</option>
+                  <option>Other</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Urgency</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0.45rem;" id="rd-urgency-opts">
+                  <div class="ts" onclick="selUrgency(this,'standard')">Standard<br/><span style="font-size:0.6rem;opacity:0.7;">5–10 working days</span></div>
+                  <div class="ts" onclick="selUrgency(this,'express')">Express<br/><span style="font-size:0.6rem;opacity:0.7;">2–4 working days</span></div>
+                  <div class="ts" onclick="selUrgency(this,'urgent')">Urgent<br/><span style="font-size:0.6rem;opacity:0.7;">Same / next day</span></div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="form-label">Additional Instructions (Optional)</div>
+                <textarea class="form-textarea" id="rd-notes" placeholder="Any additional information, special requirements or delivery instructions…" style="min-height:60px;"></textarea>
+              </div>
+
+              <div style="background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:7px;padding:0.9rem;font-size:0.75rem;color:var(--text2);line-height:1.65;">
+                <strong style="color:var(--gold);">Pricing &amp; Process:</strong> A fee quotation will be provided within 2–4 hours of submission, prior to any work commencing. Fees vary by document type, issuing authority, urgency and number of copies. Government registry fees and stamp duties are billed at cost. No charges are applied without your prior written approval.
+              </div>
+
+              <button class="c-submit" id="reqdoc-submit-btn" onclick="submitDocRequest()" style="background:var(--green);">📋 Submit Document Request</button>
+            </div>
+          </div>
+
+          <div class="c-section">
+            <div class="c-sec-title">How the Process Works</div>
+            <div class="c-benefits" style="margin-bottom:1.5rem;">
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Submit your request</strong> — complete the form with document details and your contact information</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Receive a fee quotation</strong> — our attorney confirms availability and provides a transparent fee quotation within 2–4 hours</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Approve and proceed</strong> — no work commences without your explicit approval of the quotation</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Attorney retrieval</strong> — our attorney attends the relevant registry, court or government authority on your behalf</span></div>
+              <div class="cbi"><span class="cbi-icon">✓</span><span class="cbi-text"><strong style="color:var(--ink)">Certified delivery</strong> — certified copies are delivered to you physically or digitally, as required</span></div>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--bg4);margin:1.25rem 0;"/>
+
+            <div class="c-sec-title" style="font-size:0.9rem;margin-bottom:0.9rem;">Documents We Retrieve</div>
+            <div style="display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.25rem;">
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">🏘️</span>
+                <span><strong style="color:var(--ink);">Land Registry</strong> — Deeds, Transfer Deed, Title Certificates, Encumbrance Certificates</span>
+              </div>
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">📐</span>
+                <span><strong style="color:var(--ink);">Survey Department</strong> — Survey Plans, Lot Plans, Cadastral Maps, Land Plans</span>
+              </div>
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">🧾</span>
+                <span><strong style="color:var(--ink);">Revenue &amp; Tax</strong> — Assessment Extracts, Tax Receipts, Rates Certificates, Valuations</span>
+              </div>
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">⚖️</span>
+                <span><strong style="color:var(--ink);">Courts</strong> — Certified Orders, Decrees, Judgments, Case Extracts, Probate Documents</span>
+              </div>
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">🪪</span>
+                <span><strong style="color:var(--ink);">Registrar General</strong> — Birth, Marriage, Death &amp; Divorce Certificates</span>
+              </div>
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">🏢</span>
+                <span><strong style="color:var(--ink);">Registrar of Companies</strong> — Company Extracts, Business Name Certificates</span>
+              </div>
+              <div style="display:flex;gap:0.6rem;align-items:center;font-size:0.78rem;color:var(--text3);">
+                <span style="font-size:0.75rem;">🌐</span>
+                <span><strong style="color:var(--ink);">Foreign Nationals</strong> — Police Clearance, Apostille, Document Legalisation &amp; Translation</span>
+              </div>
+            </div>
+
+            <hr style="border:none;border-top:1px solid var(--bg4);margin:1.25rem 0;"/>
+            <div style="padding:0.9rem;background:var(--bg3);border-radius:6px;font-size:0.72rem;color:var(--text4);line-height:1.6;">
+              LexLK attorneys act as your authorised agents in retrieving official documents. All government fees, stamp duties and registry charges are billed at actual cost with receipts provided. LexLK charges a professional service fee for attorney time and coordination. A full breakdown is provided in the quotation before engagement.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- end main -->
+</div><!-- end app -->
+
+<!-- LAWYER REVIEW MODAL -->
+<div id="lrModal" style="display:none;position:fixed;inset:0;background:rgba(26,21,16,0.6);backdrop-filter:blur(4px);z-index:600;align-items:center;justify-content:center;padding:2rem;">
+  <div style="background:var(--bg2);border:1px solid var(--bg4);border-radius:14px;padding:2rem;width:100%;max-width:480px;box-shadow:var(--shadow-lg);">
+    <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--ink);margin-bottom:0.3rem;" id="lr-modal-title">👨‍⚖️ Complimentary Attorney Review</div>
+    <div style="font-size:0.78rem;color:var(--text4);margin-bottom:1.4rem;line-height:1.6;" id="lr-modal-sub">A qualified Sri Lankan attorney will personally review your document and deliver detailed written professional feedback within 2–4 hours — at no charge to you.</div>
+    <div class="form-group" style="margin-bottom:0.9rem;">
+      <div class="form-label">Your Name</div>
+      <input class="form-input" id="lrName" placeholder="Your full name"/>
+    </div>
+    <div class="form-group" style="margin-bottom:0.9rem;">
+      <div class="form-label">WhatsApp Number</div>
+      <input class="form-input" id="lrWA" placeholder="+94 7X XXX XXXX or international"/>
+    </div>
+    <div class="form-group" style="margin-bottom:0.9rem;">
+      <div class="form-label">Email Address</div>
+      <input class="form-input" id="lrEmail" placeholder="your@email.com"/>
+    </div>
+    <div class="form-group" style="margin-bottom:1.25rem;">
+      <div class="form-label">Preferred Contact Method</div>
+      <select class="form-select" id="lrMethod"><option value="whatsapp">WhatsApp</option><option value="email">Email</option><option value="both">Both</option></select>
+    </div>
+    <div style="display:flex;gap:0.7rem;">
+      <button style="flex:1;background:transparent;color:var(--text3);border:1px solid var(--bg4);padding:0.75rem;font-family:'DM Sans',sans-serif;font-size:0.78rem;cursor:pointer;border-radius:5px;" onclick="closeLRModal()">Cancel</button>
+      <button style="flex:2;background:var(--green);color:#fff;border:none;padding:0.75rem;font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;cursor:pointer;border-radius:5px;" id="lr-modal-btn" onclick="submitLawyerReview()">✓ Request Complimentary Attorney Review</button>
+    </div>
+    <div style="font-size:0.65rem;color:var(--text4);text-align:center;margin-top:0.85rem;">Your contact information is held in strict confidence and used solely to deliver the attorney's professional feedback.</div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div id="modal">
+  <div class="modal-box">
+    <div class="modal-title" id="mt">Consultation Scheduled ✓</div>
+    <div class="modal-sub" id="ms">Your consultation request has been received and is being processed.</div>
+    <div id="mb"></div>
+    <div class="modal-btns"><button class="m-cancel" onclick="closeModal()">Close</button><button class="m-confirm" onclick="closeModal()">Done</button></div>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+const WU='https://lexlk.acedynamicstrading.workers.dev/';
+
+const AP=`You are LexLK, a Sri Lankan legal document analysis assistant. You serve everyone — Sri Lankan citizens, foreigners, expatriates and visitors.
+ABSOLUTE RULES:
+1. NEVER invent case citations. If uncertain write: "A relevant authority may exist — search lawnet.gov.lk or the Supreme Court registry."
+2. NEVER invent section numbers you are not certain of.
+3. NEVER invent gazette numbers.
+4. SAFE to cite: CPC, Civil Law Ordinance Ch.79, Evidence Ordinance, Constitution, functus officio, audi alteram partem, ultra petita, res judicata, natural justice.
+5. Only cite a case if certain of exact name, year, report reference AND what it decided.
+6. Label document extractions as "From document:".
+7. For foreigners — note relevant immigration, property or special laws that apply.
+8. END with: "⚠ VERIFICATION REQUIRED: All legal authorities should be independently verified before relying on them in court. Consult a qualified Sri Lankan attorney."
+STRUCTURE: 1.DOCUMENT SUMMARY 2.KEY FACTS 3.LEGAL ISSUES IDENTIFIED 4.FIGURES & DATES 5.STRENGTHS 6.WEAKNESSES/CONCERNS 7.RECOMMENDATIONS & WHERE TO VERIFY`;
+
+const DP=`You are LexLK, a Sri Lankan legal document drafting assistant. Draft formal legal documents for Sri Lankan courts.
+Rules: Use correct formal Sri Lankan legal style. Structure properly for the court or authority. Include proper headings, prayer/relief sections, verification clauses. Do NOT invent case citations unless 100% certain. Use [BRACKETS] for missing information. End with: "DRAFTED BY LexLK AI — MUST BE REVIEWED BY A QUALIFIED SRI LANKAN ATTORNEY BEFORE FILING."`;
+
+const QP=`You are LexLK, a Sri Lankan legal Q&A assistant. You serve everyone — Sri Lankan citizens, foreigners, expats and visitors.
+Rules: 1.NEVER invent case citations — if uncertain, direct to lawnet.gov.lk or Supreme Court registry. 2.Cite statutes only when certain. 3.Be direct and clear. 4.If uncertain say so. 5.For foreigners, note relevant special rules that apply to them. 6.End with reminder to consult a qualified Sri Lankan attorney.
+Knowledge: CPC, Civil Law Ordinance, Evidence Ordinance, Constitution, Roman Dutch law, common law, immigration law, Immigrants and Emigrants Act, Land (Restrictions on Alienation) Act.`;
+
+let fd=null,aM=[],qM=[],aL=false,qL=false,dL=false,sT='';
+
+function startApp(){document.getElementById('disclaimer').style.display='none';document.getElementById('app').classList.add('on');renderLawyers();}
+
+function toggleMobileMenu(){
+  const m=document.getElementById('mobile-menu');
+  const h=document.getElementById('hamburger');
+  const open=m.classList.toggle('open');
+  h.setAttribute('aria-expanded',open);
+  // animate bars
+  const bars=h.querySelectorAll('span');
+  if(open){bars[0].style.transform='translateY(7px) rotate(45deg)';bars[1].style.opacity='0';bars[2].style.transform='translateY(-7px) rotate(-45deg)';}
+  else{bars[0].style.transform='';bars[1].style.opacity='';bars[2].style.transform='';}
+}
+function closeMobileMenu(){
+  const m=document.getElementById('mobile-menu');
+  const h=document.getElementById('hamburger');
+  m.classList.remove('open');
+  h.querySelectorAll('span').forEach(s=>{s.style.transform='';s.style.opacity='';});
+}
+
+function showPage(n){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  const pg=document.getElementById('page-'+n);
+  const nb=document.getElementById('nav-'+n);
+  if(pg)pg.classList.add('on');
+  if(nb)nb.classList.add('active');
+  closeMobileMenu();
+}
+
+function dzO(e){e.preventDefault();document.getElementById('dz').classList.add('over');}
+function dzL(){document.getElementById('dz').classList.remove('over');}
+function dzD(e){e.preventDefault();dzL();loadFile(e.dataTransfer.files[0]);}
+
+function loadFile(f){
+  if(!f)return; fd=null; aM=[];
+  const r=new FileReader();
+  if(f.type==='application/pdf'){r.onload=e=>{fd={type:'pdf',data:e.target.result.split(',')[1]};};r.readAsDataURL(f);}
+  else if(f.type.startsWith('image/')){r.onload=e=>{fd={type:'image',mime:f.type,data:e.target.result.split(',')[1]};};r.readAsDataURL(f);}
+  else{r.onload=e=>{fd={type:'text',data:e.target.result};};r.readAsText(f);}
+  document.getElementById('dz').style.display='none';
+  document.getElementById('fc').classList.add('on');
+  document.getElementById('fcn').textContent='📄 '+f.name;
+  document.getElementById('fcs').textContent=(f.size/1024).toFixed(1)+' KB';
+  document.getElementById('btn-an').classList.add('on');
+  document.getElementById('btn-cl').classList.add('on');
+  const qi=document.getElementById('qi'); qi.disabled=false; qi.placeholder='Ask a follow-up question…'; chkQ();
+}
+
+function clearAll(){
+  fd=null;aM=[];
+  document.getElementById('dz').style.display='';
+  document.getElementById('fc').classList.remove('on');
+  document.getElementById('btn-an').classList.remove('on');
+  document.getElementById('btn-cl').classList.remove('on');
+  document.getElementById('qi').value='';
+  document.getElementById('qi').disabled=true;
+  document.getElementById('qi').placeholder='Upload a document first…';
+  document.getElementById('sb').classList.remove('on');
+  document.getElementById('fi').value='';
+  document.getElementById('lrs').style.display='none';
+  clrChat();
+}
+
+function clrChat(){
+  const c=document.getElementById('cs'); c.innerHTML='';
+  const e=document.createElement('div'); e.className='empty'; e.id='ce';
+  e.innerHTML='<div class="empty-glyph">⚖</div><div class="empty-title">Submit a document to commence</div><div class="empty-sub">Judgments · Petitions · Affidavits · Decrees · Formal Complaints</div>';
+  c.appendChild(e);
+}
+
+function chkQ(){const v=document.getElementById('qi').value.trim();document.getElementById('sb').classList.toggle('on',v.length>0);}
+function qKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doQSend();}}
+
+async function doAnalyse(){
+  if(!fd||aL)return; aL=true;
+  document.getElementById('btn-an').textContent='Analysing…';
+  const ce=document.getElementById('ce'); if(ce)ce.remove();
+  const le=addL('cs');
+  let msgs;
+  if(fd.type==='pdf'){msgs=[{role:'user',content:[{type:'document',source:{type:'base64',media_type:'application/pdf',data:fd.data}},{type:'text',text:'Analyse this Sri Lankan legal document according to your instructions.'}]}];}
+  else if(fd.type==='image'){msgs=[{role:'user',content:[{type:'image',source:{type:'base64',media_type:fd.mime,data:fd.data}},{type:'text',text:'Analyse this Sri Lankan legal document according to your instructions.'}]}];}
+  else{msgs=[{role:'user',content:'Analyse this Sri Lankan legal document:\n\n'+fd.data}];}
+  const r=await callAPI(AP,msgs);
+  aM=msgs.concat([{role:'assistant',content:r}]);
+  le.remove(); addA('cs',r);
+  aL=false;
+  document.getElementById('btn-an').textContent='⚡ Analyse Document';
+  document.getElementById('lrs').style.display='flex';
+}
+
+async function doQSend(){
+  const el=document.getElementById('qi'); const q=el.value.trim();
+  if(!q||aL)return; el.value=''; el.style.height='auto'; aL=true;
+  document.getElementById('sb').classList.remove('on');
+  aM.push({role:'user',content:q});
+  addU('cs',q); const le=addL('cs');
+  const r=await callAPI(AP,aM);
+  aM.push({role:'assistant',content:r});
+  le.remove(); addA('cs',r);
+  aL=false; chkQ();
+}
+
+async function doDraft(){
+  const type=document.getElementById('dt').value||'legal document';
+  const facts=document.getElementById('df').value.trim();
+  if(!facts){toast('Please enter key facts first.');return;}
+  dL=true;
+  document.getElementById('btn-draft').textContent='Generating…';
+  document.getElementById('btn-draft').style.opacity='0.6';
+  const de=document.getElementById('ds'); de.innerHTML='<div style="display:flex;gap:.3rem;padding:2rem"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>';
+  const p=`Draft a ${type} for Sri Lankan court.\nParty: ${document.getElementById('dn').value||'[PETITIONER]'}\nOther: ${document.getElementById('do').value||'[RESPONDENT]'}\nCourt: ${document.getElementById('dc').value||'[COURT]'}\nCase: ${document.getElementById('dcase').value||'[CASE NO]'}\nFacts: ${facts}\nRelief: ${document.getElementById('dr').value||'[RELIEF SOUGHT]'}\n\nDraft a complete, properly formatted document in formal Sri Lankan legal style.`;
+  const r=await callAPI(DP,[{role:'user',content:p}]);
+  dL=false;
+  document.getElementById('btn-draft').textContent='Generate Document';
+  document.getElementById('btn-draft').style.opacity='1';
+  const out=document.createElement('div'); out.className='draft-out'; out.id='dout'; out.textContent=r;
+  de.innerHTML=''; de.appendChild(out);
+  document.getElementById('da').style.display='flex';
+}
+
+function cpDraft(){const el=document.getElementById('dout');if(!el)return;navigator.clipboard.writeText(el.textContent).then(()=>toast('Copied to clipboard ✓'));}
+function askChip(el){document.getElementById('ask-inp').value=el.textContent;doAsk();}
+function askKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();doAsk();}}
+
+async function doAsk(){
+  const el=document.getElementById('ask-inp'); const q=el.value.trim();
+  if(!q||qL)return; el.value=''; el.style.height='auto'; qL=true;
+  const qe=document.getElementById('qe'); if(qe)qe.remove();
+  qM.push({role:'user',content:q,display:q});
+  addU('qs',q); const le=addL('qs');
+  document.getElementById('ask-send').textContent='…';
+  const r=await callAPI(QP,qM.map(m=>({role:m.role,content:m.content})));
+  qM.push({role:'assistant',content:r,display:r});
+  le.remove(); addA('qs',r);
+  qL=false; document.getElementById('ask-send').textContent='Ask →';
+}
+
+async function callAPI(sys,msgs){
+  try{
+    const res=await fetch(WU,{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1500,system:sys,messages:msgs.map(m=>({role:m.role,content:m.content}))})});
+    const d=await res.json();
+    return(d.content||[]).map(c=>c.text||'').join('')||'No response received.';
+  }catch(e){return'Connection error. Please check your internet and try again.';}
+}
+
+function addU(sid,txt){const c=document.getElementById(sid);const d=document.createElement('div');d.className='msg msg-u';d.innerHTML=`<div class="msg-u-b">${esc(txt)}</div>`;c.appendChild(d);c.scrollTop=c.scrollHeight;}
+function addL(sid){const c=document.getElementById(sid);const d=document.createElement('div');d.className='msg msg-a';d.innerHTML=`<div class="msg-av">L</div><div class="msg-body"><div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div></div>`;c.appendChild(d);c.scrollTop=c.scrollHeight;return d;}
+function addA(sid,txt){const c=document.getElementById(sid);const d=document.createElement('div');d.className='msg msg-a';const b=document.createElement('div');b.className='msg-body';b.appendChild(fmt(txt));d.innerHTML=`<div class="msg-av">L</div>`;d.appendChild(b);c.appendChild(d);c.scrollTop=c.scrollHeight;}
+
+function fmt(txt){
+  const f=document.createDocumentFragment();
+  txt.split('\n').forEach(line=>{
+    const t=line.trim(),el=document.createElement('div');
+    if(t.startsWith('⚠')){el.className='r-warn';el.textContent=line;}
+    else if(/search lawnet|lawnet\.gov|registry|verify|cannot verify/i.test(t)&&t.length<220){el.className='r-verify';el.textContent=line;}
+    else if(/^\d+\.\s[A-Z]/.test(t)||(/^[A-Z][A-Z\s\/&—()]{4,}$/.test(t)&&t.length<60)){el.className='r-head';el.textContent=line;}
+    else if(t===''){el.className='r-gap';}
+    else{el.className='r-body'+(line.startsWith('- ')||/^\s*\d+\./.test(line)?' r-indent':'');el.textContent=line;}
+    f.appendChild(el);
+  });
+  return f;
+}
+
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+function showLawyerReviewModal(){document.getElementById('lrModal').style.display='flex';}
+function closeLRModal(){document.getElementById('lrModal').style.display='none';}
+function submitLawyerReview(){
+  const n=document.getElementById('lrName').value.trim();
+  const w=document.getElementById('lrWA').value.trim();
+  const e=document.getElementById('lrEmail').value.trim();
+  if(!n||((!w)&&(!e))){toast('Please enter your name and at least one contact method.');return;}
+  closeLRModal();
+  document.getElementById('lrs').innerHTML='<div class="lrs-icon">✅</div><div class="lrs-text"><strong>Lawyer review requested!</strong> A qualified Sri Lankan attorney will review your document and send you feedback within 2–4 hours to your '+document.getElementById('lrMethod').value+'.</div>';
+  toast('✓ Lawyer review requested — you will receive feedback within 2–4 hours');
+}
+
+const LAWYERS=[
+  {name:'Priya Wijesekara',title:'Attorney-at-Law, Notary Public',areas:['civil','property'],tags:['Civil Law','Property','District Court'],exp:'12 yrs',cases:'340+',rating:'4.9',lang:'English, Sinhala'},
+  {name:'Kasun Rajapaksa',title:'Attorney-at-Law',areas:['criminal','civil'],tags:['Criminal Law','Civil Litigation','Court of Appeal'],exp:'8 yrs',cases:'210+',rating:'4.8',lang:'English, Sinhala'},
+  {name:'Nirosha Fernando',title:'Attorney-at-Law, Notary Public',areas:['family','civil'],tags:['Family Law','Divorce','Child Custody'],exp:'15 yrs',cases:'480+',rating:'5.0',lang:'English, Sinhala, Tamil'},
+  {name:'Dinesh Perera',title:'Senior Attorney-at-Law',areas:['commercial','civil'],tags:['Commercial Law','Contracts','Debt Recovery'],exp:'20 yrs',cases:'600+',rating:'4.9',lang:'English, Sinhala'},
+  {name:'Amara Jayawardena',title:'Attorney-at-Law',areas:['labour','civil','immigration'],tags:['Labour Law','Employment','Immigration'],exp:'7 yrs',cases:'180+',rating:'4.7',lang:'English, Sinhala'},
+  {name:'Rohan Gunasekara',title:'Attorney-at-Law, PC',areas:['civil','criminal','property','immigration'],tags:['Supreme Court','Court of Appeal','Foreign Nationals'],exp:'25 yrs',cases:'900+',rating:'5.0',lang:'English, Sinhala, French'},
+];
+
+function renderLawyers(f='all'){
+  const g=document.getElementById('lg'); g.innerHTML='';
+  LAWYERS.filter(l=>f==='all'||l.areas.includes(f)).forEach(l=>{
+    const ini=l.name.split(' ').map(n=>n[0]).join('');
+    const c=document.createElement('div'); c.className='lc';
+    c.innerHTML=`<div class="lc-top"><div class="lc-av">${ini}</div><div><div class="lc-name">${l.name}</div><div class="lc-title">${l.title}</div></div></div>
+    <div class="lc-tags">${l.tags.map(t=>`<span class="lc-tag">${t}</span>`).join('')}</div>
+    <div class="lc-meta"><div class="lc-stat"><strong>${l.exp}</strong> exp</div><div class="lc-stat"><strong>${l.cases}</strong> cases</div><div class="lc-stat"><strong>★ ${l.rating}</strong></div></div>
+    <div style="font-size:0.65rem;color:var(--text4);margin-bottom:0.75rem;">🗣 ${l.lang}</div>
+    <button class="lc-book" onclick="bkLaw('${l.name}')">Book Free Consultation</button>
+    <div class="lc-free">First 30 minutes — free</div>`;
+    g.appendChild(c);
+  });
+}
+
+function fLaw(btn,f){document.querySelectorAll('.f-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderLawyers(f);}
+function bkLaw(n){showPage('consult');setTimeout(()=>toast('Booking with '+n+' — please fill in the form'),300);}
+function selTime(el){document.querySelectorAll('.ts').forEach(s=>s.classList.remove('active'));el.classList.add('active');sT=el.textContent;}
+
+function bookConsult(){
+  const fn=document.getElementById('cfn').value.trim();
+  const ph=document.getElementById('cph').value.trim();
+  const ar=document.getElementById('car').value;
+  const dt=document.getElementById('cdt').value;
+  if(!fn||!ph||!ar||!dt||!sT){toast('Please fill in all required fields and select a time.');return;}
+  document.getElementById('mt').textContent='Consultation Booked ✓';
+  document.getElementById('ms').textContent='Your free consultation request has been received.';
+  document.getElementById('mb').innerHTML=`<div style="background:var(--bg3);border-radius:6px;padding:0.9rem;margin-bottom:0.9rem;font-size:0.8rem;line-height:1.8;color:var(--text3);"><div><strong style="color:var(--ink)">Name:</strong> ${esc(fn)}</div><div><strong style="color:var(--ink)">Area:</strong> ${esc(ar)}</div><div><strong style="color:var(--ink)">Date:</strong> ${esc(dt)} at ${esc(sT)}</div><div><strong style="color:var(--ink)">Contact:</strong> ${esc(ph)}</div></div><div style="font-size:0.73rem;color:var(--text4);line-height:1.6;">A qualified Sri Lankan attorney will contact you to confirm your free 30-minute consultation.</div>`;
+  document.getElementById('modal').classList.add('on');
+}
+
+function closeModal(){document.getElementById('modal').classList.remove('on');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';setTimeout(()=>{t.style.display='none';},3500);}
+
+
+// ===================== TRANSLATION SYSTEM =====================
+const TRANSLATIONS = {
+  en: {
+    // Disclaimer
+    disc_tagline: 'Professional Legal Services · Sri Lanka · Complimentary & Paid',
+    disc_notice: 'Important Notice — Please Read Before Proceeding',
+    disc_item1_title: 'Complimentary Attorney Document Review',
+    disc_item1_text: 'Submit any legal document and a qualified Sri Lankan attorney will conduct a personal review and deliver written professional feedback within 2–4 hours via WhatsApp or email, at no charge.',
+    disc_item2_title: 'Instant AI-Assisted Analysis',
+    disc_item2_text: 'Receive immediate AI-generated insights covering key facts, identified legal issues, relevant statutes and strategic recommendations.',
+    disc_item3_title: 'Complimentary Initial Consultation',
+    disc_item3_text: 'Schedule a complimentary 30-minute consultation with a qualified Sri Lankan attorney. No engagement obligation.',
+    disc_item4_title: 'Inclusive Access',
+    disc_item4_text: 'Our services are available to Sri Lankan nationals, foreign nationals, expatriates, investors and visitors alike.',
+    disc_warning: 'AI-generated analysis is for informational purposes only and does not constitute legal advice. All legal authorities must be independently verified by a qualified attorney prior to reliance in any legal proceedings.',
+    disc_btn: 'I Acknowledge & Accept — Enter LexLK',
+    disc_foot: 'Complimentary & Paid Services Available · Sri Lanka Jurisdiction · No Undisclosed Charges',
+    // Nav
+    nav_home: '🏠 Home', nav_analyse: '⚖ Analyse', nav_draft: '✍ Draft',
+    nav_qa: '💬 Legal Q&A', nav_lawyers: '👤 Find a Lawyer', nav_reqdoc: '📋 Request Documents',
+    nav_consult: '📅 Schedule Consultation',
+    mob_home: '🏠 Home', mob_analyse: '⚖ Document Analysis', mob_draft: '✍ Document Drafting',
+    mob_qa: '💬 Legal Q&A', mob_lawyers: '👤 Find an Attorney',
+    mob_reqdoc: '📋 Request Legal Documents', mob_consult: '📅 Schedule Complimentary Consultation',
+    // Hero
+    hero_eyebrow: "Sri Lanka's Premier Legal Services Platform",
+    hero_title: 'Professional Legal Assistance.<br/><span>Accessible to All.</span>',
+    hero_sub: 'Submit your legal documents and receive immediate AI-assisted analysis alongside a complimentary personal review by a qualified Sri Lankan attorney — delivered directly to your WhatsApp or email within 2–4 hours.',
+    hero_btn1: '⚖ Submit Documents for Analysis',
+    hero_btn2: '📅 Schedule Complimentary Consultation',
+    // Signature banner
+    sig_label: '🌟 Our Signature Service — Complimentary',
+    sig_title: 'Qualified Attorney. Professional Feedback. At No Charge.',
+    sig_sub: 'Unlike any other platform in Sri Lanka, LexLK provides a genuine attorney review of your submitted documents at absolutely no charge. A qualified Sri Lankan attorney personally examines your matter and delivers detailed written professional feedback via WhatsApp or email within 2–4 hours.',
+    sig_btn: 'Submit Your Documents Now →',
+    // Steps
+    steps_label: 'Our Process', steps_title: 'Three Steps to Legal Clarity',
+    steps_sub: 'From submission to expert guidance — our process is straightforward, efficient and designed around your needs.',
+    step1_title: 'Submit Your Document', step1_badge: 'Complimentary',
+    step1_text: 'Upload any court document, judgment, petition, contract or legal notice. Accepted formats include PDF, image and plain text. Our AI delivers an immediate analysis covering key facts, legal issues, relevant statutes, strengths and areas of concern.',
+    step2_title: 'Choose Your Level of Review', step2_badge: '2–4 hrs · Complimentary',
+    step2_text: 'Select from two complimentary options: <strong>Document Review Only</strong> — a qualified attorney delivers written professional feedback to your WhatsApp or email within 2–4 hours; or <strong>All-Inclusive Consultation</strong> — attorney feedback plus a complimentary 30-minute consultation to discuss your matter in full.',
+    step3_title: 'Proceed with Confidence', step3_badge: 'Paid · Professional',
+    step3_text: 'Should you require further legal assistance — court representation, document drafting and authentication, notarisation or formal legal opinion — our network of qualified Sri Lankan attorneys is available to assist. Fee schedules are provided transparently and in advance.',
+    // CTA
+    cta_title: 'Ready to Obtain Expert Legal Assistance?',
+    cta_sub: 'Submit your document today and receive immediate AI-assisted analysis together with a complimentary personal review from a qualified Sri Lankan attorney — at no charge.',
+    cta_btn: '📅 Schedule Your Complimentary Consultation',
+    cta_note: 'Or',
+    cta_note2: 'submit a document for complimentary attorney review →',
+    // Footer
+    footer_tagline: "Sri Lanka's professional legal services platform. Immediate AI-assisted analysis and complimentary attorney document review — available to all in Sri Lanka.",
+    footer_contact: 'Contact & Founders', footer_services: 'Services',
+    footer_copy: '© 2025 LexLK. All rights reserved. Founded by Elmo & Rukshan. Unauthorised reproduction of any content or branding is strictly prohibited.',
+    footer_disc: 'LexLK provides AI-assisted legal information and facilitates access to independent Sri Lankan attorneys. Nothing on this platform constitutes legal advice. Users must independently verify all legal authorities. LexLK assumes no liability for reliance on platform content.',
+    // Consult
+    consult_eyebrow: 'Complimentary Initial Consultation',
+    consult_title: 'Consult a Qualified<br/>Sri Lankan Attorney',
+    consult_btn: '📅 Schedule Complimentary Consultation',
+    // Doc request
+    reqdoc_eyebrow: 'Official Document Retrieval Service',
+    reqdoc_title: 'Request Certified<br/>Legal Documents',
+    reqdoc_btn: '📋 Submit Document Request',
+    // Lawyer review modal
+    lr_title: '👨‍⚖️ Complimentary Attorney Review',
+    lr_sub: 'A qualified Sri Lankan attorney will personally review your document and deliver detailed written professional feedback within 2–4 hours — at no charge to you.',
+    lr_btn: '✓ Request Complimentary Attorney Review',
+  },
+
+  si: {
+    disc_tagline: 'වෘත්තීය නීති සේවා · ශ්‍රී ලංකා · නොමිලේ සහ ගෙවා',
+    disc_notice: 'වැදගත් දැනුම්දීම — ඉදිරියට යාමට පෙර කියවන්න',
+    disc_item1_title: 'නොමිලේ නීතිඥ ලේඛන සමාලෝචනය',
+    disc_item1_text: 'ඕනෑම නීතිමය ලේඛනයක් ඉදිරිපත් කරන්න — සුදුසුකම් ලත් ශ්‍රී ලාංකික නීතිඥයෙකු පෞද්ගලිකව සමාලෝචනය කර WhatsApp හෝ ඊමේල් හරහා පැය 2-4 ඇතුළත ලිඛිත ප්‍රතිපෝෂණ ලබා දෙනු ඇත.',
+    disc_item2_title: 'ක්ෂණික AI විශ්ලේෂණය',
+    disc_item2_text: 'ප්‍රධාන කරුණු, නීතිමය ගැටලු, අදාළ ව්‍යවස්ථා සහ නිර්දේශ ඇතුළු ක්ෂණික AI ප්‍රතිඵල ලබා ගන්න.',
+    disc_item3_title: 'නොමිලේ මූලික උපදේශනය',
+    disc_item3_text: 'සුදුසුකම් ලත් ශ්‍රී ලාංකික නීතිඥයෙකු සමඟ නොමිලේ විනාඩි 30 ක උපදේශනයක් කාලසටහන් කරන්න.',
+    disc_item4_title: 'සියලු දෙනාට ප්‍රවේශය',
+    disc_item4_text: 'ශ්‍රී ලාංකිකයන්, විදේශිකයන්, රාජ්‍ය ගත වූවන්, ආයෝජකයන් සහ අමුත්තන් සියලු දෙනාටම සේවා ලබා ගත හැකිය.',
+    disc_warning: 'AI විශ්ලේෂණය තොරතුරු සඳහා පමණි. ශ්‍රී ලාංකික නීතිඥයෙකු සමඟ ස්වාධීනව සත්‍යාපන කරන්න.',
+    disc_btn: 'මම පිළිගනිමි — LexLK ට ඇතුල් වන්න',
+    disc_foot: 'නොමිලේ සහ ගෙවා සේවා · ශ්‍රී ලංකා',
+    nav_home: '🏠 මුල් පිටුව', nav_analyse: '⚖ විශ්ලේෂණය', nav_draft: '✍ කෙටුම්පත',
+    nav_qa: '💬 නීති ප්‍රශ්නෝත්තර', nav_lawyers: '👤 නීතිඥ සොයන්න', nav_reqdoc: '📋 ලේඛන ඉල්ලීම',
+    nav_consult: '📅 උපදේශනය',
+    mob_home: '🏠 මුල් පිටුව', mob_analyse: '⚖ ලේඛන විශ්ලේෂණය', mob_draft: '✍ ලේඛන කෙටුම්පත',
+    mob_qa: '💬 නීති ප්‍රශ්නෝත්තර', mob_lawyers: '👤 නීතිඥ සොයන්න',
+    mob_reqdoc: '📋 නීතිමය ලේඛන ඉල්ලීම', mob_consult: '📅 නොමිලේ උපදේශනය',
+    hero_eyebrow: 'ශ්‍රී ලංකාවේ ප්‍රමුඛ නීතිමය සේවා වේදිකාව',
+    hero_title: 'වෘත්තීය නීතිමය සහාය.<br/><span>සියලු දෙනාට.</span>',
+    hero_sub: 'ඔබේ නීතිමය ලේඛන ඉදිරිපත් කරන්න — ක්ෂණික AI විශ්ලේෂණය සහ නොමිලේ නීතිඥ සමාලෝචනය WhatsApp හෝ ඊමේල් හරහා පැය 2-4 ඇතුළත ලබා ගන්න.',
+    hero_btn1: '⚖ ලේඛන ඉදිරිපත් කරන්න', hero_btn2: '📅 නොමිලේ උපදේශනය',
+    sig_label: '🌟 අපගේ විශේෂ සේවාව — නොමිලේ',
+    sig_title: 'සුදුසුකම් ලත් නීතිඥ. වෘත්තීය ප්‍රතිපෝෂණ. නොමිලේ.',
+    sig_sub: 'ශ්‍රී ලංකාවේ වෙනත් කිසිදු වේදිකාවක් මෙය ලබා නොදේ. සුදුසුකම් ලත් ශ්‍රී ලාංකික නීතිඥයෙකු ඔබේ ලේඛන පෞද්ගලිකව සමාලෝචනය කර WhatsApp හෝ ඊමේල් හරහා ලිඛිත ප්‍රතිපෝෂණ ලබා දෙයි.',
+    sig_btn: 'ලේඛන ඉදිරිපත් කරන්න →',
+    steps_label: 'අපගේ ක්‍රියාවලිය', steps_title: 'නීතිමය පැහැදිලිකම සඳහා පියවර 3',
+    steps_sub: 'ඉදිරිපත් කිරීමේ සිට විශේෂඥ මෙහෙයවීම දක්වා.',
+    step1_title: 'ලේඛනය ඉදිරිපත් කරන්න', step1_badge: 'නොමිලේ',
+    step1_text: 'ඕනෑම නීතිමය ලේඛනයක් PDF, රූපය හෝ පාඨ ලෙස ඉදිරිපත් කරන්න.',
+    step2_title: 'සමාලෝචන මට්ටම තෝරන්න', step2_badge: 'පැය 2-4 · නොමිලේ',
+    step2_text: '<strong>ලේඛන සමාලෝචනය පමණක්</strong> — නීතිඥ ලිඛිත ප්‍රතිපෝෂණ; හෝ <strong>සම්පූර්ණ උපදේශනය</strong> — ප්‍රතිපෝෂණ + නොමිලේ විනාඩි 30.',
+    step3_title: 'විශ්වාසයෙන් ඉදිරියට යන්න', step3_badge: 'ගෙවා · වෘත්තීය',
+    step3_text: 'උසාවි නියෝජනය, ලේඛන කෙටුම්පත, නොතාරිස් සහ නීතිමය මතය ඇතුළු සේවා ගෙවා ලබා ගත හැකිය.',
+    cta_title: 'විශේෂඥ නීතිමය සහාය ලබා ගැනීමට සූදානම්ද?',
+    cta_sub: 'ඔබේ ලේඛනය ඉදිරිපත් කර ක්ෂණික AI විශ්ලේෂණය සහ නොමිලේ නීතිඥ සමාලෝචනය ලබා ගන්න.',
+    cta_btn: '📅 නොමිලේ උපදේශනය කාලසටහන් කරන්න',
+    cta_note: 'හෝ', cta_note2: 'නොමිලේ නීතිඥ සමාලෝචනය සඳහා ලේඛනය ඉදිරිපත් කරන්න →',
+    footer_tagline: 'ශ්‍රී ලංකාවේ වෘත්තීය නීතිමය සේවා වේදිකාව. AI විශ්ලේෂණය සහ නොමිලේ නීතිඥ සමාලෝචනය.',
+    footer_contact: 'සම්බන්ධ කිරීමට', footer_services: 'සේවා',
+    footer_copy: '© 2025 LexLK. සියලු හිමිකම් ඇවිරිණි. Elmo සහ Rukshan ආරම්භ කළේය.',
+    footer_disc: 'LexLK AI-assisted නීතිමය තොරතුරු සපයයි. කිසිවක් නීතිමය උපදේශයක් නොවේ.',
+    consult_eyebrow: 'නොමිලේ මූලික උපදේශනය',
+    consult_title: 'සුදුසුකම් ලත් ශ්‍රී ලාංකික නීතිඥයෙකු සමඟ',
+    consult_btn: '📅 නොමිලේ උපදේශනය',
+    reqdoc_eyebrow: 'නිල ලේඛන ලබා ගැනීමේ සේවාව',
+    reqdoc_title: 'නිල ලේඛන ඉල්ලීම',
+    reqdoc_btn: '📋 ලේඛන ඉල්ලීම ඉදිරිපත් කරන්න',
+    lr_title: '👨‍⚖️ නොමිලේ නීතිඥ සමාලෝචනය',
+    lr_sub: 'සුදුසුකම් ලත් ශ්‍රී ලාංකික නීතිඥයෙකු ඔබේ ලේඛනය සමාලෝචනය කර WhatsApp හෝ ඊමේල් හරහා ලිඛිත ප්‍රතිපෝෂණ ලබා දෙනු ඇත.',
+    lr_btn: '✓ නොමිලේ නීතිඥ සමාලෝචනය ඉල්ලන්න',
+  },
+
+  ta: {
+    disc_tagline: 'தொழில்முறை சட்ட சேவைகள் · இலங்கை · இலவச மற்றும் கட்டண',
+    disc_notice: 'முக்கிய அறிவிப்பு — தொடர்வதற்கு முன் படிக்கவும்',
+    disc_item1_title: 'இலவச வழக்கறிஞர் ஆவண ஆய்வு',
+    disc_item1_text: 'எந்த சட்ட ஆவணத்தையும் சமர்ப்பிக்கவும் — தகுதிவாய்ந்த இலங்கை வழக்கறிஞர் 2-4 மணி நேரத்தில் WhatsApp அல்லது மின்னஞ்சல் மூலம் தொழில்முறை கருத்துக்களை வழங்குவார்.',
+    disc_item2_title: 'உடனடி AI பகுப்பாய்வு',
+    disc_item2_text: 'முக்கிய உண்மைகள், சட்ட சிக்கல்கள், சட்டதிட்டங்கள் மற்றும் பரிந்துரைகள் உள்ளிட்ட உடனடி AI நுண்ணறிவுகளைப் பெறுங்கள்.',
+    disc_item3_title: 'இலவச ஆரம்ப ஆலோசனை',
+    disc_item3_text: 'தகுதிவாய்ந்த இலங்கை வழக்கறிஞருடன் இலவச 30 நிமிட ஆலோசனை திட்டமிடுங்கள்.',
+    disc_item4_title: 'அனைவருக்கும் அணுகல்',
+    disc_item4_text: 'இலங்கையர்கள், வெளிநாட்டினர், புலம்பெயர்ந்தோர், முதலீட்டாளர்கள் மற்றும் பார்வையாளர்கள் அனைவருக்கும் சேவைகள் கிடைக்கும்.',
+    disc_warning: 'AI பகுப்பாய்வு தகவல் நோக்கங்களுக்காக மட்டுமே. தகுதிவாய்ந்த வழக்கறிஞரிடம் சரிபார்க்கவும்.',
+    disc_btn: 'ஒப்புக்கொள்கிறேன் — LexLK-ல் நுழைக',
+    disc_foot: 'இலவச மற்றும் கட்டண சேவைகள் · இலங்கை',
+    nav_home: '🏠 முகப்பு', nav_analyse: '⚖ பகுப்பாய்வு', nav_draft: '✍ வரைவு',
+    nav_qa: '💬 சட்ட கேள்விகள்', nav_lawyers: '👤 வழக்கறிஞர் கண்டுபிடிக்க', nav_reqdoc: '📋 ஆவணங்கள் கோரு',
+    nav_consult: '📅 ஆலோசனை',
+    mob_home: '🏠 முகப்பு', mob_analyse: '⚖ ஆவண பகுப்பாய்வு', mob_draft: '✍ ஆவண வரைவு',
+    mob_qa: '💬 சட்ட கேள்விகள்', mob_lawyers: '👤 வழக்கறிஞர் கண்டுபிடி',
+    mob_reqdoc: '📋 சட்ட ஆவணங்கள் கோரு', mob_consult: '📅 இலவச ஆலோசனை',
+    hero_eyebrow: 'இலங்கையின் முன்னணி சட்ட சேவைகள் தளம்',
+    hero_title: 'தொழில்முறை சட்ட உதவி.<br/><span>அனைவருக்கும் கிடைக்கும்.</span>',
+    hero_sub: 'உங்கள் சட்ட ஆவணங்களை சமர்ப்பிக்கவும் — உடனடி AI பகுப்பாய்வு மற்றும் இலவச வழக்கறிஞர் ஆய்வு 2-4 மணி நேரத்தில் பெறுங்கள்.',
+    hero_btn1: '⚖ ஆவணங்களை சமர்ப்பிக்க', hero_btn2: '📅 இலவச ஆலோசனை',
+    sig_label: '🌟 எங்கள் சிறப்பு சேவை — இலவசம்',
+    sig_title: 'தகுதிவாய்ந்த வழக்கறிஞர். தொழில்முறை கருத்து. இலவசம்.',
+    sig_sub: 'இலங்கையில் வேறு எந்த தளமும் இதை வழங்குவதில்லை. தகுதிவாய்ந்த இலங்கை வழக்கறிஞர் உங்கள் ஆவணங்களை ஆய்வு செய்து 2-4 மணி நேரத்தில் கருத்துக்களை வழங்குவார்.',
+    sig_btn: 'உங்கள் ஆவணங்களை சமர்ப்பிக்க →',
+    steps_label: 'எங்கள் செயல்முறை', steps_title: 'சட்ட தெளிவுக்கான 3 படிகள்',
+    steps_sub: 'சமர்ப்பிப்பிலிருந்து நிபுணர் வழிகாட்டுதல் வரை.',
+    step1_title: 'ஆவணத்தை சமர்ப்பிக்கவும்', step1_badge: 'இலவசம்',
+    step1_text: 'எந்த சட்ட ஆவணத்தையும் PDF, படம் அல்லது உரையாக சமர்ப்பிக்கவும்.',
+    step2_title: 'ஆய்வு நிலையை தேர்வு செய்யுங்கள்', step2_badge: '2-4 மணி · இலவசம்',
+    step2_text: '<strong>ஆவண ஆய்வு மட்டும்</strong> — வழக்கறிஞர் கருத்துக்கள்; அல்லது <strong>முழு ஆலோசனை</strong> — கருத்துக்கள் + இலவச 30 நிமிடம்.',
+    step3_title: 'நம்பிக்கையுடன் முன்னேறுங்கள்', step3_badge: 'கட்டண · தொழில்முறை',
+    step3_text: 'நீதிமன்ற பிரதிநிதித்துவம், ஆவண வரைவு, நோட்டரைசேஷன் மற்றும் சட்ட கருத்து கட்டண சேவைகளாக கிடைக்கும்.',
+    cta_title: 'நிபுணர் சட்ட உதவி பெற தயாரா?',
+    cta_sub: 'உங்கள் ஆவணத்தை சமர்ப்பித்து உடனடி AI பகுப்பாய்வு மற்றும் இலவச வழக்கறிஞர் ஆய்வு பெறுங்கள்.',
+    cta_btn: '📅 இலவச ஆலோசனை திட்டமிட',
+    cta_note: 'அல்லது', cta_note2: 'இலவச வழக்கறிஞர் ஆய்வுக்கு ஆவணம் சமர்ப்பிக்க →',
+    footer_tagline: 'இலங்கையின் தொழில்முறை சட்ட சேவைகள் தளம்.',
+    footer_contact: 'தொடர்பு & நிறுவனர்கள்', footer_services: 'சேவைகள்',
+    footer_copy: '© 2025 LexLK. அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை. Elmo & Rukshan நிறுவியவர்கள்.',
+    footer_disc: 'LexLK AI-assisted சட்ட தகவல்களை வழங்குகிறது. எதுவும் சட்ட ஆலோசனையல்ல.',
+    consult_eyebrow: 'இலவச ஆரம்ப ஆலோசனை',
+    consult_title: 'தகுதிவாய்ந்த இலங்கை<br/>வழக்கறிஞரிடம் ஆலோசிக்கவும்',
+    consult_btn: '📅 இலவச ஆலோசனை',
+    reqdoc_eyebrow: 'அதிகாரப்பூர்வ ஆவண மீட்டெடுப்பு சேவை',
+    reqdoc_title: 'சான்றளிக்கப்பட்ட<br/>சட்ட ஆவணங்கள் கோரு',
+    reqdoc_btn: '📋 ஆவண கோரிக்கையை சமர்ப்பிக்கவும்',
+    lr_title: '👨‍⚖️ இலவச வழக்கறிஞர் ஆய்வு',
+    lr_sub: 'தகுதிவாய்ந்த இலங்கை வழக்கறிஞர் உங்கள் ஆவணத்தை ஆய்வு செய்து 2-4 மணி நேரத்தில் கருத்துக்களை வழங்குவார்.',
+    lr_btn: '✓ இலவச வழக்கறிஞர் ஆய்வு கோரு',
+  },
+
+  fr: {
+    disc_tagline: 'Services Juridiques Professionnels · Sri Lanka · Gratuit & Payant',
+    disc_notice: 'Avis Important — Veuillez lire avant de continuer',
+    disc_item1_title: 'Examen Gratuit de Documents par un Avocat',
+    disc_item1_text: "Soumettez tout document juridique — un avocat sri-lankais qualifié effectuera un examen personnel et vous fournira un retour écrit professionnel dans les 2 à 4 heures via WhatsApp ou email, gratuitement.",
+    disc_item2_title: 'Analyse IA Instantanée',
+    disc_item2_text: "Recevez une analyse IA immédiate couvrant les faits clés, les problèmes juridiques identifiés, les statuts pertinents et les recommandations stratégiques.",
+    disc_item3_title: 'Consultation Initiale Gratuite',
+    disc_item3_text: "Planifiez une consultation gratuite de 30 minutes avec un avocat sri-lankais qualifié. Aucune obligation d'engagement.",
+    disc_item4_title: 'Accès Universel',
+    disc_item4_text: "Nos services sont disponibles pour les Sri-Lankais, les étrangers, les expatriés, les investisseurs et les visiteurs.",
+    disc_warning: "L'analyse IA est à titre informatif uniquement. Vérifiez toujours auprès d'un avocat qualifié.",
+    disc_btn: "J'accepte — Entrer dans LexLK",
+    disc_foot: 'Services Gratuits & Payants · Sri Lanka',
+    nav_home: '🏠 Accueil', nav_analyse: '⚖ Analyser', nav_draft: '✍ Rédiger',
+    nav_qa: '💬 Questions Juridiques', nav_lawyers: '👤 Trouver un Avocat', nav_reqdoc: '📋 Demander Documents',
+    nav_consult: '📅 Consultation',
+    mob_home: '🏠 Accueil', mob_analyse: '⚖ Analyse de Documents', mob_draft: '✍ Rédaction de Documents',
+    mob_qa: '💬 Questions Juridiques', mob_lawyers: '👤 Trouver un Avocat',
+    mob_reqdoc: '📋 Demander des Documents Juridiques', mob_consult: '📅 Consultation Gratuite',
+    hero_eyebrow: 'La Première Plateforme de Services Juridiques au Sri Lanka',
+    hero_title: 'Assistance Juridique Professionnelle.<br/><span>Accessible à Tous.</span>',
+    hero_sub: "Soumettez vos documents juridiques et recevez une analyse IA immédiate ainsi qu'un examen personnel gratuit par un avocat sri-lankais qualifié — livré sur WhatsApp ou email dans les 2 à 4 heures.",
+    hero_btn1: '⚖ Soumettre des Documents', hero_btn2: '📅 Consultation Gratuite',
+    sig_label: '🌟 Notre Service Signature — Gratuit',
+    sig_title: 'Avocat Qualifié. Retour Professionnel. Gratuitement.',
+    sig_sub: "Contrairement à toute autre plateforme au Sri Lanka, LexLK fournit un véritable examen de vos documents par un avocat qualifié — gratuitement. Retour détaillé via WhatsApp ou email en 2 à 4 heures.",
+    sig_btn: 'Soumettre vos Documents Maintenant →',
+    steps_label: 'Notre Processus', steps_title: '3 Étapes vers la Clarté Juridique',
+    steps_sub: 'De la soumission aux conseils experts — notre processus est simple et efficace.',
+    step1_title: 'Soumettre votre Document', step1_badge: 'Gratuit',
+    step1_text: 'Téléchargez tout document juridique en PDF, image ou texte.',
+    step2_title: "Choisir votre Niveau d'Examen", step2_badge: '2–4h · Gratuit',
+    step2_text: "<strong>Examen de Document Uniquement</strong> — retour écrit de l'avocat; ou <strong>Consultation Complète</strong> — retour + consultation gratuite de 30 min.",
+    step3_title: 'Avancer en Toute Confiance', step3_badge: 'Payant · Professionnel',
+    step3_text: 'Représentation judiciaire, rédaction, notarisation et avis juridique disponibles en tant que services payants.',
+    cta_title: 'Prêt à Obtenir une Aide Juridique Experte?',
+    cta_sub: "Soumettez votre document aujourd'hui pour une analyse IA immédiate et un examen gratuit par avocat.",
+    cta_btn: '📅 Planifier votre Consultation Gratuite',
+    cta_note: 'Ou', cta_note2: "soumettre un document pour examen gratuit par avocat →",
+    footer_tagline: 'La plateforme professionnelle de services juridiques du Sri Lanka.',
+    footer_contact: 'Contact & Fondateurs', footer_services: 'Services',
+    footer_copy: '© 2025 LexLK. Tous droits réservés. Fondé par Elmo & Rukshan.',
+    footer_disc: "LexLK fournit des informations juridiques assistées par IA. Rien sur cette plateforme ne constitue un conseil juridique.",
+    consult_eyebrow: 'Consultation Initiale Gratuite',
+    consult_title: 'Consulter un Avocat<br/>Sri-Lankais Qualifié',
+    consult_btn: '📅 Planifier une Consultation Gratuite',
+    reqdoc_eyebrow: 'Service de Récupération de Documents Officiels',
+    reqdoc_title: 'Demander des Documents<br/>Juridiques Certifiés',
+    reqdoc_btn: '📋 Soumettre une Demande de Document',
+    lr_title: '👨‍⚖️ Examen Gratuit par Avocat',
+    lr_sub: "Un avocat sri-lankais qualifié examinera votre document et vous fournira un retour professionnel écrit dans les 2 à 4 heures — gratuitement.",
+    lr_btn: "✓ Demander un Examen Gratuit par Avocat",
+  },
+
+  de: {
+    disc_tagline: 'Professionelle Rechtsdienstleistungen · Sri Lanka · Kostenlos & Kostenpflichtig',
+    disc_notice: 'Wichtiger Hinweis — Bitte vor dem Fortfahren lesen',
+    disc_item1_title: 'Kostenlose Anwaltliche Dokumentenprüfung',
+    disc_item1_text: 'Reichen Sie ein beliebiges Rechtsdokument ein — ein qualifizierter sri-lankischer Anwalt prüft es persönlich und liefert innerhalb von 2–4 Stunden ein schriftliches professionelles Feedback per WhatsApp oder E-Mail, kostenlos.',
+    disc_item2_title: 'Sofortige KI-Analyse',
+    disc_item2_text: 'Erhalten Sie sofortige KI-generierte Einblicke zu wichtigen Fakten, Rechtsproblemen und Empfehlungen.',
+    disc_item3_title: 'Kostenlose Erstberatung',
+    disc_item3_text: 'Vereinbaren Sie eine kostenlose 30-minütige Beratung mit einem qualifizierten sri-lankischen Anwalt.',
+    disc_item4_title: 'Zugang für Alle',
+    disc_item4_text: 'Unsere Dienste stehen sri-lankischen Staatsbürgern, Ausländern, Expatriates, Investoren und Besuchern zur Verfügung.',
+    disc_warning: 'KI-Analyse dient nur zu Informationszwecken. Immer bei einem qualifizierten Anwalt verifizieren.',
+    disc_btn: 'Ich bestätige & akzeptiere — LexLK betreten',
+    disc_foot: 'Kostenlose & kostenpflichtige Dienste · Sri Lanka',
+    nav_home: '🏠 Startseite', nav_analyse: '⚖ Analysieren', nav_draft: '✍ Entwurf',
+    nav_qa: '💬 Rechtsfragen', nav_lawyers: '👤 Anwalt finden', nav_reqdoc: '📋 Dokumente anfordern',
+    nav_consult: '📅 Beratung',
+    mob_home: '🏠 Startseite', mob_analyse: '⚖ Dokumentenanalyse', mob_draft: '✍ Dokumentenentwurf',
+    mob_qa: '💬 Rechtsfragen', mob_lawyers: '👤 Anwalt finden',
+    mob_reqdoc: '📋 Rechtsdokumente anfordern', mob_consult: '📅 Kostenlose Beratung',
+    hero_eyebrow: 'Sri Lankas führende Rechtsdienstleistungsplattform',
+    hero_title: 'Professionelle Rechtsunterstützung.<br/><span>Für alle zugänglich.</span>',
+    hero_sub: 'Reichen Sie Ihre Rechtsdokumente ein und erhalten Sie sofortige KI-Analyse sowie eine kostenlose persönliche Prüfung durch einen qualifizierten sri-lankischen Anwalt — innerhalb von 2–4 Stunden per WhatsApp oder E-Mail.',
+    hero_btn1: '⚖ Dokumente einreichen', hero_btn2: '📅 Kostenlose Beratung',
+    sig_label: '🌟 Unser Signatur-Service — Kostenlos',
+    sig_title: 'Qualifizierter Anwalt. Professionelles Feedback. Kostenlos.',
+    sig_sub: 'Im Gegensatz zu anderen Plattformen bietet LexLK eine echte anwaltliche Prüfung Ihrer Dokumente — kostenlos. Detailliertes Feedback per WhatsApp oder E-Mail in 2–4 Stunden.',
+    sig_btn: 'Jetzt Dokumente einreichen →',
+    steps_label: 'Unser Prozess', steps_title: '3 Schritte zur rechtlichen Klarheit',
+    steps_sub: 'Von der Einreichung bis zur Expertenberatung — unser Prozess ist einfach und effizient.',
+    step1_title: 'Dokument einreichen', step1_badge: 'Kostenlos',
+    step1_text: 'Laden Sie ein beliebiges Rechtsdokument als PDF, Bild oder Text hoch.',
+    step2_title: 'Prüfungsebene wählen', step2_badge: '2–4 Std. · Kostenlos',
+    step2_text: '<strong>Nur Dokumentenprüfung</strong> — schriftliches Feedback vom Anwalt; oder <strong>Vollständige Beratung</strong> — Feedback + kostenlose 30 Min.',
+    step3_title: 'Mit Vertrauen vorankommen', step3_badge: 'Kostenpflichtig · Professionell',
+    step3_text: 'Gerichtsvertretung, Dokumentenentwurf, Beglaubigung und Rechtsgutachten als kostenpflichtige Dienste verfügbar.',
+    cta_title: 'Bereit, professionelle Rechtshilfe zu erhalten?',
+    cta_sub: 'Reichen Sie Ihr Dokument ein für sofortige KI-Analyse und kostenlose Anwaltsprüfung.',
+    cta_btn: '📅 Kostenlose Beratung vereinbaren',
+    cta_note: 'Oder', cta_note2: 'Dokument für kostenlose Anwaltsprüfung einreichen →',
+    footer_tagline: 'Sri Lankas professionelle Rechtsdienstleistungsplattform.',
+    footer_contact: 'Kontakt & Gründer', footer_services: 'Dienste',
+    footer_copy: '© 2025 LexLK. Alle Rechte vorbehalten. Gegründet von Elmo & Rukshan.',
+    footer_disc: 'LexLK stellt KI-gestützte Rechtsinformationen bereit. Nichts auf dieser Plattform stellt eine Rechtsberatung dar.',
+    consult_eyebrow: 'Kostenlose Erstberatung',
+    consult_title: 'Mit einem qualifizierten<br/>sri-lankischen Anwalt beraten',
+    consult_btn: '📅 Kostenlose Beratung vereinbaren',
+    reqdoc_eyebrow: 'Offizieller Dokumenten-Abruf-Service',
+    reqdoc_title: 'Beglaubigte Rechtsdokumente<br/>anfordern',
+    reqdoc_btn: '📋 Dokumentenanfrage einreichen',
+    lr_title: '👨‍⚖️ Kostenlose Anwaltsprüfung',
+    lr_sub: 'Ein qualifizierter sri-lankischer Anwalt prüft Ihr Dokument und liefert innerhalb von 2–4 Stunden schriftliches Feedback — kostenlos.',
+    lr_btn: '✓ Kostenlose Anwaltsprüfung anfordern',
+  },
+
+  zh: {
+    disc_tagline: '专业法律服务 · 斯里兰卡 · 免费与付费',
+    disc_notice: '重要提示 — 请在继续之前阅读',
+    disc_item1_title: '免费律师文件审查',
+    disc_item1_text: '提交任何法律文件 — 合格的斯里兰卡律师将亲自审查，并在2-4小时内通过WhatsApp或电子邮件提供专业书面反馈，完全免费。',
+    disc_item2_title: '即时AI分析',
+    disc_item2_text: '立即获得AI生成的见解，涵盖关键事实、法律问题、相关法规和战略建议。',
+    disc_item3_title: '免费初始咨询',
+    disc_item3_text: '与合格的斯里兰卡律师安排免费30分钟咨询，无任何义务。',
+    disc_item4_title: '普遍访问',
+    disc_item4_text: '我们的服务适用于斯里兰卡公民、外国人、海外侨民、投资者和访客。',
+    disc_warning: 'AI分析仅供参考，不构成法律建议。请向合格律师独立核实。',
+    disc_btn: '我确认并接受 — 进入LexLK',
+    disc_foot: '免费及付费服务 · 斯里兰卡',
+    nav_home: '🏠 首页', nav_analyse: '⚖ 分析', nav_draft: '✍ 起草',
+    nav_qa: '💬 法律问答', nav_lawyers: '👤 寻找律师', nav_reqdoc: '📋 申请文件',
+    nav_consult: '📅 咨询',
+    mob_home: '🏠 首页', mob_analyse: '⚖ 文件分析', mob_draft: '✍ 文件起草',
+    mob_qa: '💬 法律问答', mob_lawyers: '👤 寻找律师',
+    mob_reqdoc: '📋 申请法律文件', mob_consult: '📅 免费咨询',
+    hero_eyebrow: '斯里兰卡首屈一指的法律服务平台',
+    hero_title: '专业法律协助。<br/><span>人人可及。</span>',
+    hero_sub: '提交您的法律文件，获得即时AI分析以及来自合格斯里兰卡律师的免费个人审查 — 在2-4小时内通过WhatsApp或电子邮件送达。',
+    hero_btn1: '⚖ 提交文件进行分析', hero_btn2: '📅 安排免费咨询',
+    sig_label: '🌟 我们的标志性服务 — 免费',
+    sig_title: '合格律师。专业反馈。免费。',
+    sig_sub: '与斯里兰卡其他平台不同，LexLK提供真正的律师审查，完全免费。合格的斯里兰卡律师亲自审查您的文件，并在2-4小时内提供详细书面反馈。',
+    sig_btn: '立即提交您的文件 →',
+    steps_label: '我们的流程', steps_title: '三步实现法律清晰',
+    steps_sub: '从提交到专家指导 — 我们的流程简单高效。',
+    step1_title: '提交您的文件', step1_badge: '免费',
+    step1_text: '以PDF、图片或文本格式上传任何法律文件。',
+    step2_title: '选择审查级别', step2_badge: '2-4小时 · 免费',
+    step2_text: '<strong>仅文件审查</strong> — 律师书面反馈；或 <strong>全面咨询</strong> — 反馈 + 免费30分钟咨询。',
+    step3_title: '自信前行', step3_badge: '付费 · 专业',
+    step3_text: '法庭代理、文件起草、公证和法律意见作为付费服务提供。',
+    cta_title: '准备好获得专业法律援助了吗？',
+    cta_sub: '立即提交您的文件，获得即时AI分析和免费律师审查。',
+    cta_btn: '📅 安排您的免费咨询',
+    cta_note: '或', cta_note2: '提交文件获得免费律师审查 →',
+    footer_tagline: '斯里兰卡专业法律服务平台。',
+    footer_contact: '联系方式与创始人', footer_services: '服务',
+    footer_copy: '© 2025 LexLK。版权所有。由 Elmo 和 Rukshan 创立。',
+    footer_disc: 'LexLK提供AI辅助法律信息，不构成法律建议。',
+    consult_eyebrow: '免费初始咨询',
+    consult_title: '咨询合格的<br/>斯里兰卡律师',
+    consult_btn: '📅 安排免费咨询',
+    reqdoc_eyebrow: '官方文件检索服务',
+    reqdoc_title: '申请认证<br/>法律文件',
+    reqdoc_btn: '📋 提交文件申请',
+    lr_title: '👨‍⚖️ 免费律师审查',
+    lr_sub: '合格的斯里兰卡律师将亲自审查您的文件，并在2-4小时内提供详细书面专业反馈 — 完全免费。',
+    lr_btn: '✓ 申请免费律师审查',
+  },
+
+  ja: {
+    disc_tagline: 'プロ法律サービス · スリランカ · 無料・有料',
+    disc_notice: '重要なお知らせ — 続行する前にお読みください',
+    disc_item1_title: '無料弁護士文書レビュー',
+    disc_item1_text: '法律文書を提出してください — 資格のあるスリランカ弁護士が個人的にレビューし、2〜4時間以内にWhatsAppまたはメールで専門的な書面によるフィードバックを提供します（無料）。',
+    disc_item2_title: '即時AI分析',
+    disc_item2_text: '重要な事実、法的問題、関連法規、戦略的推奨事項を含む即時AI分析を受け取ります。',
+    disc_item3_title: '無料初回相談',
+    disc_item3_text: '資格のあるスリランカ弁護士との無料30分間の相談をスケジュールしてください。',
+    disc_item4_title: 'すべての人へのアクセス',
+    disc_item4_text: 'スリランカ国民、外国人、在外邦人、投資家、訪問者のすべてにサービスが利用可能です。',
+    disc_warning: 'AI分析は情報提供のみを目的としています。資格のある弁護士に独立して確認してください。',
+    disc_btn: '同意して入る — LexLKへ',
+    disc_foot: '無料・有料サービス · スリランカ',
+    nav_home: '🏠 ホーム', nav_analyse: '⚖ 分析', nav_draft: '✍ 起草',
+    nav_qa: '💬 法律Q&A', nav_lawyers: '👤 弁護士を探す', nav_reqdoc: '📋 書類申請',
+    nav_consult: '📅 相談',
+    mob_home: '🏠 ホーム', mob_analyse: '⚖ 文書分析', mob_draft: '✍ 文書作成',
+    mob_qa: '💬 法律Q&A', mob_lawyers: '👤 弁護士を探す',
+    mob_reqdoc: '📋 法律文書を申請', mob_consult: '📅 無料相談',
+    hero_eyebrow: 'スリランカ最高の法律サービスプラットフォーム',
+    hero_title: 'プロの法律支援。<br/><span>すべての人に。</span>',
+    hero_sub: '法律文書を提出し、即時AI分析と資格のあるスリランカ弁護士による無料個人レビューを2〜4時間以内にWhatsAppまたはメールで受け取ります。',
+    hero_btn1: '⚖ 文書を提出', hero_btn2: '📅 無料相談',
+    sig_label: '🌟 シグネチャーサービス — 無料',
+    sig_title: '資格弁護士。プロのフィードバック。無料。',
+    sig_sub: 'スリランカの他のプラットフォームとは異なり、LexLKは本物の弁護士レビューを完全無料で提供します。2〜4時間以内に詳細なフィードバックをお届けします。',
+    sig_btn: '今すぐ文書を提出 →',
+    steps_label: 'プロセス', steps_title: '法律の明確性への3ステップ',
+    steps_sub: '提出から専門家の指導まで — シンプルで効率的なプロセスです。',
+    step1_title: '文書を提出', step1_badge: '無料',
+    step1_text: 'PDF、画像、またはテキスト形式で法律文書をアップロードします。',
+    step2_title: 'レビューレベルを選択', step2_badge: '2〜4時間 · 無料',
+    step2_text: '<strong>文書レビューのみ</strong> — 弁護士による書面フィードバック；または <strong>包括的相談</strong> — フィードバック + 無料30分相談。',
+    step3_title: '自信を持って前進', step3_badge: '有料 · プロ',
+    step3_text: '法廷代理、文書起草、公証、法律意見が有料サービスとして提供されます。',
+    cta_title: '専門的な法律支援を受ける準備ができましたか？',
+    cta_sub: '文書を提出して即時AI分析と無料弁護士レビューを受け取ります。',
+    cta_btn: '📅 無料相談をスケジュール',
+    cta_note: 'または', cta_note2: '無料弁護士レビューのために文書を提出 →',
+    footer_tagline: 'スリランカのプロ法律サービスプラットフォーム。',
+    footer_contact: '連絡先・創設者', footer_services: 'サービス',
+    footer_copy: '© 2025 LexLK。全権利保有。Elmo と Rukshan が創設。',
+    footer_disc: 'LexLKはAI支援法律情報を提供します。法律上のアドバイスではありません。',
+    consult_eyebrow: '無料初回相談',
+    consult_title: '資格のある<br/>スリランカ弁護士に相談',
+    consult_btn: '📅 無料相談をスケジュール',
+    reqdoc_eyebrow: '公式文書取得サービス',
+    reqdoc_title: '認証済み<br/>法律文書を申請',
+    reqdoc_btn: '📋 文書申請を提出',
+    lr_title: '👨‍⚖️ 無料弁護士レビュー',
+    lr_sub: '資格のあるスリランカ弁護士が文書をレビューし、2〜4時間以内に詳細な専門フィードバックを提供します — 無料。',
+    lr_btn: '✓ 無料弁護士レビューを申請',
+  },
+
+  ko: {
+    disc_tagline: '전문 법률 서비스 · 스리랑카 · 무료 및 유료',
+    disc_notice: '중요 공지 — 계속하기 전에 읽어주세요',
+    disc_item1_title: '무료 변호사 문서 검토',
+    disc_item1_text: '법률 문서를 제출하면 자격을 갖춘 스리랑카 변호사가 개인적으로 검토하여 2-4시간 이내에 WhatsApp 또는 이메일로 전문적인 서면 피드백을 제공합니다 — 무료.',
+    disc_item2_title: '즉각적인 AI 분석',
+    disc_item2_text: '주요 사실, 법적 문제, 관련 법규 및 전략적 권장사항을 포함한 즉각적인 AI 인사이트를 받으세요.',
+    disc_item3_title: '무료 초기 상담',
+    disc_item3_text: '자격을 갖춘 스리랑카 변호사와 무료 30분 상담을 예약하세요.',
+    disc_item4_title: '모든 사람을 위한 접근성',
+    disc_item4_text: '스리랑카 국민, 외국인, 해외 교민, 투자자 및 방문객 모두 서비스를 이용할 수 있습니다.',
+    disc_warning: 'AI 분석은 정보 제공 목적으로만 사용됩니다. 자격을 갖춘 변호사와 독립적으로 확인하세요.',
+    disc_btn: '동의합니다 — LexLK 입장',
+    disc_foot: '무료 및 유료 서비스 · 스리랑카',
+    nav_home: '🏠 홈', nav_analyse: '⚖ 분석', nav_draft: '✍ 초안',
+    nav_qa: '💬 법률 Q&A', nav_lawyers: '👤 변호사 찾기', nav_reqdoc: '📋 문서 요청',
+    nav_consult: '📅 상담',
+    mob_home: '🏠 홈', mob_analyse: '⚖ 문서 분석', mob_draft: '✍ 문서 작성',
+    mob_qa: '💬 법률 Q&A', mob_lawyers: '👤 변호사 찾기',
+    mob_reqdoc: '📋 법률 문서 요청', mob_consult: '📅 무료 상담',
+    hero_eyebrow: '스리랑카 최고의 법률 서비스 플랫폼',
+    hero_title: '전문적인 법률 지원.<br/><span>모든 사람을 위해.</span>',
+    hero_sub: '법률 문서를 제출하고 즉각적인 AI 분석과 자격을 갖춘 스리랑카 변호사의 무료 개인 검토를 2-4시간 이내에 WhatsApp 또는 이메일로 받으세요.',
+    hero_btn1: '⚖ 문서 제출', hero_btn2: '📅 무료 상담',
+    sig_label: '🌟 대표 서비스 — 무료',
+    sig_title: '자격 변호사. 전문 피드백. 무료.',
+    sig_sub: '스리랑카의 다른 플랫폼과 달리 LexLK는 완전 무료로 진정한 변호사 검토를 제공합니다. 2-4시간 이내에 상세한 피드백을 받으세요.',
+    sig_btn: '지금 문서 제출 →',
+    steps_label: '프로세스', steps_title: '법적 명확성을 위한 3단계',
+    steps_sub: '제출부터 전문가 지침까지 — 간단하고 효율적인 프로세스.',
+    step1_title: '문서 제출', step1_badge: '무료',
+    step1_text: 'PDF, 이미지 또는 텍스트 형식으로 법률 문서를 업로드하세요.',
+    step2_title: '검토 수준 선택', step2_badge: '2-4시간 · 무료',
+    step2_text: '<strong>문서 검토만</strong> — 변호사 서면 피드백; 또는 <strong>종합 상담</strong> — 피드백 + 무료 30분 상담.',
+    step3_title: '자신 있게 진행', step3_badge: '유료 · 전문',
+    step3_text: '법정 대리, 문서 초안 작성, 공증 및 법률 의견이 유료 서비스로 제공됩니다.',
+    cta_title: '전문 법률 지원을 받을 준비가 되셨나요?',
+    cta_sub: '문서를 제출하여 즉각적인 AI 분석과 무료 변호사 검토를 받으세요.',
+    cta_btn: '📅 무료 상담 예약',
+    cta_note: '또는', cta_note2: '무료 변호사 검토를 위한 문서 제출 →',
+    footer_tagline: '스리랑카 전문 법률 서비스 플랫폼.',
+    footer_contact: '연락처 및 창립자', footer_services: '서비스',
+    footer_copy: '© 2025 LexLK. 모든 권리 보유. Elmo & Rukshan 창립.',
+    footer_disc: 'LexLK는 AI 지원 법률 정보를 제공합니다. 법률 조언을 구성하지 않습니다.',
+    consult_eyebrow: '무료 초기 상담',
+    consult_title: '자격을 갖춘<br/>스리랑카 변호사와 상담',
+    consult_btn: '📅 무료 상담 예약',
+    reqdoc_eyebrow: '공식 문서 검색 서비스',
+    reqdoc_title: '인증된<br/>법률 문서 요청',
+    reqdoc_btn: '📋 문서 요청 제출',
+    lr_title: '👨‍⚖️ 무료 변호사 검토',
+    lr_sub: '자격을 갖춘 스리랑카 변호사가 문서를 검토하고 2-4시간 이내에 전문 피드백을 제공합니다 — 무료.',
+    lr_btn: '✓ 무료 변호사 검토 요청',
+  },
+
+  ar: {
+    disc_tagline: 'خدمات قانونية احترافية · سريلانكا · مجاني ومدفوع',
+    disc_notice: 'إشعار مهم — يرجى القراءة قبل المتابعة',
+    disc_item1_title: 'مراجعة وثائق مجانية من محامٍ',
+    disc_item1_text: 'قدّم أي وثيقة قانونية — سيقوم محامٍ سريلانكي مؤهل بمراجعتها شخصياً وتقديم تعليقات احترافية مكتوبة خلال 2-4 ساعات عبر واتساب أو البريد الإلكتروني، مجاناً.',
+    disc_item2_title: 'تحليل فوري بالذكاء الاصطناعي',
+    disc_item2_text: 'احصل على رؤى فورية تغطي الحقائق الرئيسية والقضايا القانونية المحددة والتشريعات ذات الصلة والتوصيات الاستراتيجية.',
+    disc_item3_title: 'استشارة أولية مجانية',
+    disc_item3_text: 'احجز استشارة مجانية مدتها 30 دقيقة مع محامٍ سريلانكي مؤهل، بدون أي التزام.',
+    disc_item4_title: 'وصول شامل',
+    disc_item4_text: 'خدماتنا متاحة للمواطنين السريلانكيين والأجانب والمغتربين والمستثمرين والزوار.',
+    disc_warning: 'تحليل الذكاء الاصطناعي لأغراض إعلامية فقط. يجب التحقق المستقل مع محامٍ مؤهل.',
+    disc_btn: 'أوافق وأقبل — الدخول إلى LexLK',
+    disc_foot: 'خدمات مجانية ومدفوعة · سريلانكا',
+    nav_home: '🏠 الرئيسية', nav_analyse: '⚖ تحليل', nav_draft: '✍ صياغة',
+    nav_qa: '💬 أسئلة قانونية', nav_lawyers: '👤 إيجاد محامٍ', nav_reqdoc: '📋 طلب وثائق',
+    nav_consult: '📅 استشارة',
+    mob_home: '🏠 الرئيسية', mob_analyse: '⚖ تحليل المستندات', mob_draft: '✍ صياغة المستندات',
+    mob_qa: '💬 أسئلة قانونية', mob_lawyers: '👤 إيجاد محامٍ',
+    mob_reqdoc: '📋 طلب وثائق قانونية', mob_consult: '📅 استشارة مجانية',
+    hero_eyebrow: 'منصة الخدمات القانونية الرائدة في سريلانكا',
+    hero_title: 'مساعدة قانونية احترافية.<br/><span>متاحة للجميع.</span>',
+    hero_sub: 'قدّم وثائقك القانونية واحصل على تحليل فوري بالذكاء الاصطناعي ومراجعة شخصية مجانية من محامٍ سريلانكي مؤهل خلال 2-4 ساعات.',
+    hero_btn1: '⚖ تقديم المستندات', hero_btn2: '📅 استشارة مجانية',
+    sig_label: '🌟 خدمتنا المميزة — مجانية',
+    sig_title: 'محامٍ مؤهل. تعليقات احترافية. مجاناً.',
+    sig_sub: 'على عكس أي منصة أخرى في سريلانكا، تقدم LexLK مراجعة حقيقية من محامٍ مؤهل لوثائقك المقدمة مجاناً تماماً. تعليقات تفصيلية خلال 2-4 ساعات.',
+    sig_btn: 'قدّم وثائقك الآن →',
+    steps_label: 'عمليتنا', steps_title: '3 خطوات نحو الوضوح القانوني',
+    steps_sub: 'من التقديم إلى التوجيه المتخصص — عمليتنا بسيطة وفعّالة.',
+    step1_title: 'تقديم وثيقتك', step1_badge: 'مجاني',
+    step1_text: 'ارفع أي وثيقة قانونية بصيغة PDF أو صورة أو نص.',
+    step2_title: 'اختر مستوى المراجعة', step2_badge: '2-4 ساعات · مجاني',
+    step2_text: '<strong>مراجعة الوثيقة فقط</strong> — تعليقات مكتوبة من المحامي؛ أو <strong>استشارة شاملة</strong> — تعليقات + 30 دقيقة مجانية.',
+    step3_title: 'المضي بثقة', step3_badge: 'مدفوع · احترافي',
+    step3_text: 'التمثيل القضائي وصياغة الوثائق والتوثيق والرأي القانوني متاحة كخدمات مدفوعة.',
+    cta_title: 'هل أنت مستعد للحصول على مساعدة قانونية متخصصة؟',
+    cta_sub: 'قدّم وثيقتك اليوم واحصل على تحليل فوري ومراجعة مجانية من محامٍ.',
+    cta_btn: '📅 جدولة استشارتك المجانية',
+    cta_note: 'أو', cta_note2: 'تقديم وثيقة للمراجعة المجانية من محامٍ →',
+    footer_tagline: 'منصة الخدمات القانونية الاحترافية في سريلانكا.',
+    footer_contact: 'التواصل والمؤسسون', footer_services: 'الخدمات',
+    footer_copy: '© 2025 LexLK. جميع الحقوق محفوظة. تأسست على يد Elmo و Rukshan.',
+    footer_disc: 'تقدم LexLK معلومات قانونية بمساعدة الذكاء الاصطناعي. لا يُعدّ شيء في هذه المنصة استشارة قانونية.',
+    consult_eyebrow: 'استشارة أولية مجانية',
+    consult_title: 'استشر محامياً سريلانكياً<br/>مؤهلاً',
+    consult_btn: '📅 جدولة استشارة مجانية',
+    reqdoc_eyebrow: 'خدمة استرداد الوثائق الرسمية',
+    reqdoc_title: 'طلب وثائق قانونية<br/>معتمدة',
+    reqdoc_btn: '📋 تقديم طلب وثيقة',
+    lr_title: '👨‍⚖️ مراجعة مجانية من محامٍ',
+    lr_sub: 'سيراجع محامٍ سريلانكي مؤهل وثيقتك ويقدم تعليقات احترافية مكتوبة خلال 2-4 ساعات — مجاناً.',
+    lr_btn: '✓ طلب مراجعة مجانية من محامٍ',
+  },
+
+  ru: {
+    disc_tagline: 'Профессиональные юридические услуги · Шри-Ланка · Бесплатно и платно',
+    disc_notice: 'Важное уведомление — прочитайте перед продолжением',
+    disc_item1_title: 'Бесплатная проверка документов адвокатом',
+    disc_item1_text: 'Загрузите любой юридический документ — квалифицированный шри-ланкийский адвокат лично проверит его и предоставит профессиональную письменную обратную связь в течение 2–4 часов через WhatsApp или электронную почту, бесплатно.',
+    disc_item2_title: 'Мгновенный анализ ИИ',
+    disc_item2_text: 'Получите немедленные аналитические данные ИИ, охватывающие ключевые факты, правовые вопросы, соответствующие законы и стратегические рекомендации.',
+    disc_item3_title: 'Бесплатная первоначальная консультация',
+    disc_item3_text: 'Запланируйте бесплатную 30-минутную консультацию с квалифицированным шри-ланкийским адвокатом без каких-либо обязательств.',
+    disc_item4_title: 'Доступ для всех',
+    disc_item4_text: 'Наши услуги доступны для граждан Шри-Ланки, иностранцев, экспатриантов, инвесторов и посетителей.',
+    disc_warning: 'Анализ ИИ предназначен только для информационных целей. Всегда проверяйте с квалифицированным адвокатом.',
+    disc_btn: 'Я согласен и принимаю — войти в LexLK',
+    disc_foot: 'Бесплатные и платные услуги · Шри-Ланка',
+    nav_home: '🏠 Главная', nav_analyse: '⚖ Анализ', nav_draft: '✍ Черновик',
+    nav_qa: '💬 Правовые вопросы', nav_lawyers: '👤 Найти адвоката', nav_reqdoc: '📋 Запрос документов',
+    nav_consult: '📅 Консультация',
+    mob_home: '🏠 Главная', mob_analyse: '⚖ Анализ документов', mob_draft: '✍ Составление документов',
+    mob_qa: '💬 Правовые вопросы', mob_lawyers: '👤 Найти адвоката',
+    mob_reqdoc: '📋 Запросить юридические документы', mob_consult: '📅 Бесплатная консультация',
+    hero_eyebrow: 'Ведущая платформа юридических услуг Шри-Ланки',
+    hero_title: 'Профессиональная юридическая помощь.<br/><span>Доступна для всех.</span>',
+    hero_sub: 'Загрузите ваши юридические документы и получите мгновенный анализ ИИ и бесплатную личную проверку квалифицированного шри-ланкийского адвоката в течение 2–4 часов.',
+    hero_btn1: '⚖ Отправить документы', hero_btn2: '📅 Бесплатная консультация',
+    sig_label: '🌟 Наш фирменный сервис — Бесплатно',
+    sig_title: 'Квалифицированный адвокат. Профессиональная обратная связь. Бесплатно.',
+    sig_sub: 'В отличие от других платформ в Шри-Ланке, LexLK предоставляет настоящую проверку документов адвокатом абсолютно бесплатно. Подробная обратная связь в течение 2–4 часов.',
+    sig_btn: 'Отправить документы сейчас →',
+    steps_label: 'Наш процесс', steps_title: '3 шага к юридической ясности',
+    steps_sub: 'От подачи до экспертного руководства — простой и эффективный процесс.',
+    step1_title: 'Загрузить документ', step1_badge: 'Бесплатно',
+    step1_text: 'Загрузите любой юридический документ в форматах PDF, изображение или текст.',
+    step2_title: 'Выбрать уровень проверки', step2_badge: '2–4 ч · Бесплатно',
+    step2_text: '<strong>Только проверка документа</strong> — письменная обратная связь от адвоката; или <strong>Полная консультация</strong> — обратная связь + бесплатные 30 мин.',
+    step3_title: 'Уверенно двигаться вперед', step3_badge: 'Платно · Профессионально',
+    step3_text: 'Судебное представительство, составление документов, нотариальное заверение и юридическое заключение доступны как платные услуги.',
+    cta_title: 'Готовы получить профессиональную юридическую помощь?',
+    cta_sub: 'Отправьте ваш документ сегодня для мгновенного анализа ИИ и бесплатной проверки адвоката.',
+    cta_btn: '📅 Запланировать бесплатную консультацию',
+    cta_note: 'Или', cta_note2: 'отправить документ для бесплатной проверки адвоката →',
+    footer_tagline: 'Профессиональная платформа юридических услуг Шри-Ланки.',
+    footer_contact: 'Контакты и основатели', footer_services: 'Услуги',
+    footer_copy: '© 2025 LexLK. Все права защищены. Основано Elmo и Rukshan.',
+    footer_disc: 'LexLK предоставляет юридическую информацию с помощью ИИ. Ничто на этой платформе не является юридической консультацией.',
+    consult_eyebrow: 'Бесплатная первоначальная консультация',
+    consult_title: 'Консультация с квалифицированным<br/>шри-ланкийским адвокатом',
+    consult_btn: '📅 Запланировать бесплатную консультацию',
+    reqdoc_eyebrow: 'Услуга получения официальных документов',
+    reqdoc_title: 'Запросить заверенные<br/>юридические документы',
+    reqdoc_btn: '📋 Подать запрос на документ',
+    lr_title: '👨‍⚖️ Бесплатная проверка адвоката',
+    lr_sub: 'Квалифицированный шри-ланкийский адвокат проверит ваш документ и предоставит подробную профессиональную обратную связь в течение 2–4 часов — бесплатно.',
+    lr_btn: '✓ Запросить бесплатную проверку адвоката',
+  },
+};
+
+let currentLang = 'en';
+
+function setLang(lang) {
+  if (!TRANSLATIONS[lang]) return;
+  currentLang = lang;
+  const t = TRANSLATIONS[lang];
+
+  // Update language bar active state
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  const lb = document.getElementById('lb-' + lang);
+  if (lb) lb.classList.add('active');
+
+  // RTL support for Arabic
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+
+  // Disclaimer
+  setT('disc-tagline', t.disc_tagline);
+  setT('disc-notice', t.disc_notice);
+  setT('disc-item1-title', t.disc_item1_title);
+  setT('disc-item1-text', t.disc_item1_text);
+  setT('disc-item2-title', t.disc_item2_title);
+  setT('disc-item2-text', t.disc_item2_text);
+  setT('disc-item3-title', t.disc_item3_title);
+  setT('disc-item3-text', t.disc_item3_text);
+  setT('disc-item4-title', t.disc_item4_title);
+  setT('disc-item4-text', t.disc_item4_text);
+  setT('disc-warning', t.disc_warning);
+  setT('disc-btn', t.disc_btn);
+  setT('disc-foot', t.disc_foot);
+
+  // Nav buttons
+  setT('nav-home', t.nav_home); setT('nav-analyse', t.nav_analyse);
+  setT('nav-draft', t.nav_draft); setT('nav-ask', t.nav_qa);
+  setT('nav-lawyers', t.nav_lawyers); setT('nav-reqdoc', t.nav_reqdoc);
+  setT('hdr-consult-btn', t.nav_consult);
+
+  // Mobile nav
+  setT('mob-home', t.mob_home); setT('mob-analyse', t.mob_analyse);
+  setT('mob-draft', t.mob_draft); setT('mob-qa', t.mob_qa);
+  setT('mob-lawyers', t.mob_lawyers); setT('mob-reqdoc', t.mob_reqdoc);
+  setT('mob-consult', t.mob_consult);
+
+  // Hero
+  setT('hero-eyebrow', t.hero_eyebrow);
+  setH('hero-title', t.hero_title);
+  setT('hero-sub', t.hero_sub);
+  setT('hero-btn1', t.hero_btn1); setT('hero-btn2', t.hero_btn2);
+
+  // Signature banner
+  setT('sig-label', t.sig_label); setT('sig-title', t.sig_title);
+  setT('sig-sub', t.sig_sub); setT('sig-btn', t.sig_btn);
+
+  // Steps
+  setT('steps-label', t.steps_label); setT('steps-title', t.steps_title);
+  setT('steps-sub', t.steps_sub);
+  setT('step1-title', t.step1_title); setT('step1-badge', t.step1_badge); setT('step1-text', t.step1_text);
+  setT('step2-title', t.step2_title); setT('step2-badge', t.step2_badge); setH('step2-text', t.step2_text);
+  setT('step3-title', t.step3_title); setT('step3-badge', t.step3_badge); setT('step3-text', t.step3_text);
+
+  // CTA
+  setT('cta-title', t.cta_title); setT('cta-sub', t.cta_sub);
+  setT('cta-btn', t.cta_btn); setT('cta-note', t.cta_note); setT('cta-note2', t.cta_note2);
+
+  // Footer
+  setT('footer-tagline', t.footer_tagline);
+  setT('footer-contact-col', t.footer_contact); setT('footer-services-col', t.footer_services);
+  setT('footer-copy', t.footer_copy); setT('footer-disc-text', t.footer_disc);
+
+  // Consult page
+  setT('consult-eyebrow', t.consult_eyebrow);
+  setH('consult-title', t.consult_title);
+  setT('consult-submit-btn', t.consult_btn);
+
+  // Doc request page
+  setT('reqdoc-eyebrow', t.reqdoc_eyebrow);
+  setH('reqdoc-title', t.reqdoc_title);
+  setT('reqdoc-submit-btn', t.reqdoc_btn);
+
+  // Lawyer review modal
+  setT('lr-modal-title', t.lr_title);
+  setT('lr-modal-sub', t.lr_sub);
+  setT('lr-modal-btn', t.lr_btn);
+}
+
+function setT(id, text) { const el = document.getElementById(id); if (el && text) el.textContent = text; }
+function setH(id, html) { const el = document.getElementById(id); if (el && html) el.innerHTML = html; }
+// ===================== END TRANSLATION SYSTEM =====================
+
+function updateDraftTier(val){
+  const info=document.getElementById('dservice-info');
+  const tiers={
+    'draft':'<strong>AI Draft Only — Self-Review Copy</strong><br/>An AI-generated draft formatted for Sri Lankan courts, provided for your review and reference. Not court-ready; must be reviewed by a qualified attorney before filing. This is a paid service — pricing will be confirmed upon engagement.',
+    'legalready':'<strong>Court-Ready — Professionally Reviewed &amp; Endorsed</strong><br/>Your AI-generated draft is reviewed, corrected and endorsed by a qualified Sri Lankan attorney, making it suitable for submission to court. Includes one revision. This is a professional paid service — pricing will be confirmed upon engagement.',
+    'notarised':'<strong>Court-Ready with Notarisation</strong><br/>As above, with the addition of formal notarisation or authentication by a registered Notary Public or Advocate. Suitable for official submission, registration and cross-jurisdictional use. This is a professional paid service — pricing will be confirmed upon engagement.'
+  };
+  if(val && tiers[val]){info.style.display='block';info.innerHTML=tiers[val];}
+  else{info.style.display='none';}
+}
+
+const RD_DOCS={
+  property:['Certified Copy of Deed','Transfer Deed (Transfer Deed)','Land Survey Plan','Lot Plan','Cadastral Map','Title Certificate','Encumbrance Certificate','Gift Deed','Mortgage Deed','Partition Deed','Other Property Document'],
+  tax:['Assessment Extract','Property Tax Receipt','Annual Rates Certificate','Government Valuation Report','Revenue Licence','Income Tax Clearance Certificate','VAT Certificate','Other Tax / Revenue Document'],
+  civil:['Certified Court Order','Decree Nisi','Decree Absolute','Judgment Extract','Case Record Extract','Certificate of No Appeal','Probate Order','Letters of Administration','Affidavit of Execution','Other Court Document'],
+  personal:['Birth Certificate (Certified)','Marriage Certificate (Certified)','Death Certificate (Certified)','Divorce Certificate','Name Change Gazette Notification','Police Clearance Certificate (Local)','Police Clearance Certificate (International — Interpol)','Apostille / Document Legalisation','Certified Translation','Other Personal Document'],
+  business:['Company Registration Extract (Form 40)','Business Name Registration Certificate','BOI Registration Certificate','Trademark Registration Certificate','Tax Identification Number Certificate','EPF / ETF Registration Certificate','Chamber of Commerce Certificate','Other Business Document'],
+  other:['Other — Please specify in the details field below']
+};
+
+function updateDocList(cat){
+  const sel=document.getElementById('rd-doctype');
+  sel.innerHTML='<option value="">Select document…</option>';
+  if(RD_DOCS[cat]){RD_DOCS[cat].forEach(d=>{const o=document.createElement('option');o.value=d;o.textContent=d;sel.appendChild(o);});}
+  // also sync category cards
+  selectCategory(cat,false);
+}
+
+function selectCategory(cat,updateSelect=true){
+  document.querySelectorAll('.rd-cat').forEach(c=>c.classList.remove('selected'));
+  const el=document.getElementById('cat-'+cat);
+  if(el)el.classList.add('selected');
+  if(updateSelect){
+    const sel=document.getElementById('rd-category');
+    if(sel)sel.value=cat;
+    updateDocList(cat);
+  }
+}
+
+let rdUrgency='standard';
+function selUrgency(el,val){
+  document.querySelectorAll('#rd-urgency-opts .ts').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  rdUrgency=val;
+}
+
+function submitDocRequest(){
+  const name=document.getElementById('rd-name').value.trim();
+  const phone=document.getElementById('rd-phone').value.trim();
+  const email=document.getElementById('rd-email').value.trim();
+  const cat=document.getElementById('rd-category').value;
+  const doctype=document.getElementById('rd-doctype').value;
+  const details=document.getElementById('rd-details').value.trim();
+  const purpose=document.getElementById('rd-purpose').value;
+  if(!name||(!phone&&!email)||!cat||!doctype||!details||!purpose){
+    toast('Please complete all required fields before submitting.');return;
+  }
+  document.getElementById('mt').textContent='Document Request Submitted ✓';
+  document.getElementById('ms').textContent='Your request has been received. A fee quotation will be provided within 2–4 hours.';
+  document.getElementById('mb').innerHTML=`
+    <div style="background:var(--bg3);border-radius:6px;padding:0.9rem;margin-bottom:0.9rem;font-size:0.8rem;line-height:1.9;color:var(--text3);">
+      <div><strong style="color:var(--ink)">Name:</strong> ${esc(name)}</div>
+      <div><strong style="color:var(--ink)">Document:</strong> ${esc(doctype)}</div>
+      <div><strong style="color:var(--ink)">Urgency:</strong> ${esc(rdUrgency.charAt(0).toUpperCase()+rdUrgency.slice(1))}</div>
+      <div><strong style="color:var(--ink)">Contact:</strong> ${esc(phone||email)}</div>
+    </div>
+    <div style="font-size:0.73rem;color:var(--text4);line-height:1.6;">An attorney will contact you within 2–4 hours with a transparent fee quotation. No work commences without your prior written approval.</div>`;
+  document.getElementById('modal').classList.add('on');
+}
+</script>
+</body>
+</html>
