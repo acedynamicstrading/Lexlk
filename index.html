@@ -65,7 +65,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 
 /* ====== HOME PAGE ====== */
 .home-page{overflow-y:auto;}
-.hero{background:linear-gradient(135deg,#1a1208 0%,#2d2010 40%,#1a1a10 100%);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;}
+.hero{background:linear-gradient(135deg,#1a1208 0%,#2d2010 40%,#1a1a10 100%);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;z-index:1;}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(184,146,42,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(184,146,42,0.08) 0%,transparent 50%);}
 .hero-inner{position:relative;max-width:800px;margin:0 auto;}
 .hero-eyebrow{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold2);margin-bottom:1.2rem;font-weight:500;}
@@ -79,7 +79,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 .hero-btn-s:hover{border-color:var(--gold2);color:#f5ede0;}
 
 /* SIGNATURE SERVICE BANNER */
-.sig-banner{background:linear-gradient(135deg,var(--gold) 0%,#d4a020 100%);padding:2.5rem 3rem;text-align:center;}
+.sig-banner{background:linear-gradient(135deg,var(--gold) 0%,#d4a020 100%);padding:2.5rem 3rem;text-align:center;position:relative;z-index:1;}
 .sig-banner-label{font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:0.5rem;font-weight:600;}
 .sig-banner-title{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:600;color:#fff;margin-bottom:0.6rem;}
 .sig-banner-sub{font-size:0.9rem;color:rgba(255,255,255,0.88);line-height:1.7;max-width:680px;margin:0 auto 1.5rem;}
@@ -458,13 +458,13 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
       <div class="auth-err" id="reg-err"></div>
       <div class="auth-ok" id="reg-ok"></div>
       <div class="auth-row">
-        <input class="auth-input" id="rg-fname" type="text" placeholder="First name" autocomplete="given-name"/>
-        <input class="auth-input" id="rg-lname" type="text" placeholder="Last name" autocomplete="family-name"/>
+        <input class="auth-input" id="rg-fname" type="text" placeholder="First name *" autocomplete="given-name" required/>
+        <input class="auth-input" id="rg-lname" type="text" placeholder="Last name *" autocomplete="family-name" required/>
       </div>
-      <input class="auth-input" id="rg-email" type="email" placeholder="Email address" autocomplete="email"/>
-      <input class="auth-input" id="rg-phone" type="tel" placeholder="WhatsApp / Mobile (e.g. +94 77 362 2211)"/>
-      <select class="auth-input" id="rg-nat">
-        <option value="">Nationality…</option>
+      <input class="auth-input" id="rg-email" type="email" placeholder="Email address *" autocomplete="email" required/>
+      <input class="auth-input" id="rg-phone" type="tel" placeholder="WhatsApp / Mobile * (e.g. +94 77 362 2211)" required/>
+      <select class="auth-input" id="rg-nat" required>
+        <option value="">Nationality… *</option>
         <option>Sri Lankan</option>
         <option>Australian</option><option>British</option><option>Canadian</option>
         <option>Chinese</option><option>French</option><option>German</option>
@@ -472,13 +472,23 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
         <option>Russian</option><option>American</option>
         <option>Other — Please specify below</option>
       </select>
-      <input class="auth-input" id="rg-idnum" type="text" placeholder="NIC / Passport Number"/>
-      <input class="auth-input" id="rg-pass" type="password" placeholder="Create a password (min 8 characters)" autocomplete="new-password"/>
-      <input class="auth-input" id="rg-pass2" type="password" placeholder="Confirm password" autocomplete="new-password" onkeydown="if(event.key==='Enter')doRegister()"/>
+      <input class="auth-input" id="rg-idnum" type="text" placeholder="NIC / Passport Number *" required/>
+      <input class="auth-input" id="rg-pass" type="password" placeholder="Create a password * (min 8 characters)" autocomplete="new-password" required/>
+      <input class="auth-input" id="rg-pass2" type="password" placeholder="Confirm password *" autocomplete="new-password" required onkeydown="if(event.key==='Enter')doRegister()"/>
       <button class="auth-btn" id="rg-btn" onclick="doRegister()">Create Account</button>
       <div class="auth-note">By registering you agree to our terms of service. Your information is kept strictly confidential and protected by attorney-client privilege standards.</div>
     </div>
-  </div>
+
+    <!-- OTP VERIFICATION -->
+    <div class="auth-body" id="auth-otp" style="display:none;">
+      <div class="auth-err" id="otp-err"></div>
+      <div class="auth-ok" id="otp-ok"></div>
+      <div style="font-size:0.8rem;color:var(--text3);line-height:1.7;margin-bottom:1rem;">Your account has been created. A 6-digit verification code has been sent to you via WhatsApp or email by our team. Please enter it below to activate your account.</div>
+      <input class="auth-input" id="otp-email" type="email" placeholder="Your email address" readonly style="background:var(--bg3);color:var(--text3);"/>
+      <input class="auth-input" id="otp-code" type="text" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:0.3em;font-size:1.1rem;text-align:center;" onkeydown="if(event.key==='Enter')doVerifyOtp()"/>
+      <button class="auth-btn" id="otp-btn" onclick="doVerifyOtp()">Verify & Activate Account</button>
+      <div style="font-size:0.72rem;color:var(--text4);margin-top:0.5rem;text-align:center;">Didn't receive a code? Contact us on WhatsApp: +94 77 362 2211</div>
+    </div>
 </div>
 
 <div id="disclaimer">
@@ -1118,8 +1128,6 @@ async function doRegister() {
   btn.textContent = 'Creating account…'; btn.disabled = true;
 
   const hash = await sha256(pass);
-  // Generate a simple verification token
-  const token = Math.random().toString(36).slice(2) + Date.now().toString(36);
 
   try {
     const res = await fetch(WU, {
@@ -1127,24 +1135,61 @@ async function doRegister() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: 'register',
-        email, hash, token,
-        profile: { firstName:fn, lastName:ln, email, phone, nationality:nat, idNumber:idnum, verified:false, createdAt: new Date().toISOString() }
+        email, hash,
+        profile: { firstName:fn, lastName:ln, email, phone, nationality:nat, idNumber:idnum, verified:true, createdAt: new Date().toISOString() }
       })
     });
     const d = await res.json();
     if (d.error) {
       authErr('reg-err', d.error);
     } else {
-      authOk('reg-ok', '✓ Account created! A verification email has been sent to ' + email + '. Click the link in the email then sign in.');
+      // Show OTP verification screen
+      document.getElementById('auth-register').style.display = 'none';
+      document.getElementById('auth-otp').style.display = 'block';
+      document.getElementById('otp-email').value = email;
+      authOk('otp-ok', '✓ Account created! We will send you a 6-digit code shortly via WhatsApp or email.');
       ['rg-fname','rg-lname','rg-email','rg-phone','rg-idnum','rg-pass','rg-pass2'].forEach(id => document.getElementById(id).value = '');
       document.getElementById('rg-nat').value = '';
-      setTimeout(() => authTab('login'), 4000);
     }
   } catch(e) {
     authErr('reg-err', 'Connection error. Please try again.');
   }
   btn.textContent = 'Create Account'; btn.disabled = false;
 }
+
+async function doVerifyOtp() {
+  authClear('otp');
+  const email = document.getElementById('otp-email').value.trim().toLowerCase();
+  const otp   = document.getElementById('otp-code').value.trim();
+  if (!otp) return authErr('otp-err', 'Please enter the 6-digit code.');
+  if (otp.length !== 6) return authErr('otp-err', 'Code must be exactly 6 digits.');
+
+  const btn = document.getElementById('otp-btn');
+  btn.textContent = 'Verifying…'; btn.disabled = true;
+
+  try {
+    const res = await fetch(WU, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'verifyOtp', email, otp })
+    });
+    const d = await res.json();
+    if (d.error) {
+      authErr('otp-err', d.error);
+    } else {
+      authOk('otp-ok', '✓ Account verified! You can now sign in.');
+      setTimeout(() => {
+        document.getElementById('auth-otp').style.display = 'none';
+        authTab('login');
+        document.getElementById('li-email').value = email;
+      }, 2000);
+    }
+  } catch(e) {
+    authErr('otp-err', 'Connection error. Please try again.');
+  }
+  btn.textContent = 'Verify & Activate Account'; btn.disabled = false;
+}
+
 
 async function doLogin() {
   authClear('login');
@@ -1166,7 +1211,7 @@ async function doLogin() {
     if (d.error) {
       authErr('login-err', d.error);
     } else if (!d.verified) {
-      authErr('login-err', 'Please verify your email address first. Check your inbox for the verification link.');
+      authErr('login-err', 'Account not yet active. Please contact support.');
     } else {
       currentUser = d.profile;
       sessionStorage.setItem('lexlk_user', JSON.stringify(currentUser));
