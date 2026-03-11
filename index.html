@@ -493,8 +493,9 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
       <input class="auth-input" id="otp-code" type="text" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:0.3em;font-size:1.1rem;text-align:center;" onkeydown="if(event.key==='Enter')doVerifyOtp()"/>
       <button class="auth-btn" id="otp-btn" onclick="doVerifyOtp()">Verify & Activate Account</button>
       <div style="font-size:0.72rem;color:var(--text4);margin-top:0.5rem;text-align:center;">Didn't receive a code? Contact us on WhatsApp: +94 77 362 2211</div>
-    </div>
-</div>
+    </div><!-- end auth-otp -->
+  </div><!-- end auth-box -->
+</div><!-- end auth-screen -->
 
 <div id="disclaimer">
   <div class="disc-wrap">
@@ -1253,6 +1254,7 @@ function onLoginSuccess() {
     sessionStorage.setItem('lexlk_disc', '1');
     document.getElementById('app').classList.add('on');
     renderLawyers();
+    showPage('home');
   }
 }
 
@@ -1284,15 +1286,7 @@ document.addEventListener('click', e => {
   }
 });
 
-// Gate protected pages — redirect to home if not logged in
-const _origShowPage = showPage;
-function showPage(n) {
-  if (PROTECTED.includes(n) && !currentUser) {
-    toast('Please sign in to access this feature.');
-    return;
-  }
-  _origShowPage(n);
-}
+// Gate protected pages — merged into navigation showPage below
 
 // On page load — restore session if exists
 window.addEventListener('DOMContentLoaded', () => {
@@ -1318,6 +1312,7 @@ function startApp() {
   document.getElementById('disclaimer').classList.remove('visible');
   document.getElementById('app').classList.add('on');
   renderLawyers();
+  showPage('home');
 }
 
 // ─────────────────────────────────────────────────────────────
@@ -1339,6 +1334,10 @@ function closeMobileMenu() {
   h.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
 }
 function showPage(n) {
+  if (PROTECTED.includes(n) && !currentUser) {
+    toast('Please sign in to access this feature.');
+    return;
+  }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('on'));
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   const pg = document.getElementById('page-' + n);
