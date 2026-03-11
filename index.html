@@ -456,6 +456,7 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
       <input class="auth-input" id="li-pass" type="password" placeholder="Password" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()"/>
       <button class="auth-btn" id="li-btn" onclick="doLogin()">Sign In to LexLK</button>
       <div class="auth-note">Don't have an account? Click <strong>Create Account</strong> above.</div>
+      <div style="text-align:center;margin-top:0.5rem;"><span style="font-size:0.75rem;color:var(--gold2);cursor:pointer;text-decoration:underline;" onclick="showResendOtp()">Registered but didn't receive your activation code?</span></div>
     </div>
 
     <!-- REGISTER -->
@@ -488,12 +489,22 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
     <div class="auth-body" id="auth-otp" style="display:none;">
       <div class="auth-err" id="otp-err"></div>
       <div class="auth-ok" id="otp-ok"></div>
-      <div style="font-size:0.8rem;color:var(--text3);line-height:1.7;margin-bottom:1rem;">Your account has been created. A 6-digit verification code has been sent to you via WhatsApp or email by our team. Please enter it below to activate your account.</div>
+      <div style="font-size:0.8rem;color:var(--text3);line-height:1.7;margin-bottom:1rem;">Your account has been created. A 6-digit verification code will be sent to you via WhatsApp or email by our team. Please enter it below to activate your account.</div>
       <input class="auth-input" id="otp-email" type="email" placeholder="Your email address" readonly style="background:var(--bg3);color:var(--text3);"/>
       <input class="auth-input" id="otp-code" type="text" placeholder="Enter 6-digit code" maxlength="6" style="letter-spacing:0.3em;font-size:1.1rem;text-align:center;" onkeydown="if(event.key==='Enter')doVerifyOtp()"/>
       <button class="auth-btn" id="otp-btn" onclick="doVerifyOtp()">Verify & Activate Account</button>
-      <div style="font-size:0.72rem;color:var(--text4);margin-top:0.5rem;text-align:center;">Didn't receive a code? Contact us on WhatsApp: +94 77 362 2211</div>
-    </div><!-- end auth-otp -->
+      <div style="text-align:center;margin-top:0.5rem;"><span style="font-size:0.75rem;color:var(--gold2);cursor:pointer;text-decoration:underline;" id="resend-btn" onclick="doResendOtp()">Resend activation code</span></div>
+    </div>
+
+    <!-- RESEND OTP -->
+    <div class="auth-body" id="auth-resend" style="display:none;">
+      <div class="auth-err" id="resend-err"></div>
+      <div class="auth-ok" id="resend-ok"></div>
+      <div style="font-size:0.8rem;color:var(--text3);line-height:1.7;margin-bottom:1rem;">Enter your registered email address and we will resend your activation code via WhatsApp or email.</div>
+      <input class="auth-input" id="resend-email" type="email" placeholder="Your email address" autocomplete="email"/>
+      <button class="auth-btn" id="resend-submit-btn" onclick="doResendOtp()">Request New Code</button>
+      <div style="text-align:center;margin-top:0.5rem;"><span style="font-size:0.75rem;color:var(--text4);cursor:pointer;text-decoration:underline;" onclick="authTab('login')">← Back to Sign In</span></div>
+    </div>
   </div><!-- end auth-box -->
 </div><!-- end auth-screen -->
 
@@ -737,7 +748,7 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
             <div class="dropzone" id="dz" onclick="document.getElementById('fi').click()" ondragover="dzO(event)" ondragleave="dzL()" ondrop="dzD(event)">
               <div class="dz-icon">⚖</div>
               <div class="dz-text">Drop your document here or click to select</div>
-              <div class="dz-sub">Text files (.txt) — Copy text from PDF/image and save as .txt</div>
+              <div class="dz-sub">.txt only · Copy text from PDF/Word and save as .txt</div>
             </div>
             <input type="file" id="fi" accept=".txt,text/plain" onchange="loadFile(this.files[0])"/>
             <div class="file-card" id="fc"><div class="fc-name" id="fcn"></div><div class="fc-size" id="fcs"></div></div>
@@ -1090,11 +1101,49 @@ async function sha256(str) {
 function authTab(tab) {
   document.getElementById('auth-login').style.display    = tab === 'login'    ? 'flex' : 'none';
   document.getElementById('auth-register').style.display = tab === 'register' ? 'flex' : 'none';
+  document.getElementById('auth-otp').style.display      = tab === 'otp'      ? 'flex' : 'none';
+  document.getElementById('auth-resend').style.display   = tab === 'resend'   ? 'flex' : 'none';
   document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
   document.getElementById('tab-register').classList.toggle('active', tab === 'register');
-  ['login-err','login-ok','reg-err','reg-ok'].forEach(id => {
-    document.getElementById(id).classList.remove('on');
+  ['login-err','login-ok','reg-err','reg-ok','otp-err','otp-ok','resend-err','resend-ok'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.classList.remove('on');
   });
+}
+
+function showResendOtp() {
+  authTab('resend');
+  // Pre-fill email from login field if available
+  const loginEmail = document.getElementById('li-email').value.trim();
+  if (loginEmail) document.getElementById('resend-email').value = loginEmail;
+}
+
+async function doResendOtp() {
+  authClear('resend');
+  const email = document.getElementById('resend-email').value.trim().toLowerCase();
+  if (!email) return authErr('resend-err', 'Please enter your email address.');
+  const btn = document.getElementById('resend-submit-btn');
+  btn.textContent = 'Sending…'; btn.disabled = true;
+  try {
+    const res = await fetch(WU, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'resendOtp', email })
+    });
+    const d = await res.json();
+    if (d.error) {
+      authErr('resend-err', d.error);
+    } else {
+      authOk('resend-ok', '✓ A new code has been requested. Our team will send it to you shortly via WhatsApp or email.');
+      // Switch to OTP entry screen after 2s
+      setTimeout(() => {
+        document.getElementById('otp-email').value = email;
+        authTab('otp');
+      }, 2500);
+    }
+  } catch(e) {
+    authErr('resend-err', 'Connection error. Please try again.');
+  }
+  btn.textContent = 'Request New Code'; btn.disabled = false;
 }
 
 function authErr(id, msg) {
@@ -1356,18 +1405,29 @@ function dzD(e) { e.preventDefault(); dzL(); loadFile(e.dataTransfer.files[0]); 
 
 function loadFile(f) {
   if (!f) return;
+
+  // Block unsupported formats
+  if (f.type === 'application/pdf' || f.type.startsWith('image/')) {
+    document.getElementById('fi').value = '';
+    const fmt = f.type === 'application/pdf' ? 'PDF' : 'image';
+    // Show warning in the drop zone area
+    const dz = document.getElementById('dz');
+    dz.style.border = '2px solid #c0392b';
+    const existingWarn = document.getElementById('fmt-warn');
+    if (existingWarn) existingWarn.remove();
+    const warn = document.createElement('div');
+    warn.id = 'fmt-warn';
+    warn.style.cssText = 'color:#c0392b;font-size:0.8rem;margin-top:0.75rem;line-height:1.6;text-align:center;padding:0 0.5rem;';
+    warn.innerHTML = `⚠ <strong>${fmt} files are not supported.</strong><br>Please either:<br>1. Copy the text from your ${fmt} and save as a <strong>.txt</strong> file<br>2. Or copy the text and paste it directly into the chat below`;
+    dz.appendChild(warn);
+    setTimeout(() => { dz.style.border = ''; if (warn.parentNode) warn.remove(); }, 6000);
+    return;
+  }
+
   fd = null; aM = [];
   const r = new FileReader();
-  if (f.type === 'application/pdf') {
-    r.onload = e => { fd = { type: 'pdf', mime: 'application/pdf', name: f.name, data: e.target.result.split(',')[1] }; };
-    r.readAsDataURL(f);
-  } else if (f.type.startsWith('image/')) {
-    r.onload = e => { fd = { type: 'image', mime: f.type, name: f.name, data: e.target.result.split(',')[1] }; };
-    r.readAsDataURL(f);
-  } else {
-    r.onload = e => { fd = { type: 'text', mime: 'text/plain', name: f.name, data: e.target.result }; };
-    r.readAsText(f);
-  }
+  r.onload = e => { fd = { type: 'text', mime: 'text/plain', name: f.name, data: e.target.result }; };
+  r.readAsText(f);
   document.getElementById('dz').style.display = 'none';
   document.getElementById('fc').classList.add('on');
   document.getElementById('fcn').textContent = '📄 ' + f.name;
@@ -1470,7 +1530,7 @@ async function doAnalyse() {
   const ce = document.getElementById('ce'); if (ce) ce.remove();
   const le = addL('cs');
   let msgs;
-  msgs = [{ role: 'user', content: 'Analyse this Sri Lankan legal document:\n\n' + fd.data }];
+  msgs = [{ role: 'user', content: 'The following is the full text of a Sri Lankan legal document. Analyse it according to your instructions:\n\n---\n\n' + fd.data + '\n\n---\n\nProvide your full structured analysis of the document above.' }];
 
   const r = await callWorker('analyse', msgs);
   aM = msgs.concat([{ role: 'assistant', content: r }]);
