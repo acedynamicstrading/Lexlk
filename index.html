@@ -990,6 +990,13 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
                 </div>
               </div>
               <div class="form-group"><div class="form-label">Additional Instructions (Optional)</div><textarea class="form-textarea" id="rd-notes" placeholder="Any additional information, special requirements or delivery instructions…" style="min-height:60px;"></textarea></div>
+              <div class="form-group">
+                <div class="form-label">Attach Supporting Document (Optional)</div>
+                <div style="border:1px dashed var(--gold-mid);border-radius:7px;padding:0.85rem;text-align:center;cursor:pointer;background:var(--bg3);" onclick="document.getElementById('rd-file').click()">
+                  <div id="rd-file-label" style="font-size:0.78rem;color:var(--text3);">📎 Click to attach a document (.txt, .jpg, .png, .pdf)</div>
+                </div>
+                <input type="file" id="rd-file" accept=".txt,.jpg,.jpeg,.png,.pdf" style="display:none;" onchange="rdFileSelected(this.files[0])"/>
+              </div>
               <div style="background:var(--gold-light);border:1px solid var(--gold-mid);border-radius:7px;padding:0.9rem;font-size:0.75rem;color:var(--text2);line-height:1.65;"><strong style="color:var(--gold);">Pricing &amp; Process:</strong> A fee quotation will be provided within 2–4 hours of submission, prior to any work commencing. No charges are applied without your prior written approval.</div>
               <button class="c-submit" id="reqdoc-submit-btn" onclick="submitDocRequest()" style="background:var(--green);">📋 Submit Document Request</button>
             </div>
@@ -1199,8 +1206,7 @@ async function doRegister() {
       authErr('reg-err', d.error);
     } else {
       // Show OTP verification screen
-      document.getElementById('auth-register').style.display = 'none';
-      document.getElementById('auth-otp').style.display = 'block';
+      authTab('otp');
       document.getElementById('otp-email').value = email;
       authOk('otp-ok', '✓ Account created! We will send you a 6-digit code shortly via WhatsApp or email.');
       ['rg-fname','rg-lname','rg-email','rg-phone','rg-idnum','rg-pass','rg-pass2'].forEach(id => document.getElementById(id).value = '');
@@ -1234,7 +1240,6 @@ async function doVerifyOtp() {
     } else {
       authOk('otp-ok', '✓ Account verified! You can now sign in.');
       setTimeout(() => {
-        document.getElementById('auth-otp').style.display = 'none';
         authTab('login');
         document.getElementById('li-email').value = email;
       }, 2000);
@@ -1807,6 +1812,20 @@ function selectCategory(cat, updateSelect = true) {
 }
 
 let rdUrgency = 'standard';
+let rdFile = null;
+
+function rdFileSelected(f) {
+  if (!f) return;
+  rdFile = null;
+  const r = new FileReader();
+  r.onload = e => {
+    rdFile = { name: f.name, mime: f.type || 'application/octet-stream', data: e.target.result.split(',')[1] };
+    document.getElementById('rd-file-label').textContent = '✓ ' + f.name;
+    document.getElementById('rd-file-label').style.color = 'var(--green)';
+  };
+  r.readAsDataURL(f);
+}
+
 function selUrgency(el, val) {
   document.querySelectorAll('#rd-urgency-opts .ts').forEach(s => s.classList.remove('active'));
   el.classList.add('active'); rdUrgency = val;
@@ -1826,20 +1845,34 @@ async function submitDocRequest() {
   if (!name || (!phone && !email) || !cat || !doctype || !details || !purpose) { toast('Please complete all required fields before submitting.'); return; }
   const btn = document.getElementById('reqdoc-submit-btn');
   btn.textContent = 'Submitting…'; btn.style.opacity = '0.6';
-  const result = await sendW3F({
-    subject: `📋 Document Request — ${doctype} · ${name}`,
-    name,
-    'Nationality': nat,
-    'WhatsApp': phone || '—',
-    'Email': email || '—',
-    'Category': cat,
-    'Document': doctype,
-    'Copies': copies,
-    'Purpose': purpose,
-    'Urgency': rdUrgency.charAt(0).toUpperCase() + rdUrgency.slice(1),
-    'Details': details,
-    'Additional Notes': notes || '—',
-    'Type': 'Legal Document Request'
+
+  // Upload file to Drive if attached
+  let driveLink = null;
+  if (rdFile) {
+    try {
+      const res = await fetch(WU, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'submitDocument',
+          clientName: name,
+          clientContact: phone,
+          clientEmail: email,
+          fileName: rdFile.name,
+          fileMime: rdFile.mime,
+          fileData: rdFile.data,
+          aiReport: `Document Request — ${doctype} — ${details}`
+        })
+      });
+      const rd = await res.json();
+      driveLink = rd.driveLink || null;
+    } catch(e) {}
+  }
+
+  const result = await postToWorker('docRequest', {
+    name, nationality: nat, phone, email, category: cat,
+    doctype, copies, purpose, urgency: rdUrgency, details, notes,
+    driveLink: driveLink || '—'
   });
   btn.textContent = '📋 Submit Document Request'; btn.style.opacity = '1';
   if (result.error) { toast('Error: ' + result.error); return; }
