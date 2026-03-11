@@ -25,9 +25,10 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 /* DISCLAIMER */
 #disclaimer{
   position:fixed;inset:0;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  z-index:999;padding:2rem;overflow-y:auto;
+  display:none;align-items:center;justify-content:center;
+  z-index:998;padding:2rem;overflow-y:auto;
 }
+#disclaimer.visible{display:flex;}
 .disc-wrap{max-width:580px;width:100%;}
 .disc-logo{text-align:center;margin-bottom:0.3rem;}
 .disc-logo-main{font-family:'Cormorant Garamond',serif;font-size:3.4rem;font-weight:400;color:var(--ink);}
@@ -65,8 +66,8 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 
 /* ====== HOME PAGE ====== */
 .home-page{overflow-y:auto;}
-.hero{background:linear-gradient(135deg,#1a1208 0%,#2d2010 40%,#1a1a10 100%);padding:5rem 3rem 4rem;text-align:center;position:relative;overflow:hidden;z-index:1;}
-.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(184,146,42,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(184,146,42,0.08) 0%,transparent 50%);}
+.hero{background:linear-gradient(135deg,#1a1208 0%,#2d2010 40%,#1a1a10 100%);padding:5rem 3rem 4rem;text-align:center;position:relative;z-index:1;}
+.hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(184,146,42,0.15) 0%,transparent 60%),radial-gradient(ellipse at 70% 30%,rgba(184,146,42,0.08) 0%,transparent 50%);pointer-events:none;}
 .hero-inner{position:relative;max-width:800px;margin:0 auto;z-index:2;}
 .hero-eyebrow{font-size:0.65rem;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold2);margin-bottom:1.2rem;font-weight:500;}
 .hero-title{font-family:'Cormorant Garamond',serif;font-size:3.8rem;font-weight:400;color:#f5ede0;line-height:1.1;margin-bottom:1.2rem;}
@@ -399,9 +400,13 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
   #lang-bar{padding:0.38rem 0.8rem;gap:0.3rem;}.lang-btn{font-size:0.62rem;padding:0.18rem 0.4rem;}
 }
 /* ── AUTH SCREEN ─────────────────────────────────────────── */
-#auth-screen{position:fixed;inset:0;background:var(--bg);z-index:900;display:flex;align-items:center;justify-content:center;padding:1rem;}
+#auth-screen{position:fixed;inset:0;background:var(--bg);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1rem;}
 #auth-screen.hidden{display:none;}
-.auth-box{background:var(--bg2);border:1px solid var(--bg4);border-radius:12px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12);}
+.auth-box{background:var(--bg2);border:1px solid var(--bg4);border-radius:12px;width:100%;max-width:420px;overflow:hidden;box-shadow:0 8px 40px rgba(0,0,0,0.12);margin:0 auto;}
+@media(max-width:480px){
+  #auth-screen{padding:0.5rem;align-items:flex-start;padding-top:2rem;}
+  .auth-box{max-width:100%;border-radius:10px;}
+}
 .auth-header{background:var(--ink);padding:1.5rem 1.75rem;}
 .auth-logo{font-family:'Cormorant Garamond',serif;font-size:1.6rem;font-weight:700;color:var(--gold2);letter-spacing:0.04em;margin-bottom:0.25rem;}
 .auth-tagline{font-size:0.65rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.45);}
@@ -1074,7 +1079,7 @@ let fd = null, aM = [], qM = [], aL = false, qL = false, dL = false;
 let currentUser = null;
 
 // Pages that require login (all except home)
-const PROTECTED = ['analyse','draft','ask','lawyers','reqdoc','consult'];
+const PROTECTED = ['home','analyse','draft','ask','lawyers','reqdoc','consult'];
 
 async function sha256(str) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
@@ -1242,7 +1247,7 @@ function onLoginSuccess() {
      <div>🪪 ${currentUser.idNumber}</div>`;
   // Show disclaimer if not yet accepted this session
   if (!sessionStorage.getItem('lexlk_disc')) {
-    document.getElementById('disclaimer').style.display = 'flex';
+    document.getElementById('disclaimer').classList.add('visible');
   } else {
     document.getElementById('app').classList.add('on');
     renderLawyers();
@@ -1256,7 +1261,7 @@ function doLogout() {
   document.getElementById('usr-modal').style.display = 'none';
   document.getElementById('usr-badge').classList.remove('on');
   document.getElementById('app').classList.remove('on');
-  document.getElementById('disclaimer').style.display = 'none';
+  document.getElementById('disclaimer').classList.remove('visible');
   document.getElementById('auth-screen').classList.remove('hidden');
   authTab('login');
   document.getElementById('li-email').value = '';
@@ -1296,14 +1301,19 @@ window.addEventListener('DOMContentLoaded', () => {
       onLoginSuccess();
     } catch(e) {
       sessionStorage.removeItem('lexlk_user');
+      document.getElementById('auth-screen').classList.remove('hidden');
     }
+  } else {
+    // No session — force auth screen, hide app completely
+    document.getElementById('auth-screen').classList.remove('hidden');
+    document.getElementById('app').classList.remove('on');
   }
 });
 
 // ─────────────────────────────────────────────────────────────
 function startApp() {
   sessionStorage.setItem('lexlk_disc', '1');
-  document.getElementById('disclaimer').style.display = 'none';
+  document.getElementById('disclaimer').classList.remove('visible');
   document.getElementById('app').classList.add('on');
   renderLawyers();
 }
