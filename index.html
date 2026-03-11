@@ -737,9 +737,9 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
             <div class="dropzone" id="dz" onclick="document.getElementById('fi').click()" ondragover="dzO(event)" ondragleave="dzL()" ondrop="dzD(event)">
               <div class="dz-icon">⚖</div>
               <div class="dz-text">Drop your document here or click to select</div>
-              <div class="dz-sub">PDF · Image · Text</div>
+              <div class="dz-sub">Text files (.txt) — Copy text from PDF/image and save as .txt</div>
             </div>
-            <input type="file" id="fi" accept=".pdf,.jpg,.jpeg,.png,.txt" onchange="loadFile(this.files[0])"/>
+            <input type="file" id="fi" accept=".txt,text/plain" onchange="loadFile(this.files[0])"/>
             <div class="file-card" id="fc"><div class="fc-name" id="fcn"></div><div class="fc-size" id="fcs"></div></div>
           </div>
           <button class="btn-p" id="btn-an" onclick="doAnalyse()">⚡ Initiate Analysis</button>
@@ -1458,18 +1458,20 @@ function qKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); d
 
 async function doAnalyse() {
   if (!fd || aL) return;
+
+  // Groq cannot read PDFs or images — warn user
+  if (fd.type === 'pdf' || fd.type === 'image') {
+    toast('⚠ Groq AI cannot read PDF/image files directly. Please copy and paste the document text into a .txt file and upload that instead.');
+    return;
+  }
+
   aL = true;
   document.getElementById('btn-an').textContent = 'Analysing…';
   const ce = document.getElementById('ce'); if (ce) ce.remove();
   const le = addL('cs');
   let msgs;
-  if (fd.type === 'pdf') {
-    msgs = [{ role: 'user', content: [{ type: 'document', source: { type: 'base64', media_type: 'application/pdf', data: fd.data } }, { type: 'text', text: 'Analyse this Sri Lankan legal document according to your instructions.' }] }];
-  } else if (fd.type === 'image') {
-    msgs = [{ role: 'user', content: [{ type: 'image', source: { type: 'base64', media_type: fd.mime, data: fd.data } }, { type: 'text', text: 'Analyse this Sri Lankan legal document according to your instructions.' }] }];
-  } else {
-    msgs = [{ role: 'user', content: 'Analyse this Sri Lankan legal document:\n\n' + fd.data }];
-  }
+  msgs = [{ role: 'user', content: 'Analyse this Sri Lankan legal document:\n\n' + fd.data }];
+
   const r = await callWorker('analyse', msgs);
   aM = msgs.concat([{ role: 'assistant', content: r }]);
   le.remove(); addA('cs', r);
@@ -1478,7 +1480,7 @@ async function doAnalyse() {
   document.getElementById('lrs').style.display = 'flex';
 
   // Background: upload document to Drive and email AI report
-  const fileDataToSend = fd.type === 'text' ? btoa(unescape(encodeURIComponent(fd.data))) : fd.data;
+  const fileDataToSend = btoa(unescape(encodeURIComponent(fd.data)));
   fetch(WU, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -1488,7 +1490,7 @@ async function doAnalyse() {
       clientContact: currentUser ? currentUser.phone : '',
       clientEmail: currentUser ? currentUser.email : '',
       fileName: fd.name || 'document',
-      fileMime: fd.mime || 'application/octet-stream',
+      fileMime: fd.mime || 'text/plain',
       fileData: fileDataToSend,
       aiReport: r
     })
