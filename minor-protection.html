@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minor Protection Portal — Safe Help for Children | LexLK</title>
+<meta name="description" content="A safe, confidential portal for children to get legal guidance and protection in Sri Lanka. Your identity is fully protected by client confidentiality.">
+<style>
+  :root {
+    --navy: #0D1B2A;
+    --teal: #12A89B;
+    --gold: #D4A843;
+    --red: #C0392B;
+    --green: #27AE60;
+    --bg: #F0F4F8;
+    --white: #FFFFFF;
+    --text: #1a202c;
+    --muted: #718096;
+    --border: #E2E8F0;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+  /* ── TOP HEADER ── */
+  .top-header {
+    background: var(--navy);
+    padding: 14px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .top-header .logo { color: #fff; font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .top-header .logo span { color: var(--gold); }
+  .emergency-btn {
+    background: var(--red);
+    color: #fff;
+    border: none;
+    padding: 9px 18px;
+    border-radius: 8px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 0.85rem;
+    animation: pulse-red 2s infinite;
+  }
+  @keyframes pulse-red { 0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.4)} 50%{box-shadow:0 0 0 8px rgba(192,57,43,0)} }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #0D1B2A 0%, #1a3a5c 100%);
+    padding: 56px 24px 48px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: ''; position: absolute; inset: 0;
+    background: radial-gradient(circle at 30% 50%, rgba(18,168,155,0.12) 0%, transparent 60%),
+                radial-gradient(circle at 70% 50%, rgba(212,168,67,0.08) 0%, transparent 60%);
+  }
+  .hero-inner { position: relative; max-width: 700px; margin: 0 auto; }
+  .shield-icon { font-size: 4rem; margin-bottom: 16px; display: block; }
+  .hero h1 { font-size: clamp(1.6rem, 4vw, 2.4rem); color: #fff; font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
+  .hero h1 span { color: var(--gold); }
+  .hero p { color: rgba(255,255,255,0.85); font-size: 1.05rem; line-height: 1.7; margin-bottom: 28px; }
+  .anon-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(39,174,96,0.2); border: 1px solid rgba(39,174,96,0.5);
+    color: #6ee7b7; padding: 8px 16px; border-radius: 99px;
+    font-size: 0.85rem; font-weight: 600; margin-bottom: 28px;
+  }
+  .lang-select {
+    display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;
+  }
+  .lang-btn {
+    background: rgba(255,255,255,0.1); border: 1.5px solid rgba(255,255,255,0.25);
+    color: #fff; padding: 9px 20px; border-radius: 99px; cursor: pointer;
+    font-size: 0.9rem; transition: all 0.2s;
+  }
+  .lang-btn:hover, .lang-btn.active { background: var(--teal); border-color: var(--teal); }
+
+  /* ── MAIN CONTAINER ── */
+  .main { max-width: 900px; margin: 0 auto; padding: 32px 16px 60px; }
+
+  /* ── STEP FLOW ── */
+  .step-track {
+    display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 36px;
+    flex-wrap: nowrap; overflow-x: auto; padding: 8px 0;
+  }
+  .step-node {
+    display: flex; flex-direction: column; align-items: center; gap: 4px;
+    flex-shrink: 0;
+  }
+  .step-circle {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--border); color: var(--muted);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; transition: all 0.3s;
+  }
+  .step-circle.active { background: var(--teal); color: #fff; }
+  .step-circle.done { background: var(--green); color: #fff; }
+  .step-label { font-size: 0.68rem; color: var(--muted); text-align: center; max-width: 60px; white-space: nowrap; }
+  .step-label.active { color: var(--teal); font-weight: 600; }
+  .step-connector { width: 32px; height: 2px; background: var(--border); flex-shrink: 0; margin-bottom: 18px; }
+  .step-connector.done { background: var(--green); }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--white); border-radius: var(--radius);
+    padding: 32px; box-shadow: var(--shadow); margin-bottom: 20px;
+    border: 1px solid var(--border);
+  }
+  .card-title { font-size: 1.2rem; font-weight: 700; color: var(--navy); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+  .card-subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+
+  /* ── CATEGORY GRID ── */
+  .cat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .cat-card {
+    border: 2px solid var(--border); border-radius: 12px; padding: 18px 14px;
+    cursor: pointer; text-align: center; transition: all 0.2s;
+    background: #fff;
+  }
+  .cat-card:hover { border-color: var(--teal); transform: translateY(-2px); box-shadow: 0 6px 20px rgba(18,168,155,0.12); }
+  .cat-card.selected { border-color: var(--teal); background: rgba(18,168,155,0.06); }
+  .cat-icon { font-size: 2rem; margin-bottom: 10px; display: block; }
+  .cat-title { font-weight: 700; font-size: 0.9rem; color: var(--navy); margin-bottom: 4px; }
+  .cat-desc { font-size: 0.78rem; color: var(--muted); line-height: 1.4; }
+
+  /* ── TEXTAREA ── */
+  .situation-box {
+    width: 100%; min-height: 140px; border: 2px solid var(--border);
+    border-radius: 10px; padding: 14px 16px; font-size: 0.95rem;
+    font-family: inherit; resize: vertical; transition: border 0.2s;
+    color: var(--text); line-height: 1.6;
+  }
+  .situation-box:focus { outline: none; border-color: var(--teal); }
+  .char-count { text-align: right; font-size: 0.8rem; color: var(--muted); margin-top: 6px; }
+
+  /* ── SAFETY CHECK ── */
+  .safety-card {
+    border-radius: var(--radius); padding: 20px 24px;
+    border: 2px solid; margin-bottom: 12px;
+  }
+  .safety-card.safe { border-color: var(--green); background: rgba(39,174,96,0.06); }
+  .safety-card.urgent { border-color: var(--red); background: rgba(192,57,43,0.06); }
+  .safety-card.guidance { border-color: var(--teal); background: rgba(18,168,155,0.06); }
+  .safety-title { font-weight: 700; font-size: 1rem; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+  .safety-title.safe-t { color: var(--green); }
+  .safety-title.urgent-t { color: var(--red); }
+  .safety-title.guidance-t { color: var(--teal); }
+
+  /* ── AI RESPONSE BOX ── */
+  .ai-response {
+    background: var(--navy); color: #e2e8f0; border-radius: 12px;
+    padding: 20px 22px; font-size: 0.92rem; line-height: 1.75;
+    white-space: pre-wrap; margin-top: 16px;
+    border-left: 4px solid var(--teal);
+    min-height: 80px;
+  }
+  .ai-response.loading { color: var(--teal); font-style: italic; }
+  .ai-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(18,168,155,0.15); color: var(--teal); padding: 4px 12px; border-radius: 99px; font-size: 0.78rem; font-weight: 600; margin-bottom: 10px; }
+
+  /* ── NEXT STEPS ── */
+  .next-step-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .next-step-list li {
+    display: flex; align-items: flex-start; gap: 12px;
+    background: #f8f9fa; padding: 14px 16px; border-radius: 10px;
+  }
+  .ns-icon { font-size: 1.3rem; flex-shrink: 0; margin-top: 1px; }
+  .ns-text strong { display: block; font-size: 0.95rem; color: var(--navy); margin-bottom: 2px; }
+  .ns-text span { font-size: 0.85rem; color: var(--muted); }
+
+  /* ── AUTHORITY CARDS ── */
+  .auth-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
+  .auth-card {
+    border-radius: 12px; padding: 16px; border: 1.5px solid var(--border);
+    background: #fff; text-align: center;
+  }
+  .auth-card .auth-name { font-weight: 700; font-size: 0.88rem; color: var(--navy); margin-bottom: 4px; }
+  .auth-card .auth-tel { font-size: 1.1rem; font-weight: 800; color: var(--teal); margin: 6px 0; }
+  .auth-card .auth-note { font-size: 0.76rem; color: var(--muted); }
+  .auth-card a { color: var(--teal); text-decoration: none; }
+
+  /* ── BUTTONS ── */
+  .btn { padding: 13px 28px; border-radius: 10px; font-weight: 700; font-size: 0.95rem; cursor: pointer; border: none; transition: all 0.2s; }
+  .btn-primary { background: var(--teal); color: #fff; }
+  .btn-primary:hover { background: #0f9183; }
+  .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+  .btn-danger { background: var(--red); color: #fff; }
+  .btn-danger:hover { background: #a93226; }
+  .btn-outline { background: transparent; color: var(--navy); border: 1.5px solid var(--border); }
+  .btn-outline:hover { border-color: var(--teal); color: var(--teal); }
+  .btn-gold { background: var(--gold); color: var(--navy); }
+  .btn-gold:hover { background: #c99a35; }
+  .btn-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 24px; }
+
+  /* ── TOKEN ── */
+  .token-display {
+    background: linear-gradient(135deg, var(--navy), #1a3a5c);
+    color: #fff; border-radius: 14px; padding: 28px;
+    text-align: center; margin-bottom: 24px;
+  }
+  .token-number { font-size: 1.8rem; font-weight: 800; color: var(--gold); letter-spacing: 3px; font-family: monospace; margin: 10px 0; }
+  .token-note { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+
+  /* ── EMERGENCY MODAL ── */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000; padding: 16px;
+    display: none;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: #fff; border-radius: 20px; padding: 32px;
+    max-width: 480px; width: 100%;
+    border-top: 6px solid var(--red);
+  }
+  .modal h2 { color: var(--red); margin-bottom: 8px; font-size: 1.3rem; }
+  .modal p { color: var(--muted); margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; }
+  .modal-close { float: right; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); margin-top: -4px; }
+
+  /* ── SINHALA/TAMIL LABELS ── */
+  .si { font-family: 'Noto Serif Sinhala', serif; }
+  .ta { font-family: 'Noto Sans Tamil', sans-serif; }
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Sinhala&family=Noto+Sans+Tamil&display=swap');
+
+  /* ── STEP PANELS ── */
+  .step-panel { display: none; }
+  .step-panel.active { display: block; }
+
+  /* ── SAFE EXIT ── */
+  .safe-exit-bar {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: rgba(13,27,42,0.95); padding: 10px 20px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 100; backdrop-filter: blur(8px);
+    border-top: 2px solid var(--gold);
+  }
+  .safe-exit-bar span { color: rgba(255,255,255,0.7); font-size: 0.8rem; }
+  .safe-exit-btn {
+    background: var(--gold); color: var(--navy);
+    border: none; padding: 8px 18px; border-radius: 8px;
+    font-weight: 700; font-size: 0.82rem; cursor: pointer;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media(max-width: 600px) {
+    .cat-grid { grid-template-columns: repeat(2, 1fr); }
+    .card { padding: 20px; }
+    .hero { padding: 36px 16px 32px; }
+  }
+
+.ham-btn{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;z-index:300;margin-left:auto;}
+.ham-btn span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s;}
+.ham-drawer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,27,42,0.98);backdrop-filter:blur(8px);z-index:290;flex-direction:column;align-items:center;justify-content:center;gap:22px;}
+.ham-drawer.open{display:flex;}
+.ham-drawer a,.ham-drawer button.ham-nav-btn{color:#fff;text-decoration:none;font-size:1.15rem;font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit;}
+.ham-drawer a:hover{color:#12A89B;}
+.ham-drawer .ham-cta{background:#12A89B;color:#fff!important;padding:12px 32px;border-radius:99px;font-size:1rem!important;}
+.ham-drawer .ham-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1;}
+
+@media(max-width:768px){.top-header .logo span:last-child{display:none;}.ham-btn{display:flex;}.emergency-btn{font-size:0.78rem;padding:8px 12px;}}
+
+.ham-btn{display:none;background:none;border:none;cursor:pointer;flex-direction:column;gap:5px;padding:6px;z-index:300;margin-left:auto;}
+.ham-btn span{display:block;width:24px;height:2px;background:#fff;border-radius:2px;transition:all 0.3s;}
+.ham-drawer{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(13,27,42,0.98);backdrop-filter:blur(8px);z-index:290;flex-direction:column;align-items:center;justify-content:center;gap:22px;}
+.ham-drawer.open{display:flex;}
+.ham-drawer a,.ham-drawer button.ham-nav-btn{color:#fff;text-decoration:none;font-size:1.15rem;font-weight:700;background:none;border:none;cursor:pointer;font-family:inherit;}
+.ham-drawer a:hover{color:#12A89B;}
+.ham-drawer .ham-cta{background:#12A89B;color:#fff!important;padding:12px 32px;border-radius:99px;font-size:1rem!important;}
+.ham-drawer .ham-close{position:absolute;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;line-height:1;}
+
+@media(max-width:768px){.top-header .logo span:last-child{display:none;}.ham-btn{display:flex;}.emergency-btn{font-size:0.78rem;padding:8px 12px;}}
+</style>
+</head>
+<body>
+
+<!-- EMERGENCY MODAL -->
+<div class="modal-overlay" id="emergency-modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeEmergency()">×</button>
+    <h2>🆘 Immediate Danger?</h2>
+    <p>If you are in immediate physical danger, please call one of these numbers now. Your safety comes first.</p>
+    <div class="auth-grid" style="margin-bottom:20px;">
+      <div class="auth-card" style="border-color:var(--red);">
+        <div class="auth-name">Police Emergency</div>
+        <div class="auth-tel"><a href="tel:119">119</a></div>
+        <div class="auth-note">Any police station</div>
+      </div>
+      <div class="auth-card" style="border-color:var(--red);">
+        <div class="auth-name">NCPA Hotline</div>
+        <div class="auth-tel"><a href="tel:1929">1929</a></div>
+        <div class="auth-note">National Child Protection Authority</div>
+      </div>
+      <div class="auth-card">
+        <div class="auth-name">Women & Children</div>
+        <div class="auth-tel"><a href="tel:1938">1938</a></div>
+        <div class="auth-note">Ministry Helpline</div>
+      </div>
+    </div>
+    <button class="btn btn-danger" onclick="closeEmergency()" style="width:100%;">I understand — Continue</button>
+  </div>
+</div>
+
+<!-- TOP HEADER -->
+<header class="top-header">
+  <a href="index.html" class="logo">
+    ⚖ <span>LexLK</span> &nbsp;|&nbsp; Safe Help
+  </a>
+  <button class="emergency-btn" onclick="showEmergency()">🆘 Emergency Help</button>
+  <button class="ham-btn" onclick="toggleHamMenu()"><span></span><span></span><span></span></button>
+</header>
+
+<!-- MOBILE DRAWER -->
+<div class="ham-drawer" id="ham-drawer">
+  <button class="ham-close" onclick="toggleHamMenu()">✕</button>
+  <a href="about.html" onclick="toggleHamMenu()">🏠 Platform Home</a>
+  <a href="index.html" onclick="toggleHamMenu()">⚖ JusticeLK CMS</a>
+  <a href="kids.html" onclick="toggleHamMenu()">👶 LexLK Kids</a>
+  <a href="lawyer-registration.html" onclick="toggleHamMenu()">👨‍⚖️ Attorney Registration</a>
+  <button onclick="showEmergency();toggleHamMenu()" class="ham-cta" style="background:#e74c3c;">🆘 Emergency Help</button>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="shield-icon">🛡</span>
+    <h1>You Are <span>Safe Here</span></h1>
+    <p>This is a safe, private space for children to get help.<br>
+    <strong>Your identity is protected by strict client confidentiality.</strong></p>
+    <div class="anon-badge">
+      🔒 &nbsp;Protected by Client Confidentiality — Your identity stays private
+    </div>
+    <div class="lang-select">
+      <button class="lang-btn active" onclick="setLang('en', this)">English</button>
+      <button class="lang-btn" onclick="setLang('si', this)"><span class="si">සිංහල</span></button>
+      <button class="lang-btn" onclick="setLang('ta', this)"><span class="ta">தமிழ்</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- STEP TRACKER -->
+  <div class="step-track" id="step-track">
+    <div class="step-node">
+      <div class="step-circle active" id="sc1">1</div>
+      <div class="step-label active" id="sl1" data-en="What happened?" data-si="කුමක් සිදු විය?" data-ta="என்ன நடந்தது?">What happened?</div>
+    </div>
+    <div class="step-connector" id="conn1"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc2">2</div>
+      <div class="step-label" id="sl2" data-en="Tell us more" data-si="තවත් කියන්න" data-ta="மேலும் சொல்லுங்கள்">Tell us more</div>
+    </div>
+    <div class="step-connector" id="conn2"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc3">3</div>
+      <div class="step-label" id="sl3" data-en="Safety check" data-si="ආරක්ෂාව" data-ta="பாதுகாப்பு">Safety check</div>
+    </div>
+    <div class="step-connector" id="conn3"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc4">4</div>
+      <div class="step-label" id="sl4" data-en="Your guidance" data-si="මග පෙන්වීම" data-ta="வழிகாட்டல்">Your guidance</div>
+    </div>
+    <div class="step-connector" id="conn4"></div>
+    <div class="step-node">
+      <div class="step-circle" id="sc5">5</div>
+      <div class="step-label" id="sl5" data-en="Next steps" data-si="ඊළඟ පියවර" data-ta="அடுத்த படிகள்">Next steps</div>
+    </div>
+  </div>
+
+  <!-- STEP 1: CATEGORY -->
+  <div class="step-panel active" id="panel1">
+    <div class="card">
+      <div class="card-title">🤔 <span data-en="What kind of problem are you facing?" data-si="ඔබ මුහුණ දෙන ගැටලුව කුමක්ද?" data-ta="நீங்கள் என்ன வகையான சிக்கலை எதிர்கொள்கிறீர்கள்?">What kind of problem are you facing?</span></div>
+      <div class="card-subtitle" data-en="Choose the one that feels most like your situation. You can always change it." data-si="ඔබේ තත්ත්වයට වඩාත් සුදුසු එකක් තෝරන්න." data-ta="உங்கள் நிலைமைக்கு மிகவும் பொருத்தமான ஒன்றை தேர்ந்தெடுங்கள்.">Choose the one that feels most like your situation. You can always change it.</div>
+      <div class="cat-grid" id="cat-grid">
+        <div class="cat-card" onclick="selectCat(this, 'abuse_physical')" data-en-title="Hitting or Hurting" data-en-desc="Being physically hurt by someone" data-si-title="ශාරීරික හිංසා" data-si-desc="කෙනෙකු ශාරීරිකව රිදවීම" data-ta-title="தாக்குதல்" data-ta-desc="யாரோ உடலளவில் காயப்படுத்துகிறார்கள்">
+          <span class="cat-icon">👊</span>
+          <div class="cat-title">Hitting or Hurting</div>
+          <div class="cat-desc">Being physically hurt by someone</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'abuse_verbal')" data-en-title="Yelling / Threats" data-en-desc="Being yelled at, threatened, or made to feel afraid" data-si-title="බැනීම / තර්ජන" data-si-desc="බියගන්වීම, තර්ජනය" data-ta-title="கதறல் / மிரட்டல்" data-ta-desc="மிரட்டல் அல்லது பயமுறுத்துதல்">
+          <span class="cat-icon">😨</span>
+          <div class="cat-title">Yelling / Threats</div>
+          <div class="cat-desc">Being yelled at, threatened, or made to feel afraid</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'abuse_sexual')" data-en-title="Touched Wrongly" data-en-desc="Someone touched you in a way that felt wrong or uncomfortable" data-si-title="වැරදි ස්පර්ශය" data-si-desc="නුසුදුසු ලෙස ස්පර්ශ කිරීම" data-ta-title="தவறான தொடுதல்" data-ta-desc="தவறான முறையில் தொட்டது">
+          <span class="cat-icon">🚫</span>
+          <div class="cat-title">Touched Wrongly</div>
+          <div class="cat-desc">Someone touched you in a way that felt wrong or uncomfortable</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'school')" data-en-title="School Problems" data-en-desc="Bullying, unfair treatment, punishment, or school rights" data-si-title="පාසල් ගැටලු" data-si-desc="දිනෙන් දිනෙ හිරිහැර, අසාධාරණ සැලකීම" data-ta-title="பள்ளி பிரச்சனைகள்" data-ta-desc="காட்டிக்கொடுத்தல், தண்டனை">
+          <span class="cat-icon">🏫</span>
+          <div class="cat-title">School Problems</div>
+          <div class="cat-desc">Bullying, unfair treatment, punishment, or school rights</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'online')" data-en-title="Online Safety" data-en-desc="Cyberbullying, bad messages, or someone asking for photos" data-si-title="මාර්ගගත ආරක්ෂාව" data-si-desc="සයිබර් හිරිහැර, නරක පණිවිඩ" data-ta-title="ஆன்லைன் பாதுகாப்பு" data-ta-desc="சைபர் தொல்லை, தவறான செய்திகள்">
+          <span class="cat-icon">📱</span>
+          <div class="cat-title">Online Safety</div>
+          <div class="cat-desc">Cyberbullying, bad messages, or someone asking for photos</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'family')" data-en-title="Family Trouble" data-en-desc="Problems at home, parents fighting, or feeling unsafe at home" data-si-title="පවුලේ ගැටලු" data-si-desc="නිවසේ ගැටලු, දෙමාපියයන් ගැටෙනවා" data-ta-title="குடும்ப பிரச்சனைகள்" data-ta-desc="வீட்டில் பிரச்சனைகள்">
+          <span class="cat-icon">🏠</span>
+          <div class="cat-title">Family Trouble</div>
+          <div class="cat-desc">Problems at home, parents fighting, or feeling unsafe at home</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'rights')" data-en-title="My Rights" data-en-desc="Wanting to know what rights I have as a child" data-si-title="මගේ අයිතිවාසිකම්" data-si-desc="ළමයෙකු ලෙස මගේ අයිතිවාසිකම් දැන ගැනීමට" data-ta-title="என் உரிமைகள்" data-ta-desc="குழந்தையாக என் உரிமைகளை அறிய">
+          <span class="cat-icon">⚖️</span>
+          <div class="cat-title">My Rights</div>
+          <div class="cat-desc">Wanting to know what rights I have as a child</div>
+        </div>
+        <div class="cat-card" onclick="selectCat(this, 'other')" data-en-title="Something Else" data-en-desc="My situation is different — I'll describe it" data-si-title="වෙනත් දෙයක්" data-si-desc="මගේ තත්ත්වය වෙනස් — විස්තර කරන්නම්" data-ta-title="வேறு ஏதோ" data-ta-desc="என் நிலைமை வித்தியாசமானது">
+          <span class="cat-icon">💬</span>
+          <div class="cat-title">Something Else</div>
+          <div class="cat-desc">My situation is different — I'll describe it</div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goStep(2)" id="step1-next" disabled>Next →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: DESCRIBE -->
+  <div class="step-panel" id="panel2">
+    <div class="card">
+      <div class="card-title">💬 <span data-en="Tell us what happened" data-si="සිදු වූ දේ කියන්න" data-ta="என்ன நடந்தது என்று சொல்லுங்கள்">Tell us what happened</span></div>
+      <div class="card-subtitle" data-en="Write in your own words. No names or addresses needed — just what happened." data-si="ඔබේ වචනවලින් ලියන්න. නම් හෝ ලිපිනය අවශ්‍ය නොවේ." data-ta="உங்கள் வார்த்தைகளில் எழுதுங்கள். பெயர்கள் அல்லது முகவரி தேவையில்லை.">Write in your own words. No names or addresses needed — just what happened.</div>
+      <textarea class="situation-box" id="situation-text" placeholder="You can write in Sinhala, Tamil, or English. Take your time." maxlength="1000" oninput="updateCount()"></textarea>
+      <div class="char-count"><span id="char-count">0</span>/1000</div>
+
+      <!-- Age / Who -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:20px;">
+        <div>
+          <label style="display:block;font-weight:600;font-size:0.85rem;color:var(--navy);margin-bottom:6px;" data-en="How old are you? (optional)" data-si="ඔබට වයස කීයද? (අවශ්‍ය නැත)" data-ta="உங்களுக்கு வயதென்ன? (விருப்பம்)">How old are you? (optional)</label>
+          <select id="age-range" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:0.9rem;">
+            <option value="">Prefer not to say</option>
+            <option value="under10">Under 10</option>
+            <option value="10-12">10–12</option>
+            <option value="13-15">13–15</option>
+            <option value="16-17">16–17</option>
+          </select>
+        </div>
+        <div>
+          <label style="display:block;font-weight:600;font-size:0.85rem;color:var(--navy);margin-bottom:6px;" data-en="Who is doing this?" data-si="මෙය කරන්නේ කවුද?" data-ta="யார் இதை செய்கிறார்கள்?">Who is doing this?</label>
+          <select id="who-person" style="width:100%;padding:10px;border:1.5px solid var(--border);border-radius:8px;font-size:0.9rem;">
+            <option value="">Prefer not to say</option>
+            <option value="parent">Parent / Stepparent</option>
+            <option value="relative">Relative</option>
+            <option value="teacher">Teacher</option>
+            <option value="peer">Classmate / Friend</option>
+            <option value="stranger">Stranger</option>
+            <option value="online">Online / Unknown</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Danger check -->
+      <div class="safety-card urgent" style="margin-top:20px;">
+        <div class="safety-title urgent-t">⚠️ <span data-en="Are you safe RIGHT NOW?" data-si="ඔබ දැන් ආරක්ෂිතද?" data-ta="நீங்கள் இப்போது பாதுகாப்பாக இருக்கிறீர்களா?">Are you safe RIGHT NOW?</span></div>
+        <div style="display:flex;gap:12px;margin-top:10px;">
+          <button class="btn btn-outline" onclick="setSafe('yes', this)" id="safe-yes" style="flex:1;">✅ Yes, I'm safe</button>
+          <button class="btn btn-danger" onclick="setSafe('no', this)" id="safe-no" style="flex:1;">🆘 I'm in danger</button>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="goStep(1)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(3)" id="step2-next" disabled>Analyse my situation →</button>
+    </div>
+  </div>
+
+  <!-- STEP 3: AI SAFETY ANALYSIS -->
+  <div class="step-panel" id="panel3">
+    <div class="card">
+      <div class="card-title">🔍 <span data-en="Understanding your situation" data-si="ඔබේ තත්ත්වය තේරුම් ගැනීම" data-ta="உங்கள் நிலைமையை புரிந்துகொள்ளுதல்">Understanding your situation</span></div>
+      <div class="card-subtitle" data-en="Our AI is reviewing what you described to understand the best way to help you." data-si="AI ඔබ විස්තර කළ දේ සමාලෝචනය කරමින් ඔබට උදව් කිරීමේ හොඳම ක්‍රමය හොයාගනී." data-ta="நீங்கள் விவரித்ததை AI ஆராய்ந்து உதவியை திட்டமிடுகிறது.">Our AI is reviewing what you described to understand the best way to help you.</div>
+
+      <div id="safety-result">
+        <!-- Populated by JS -->
+      </div>
+    </div>
+    <div class="btn-row" id="step3-btns">
+      <button class="btn btn-outline" onclick="goStep(2)">← Change my description</button>
+      <button class="btn btn-primary" onclick="goStep(4)" id="step3-next" style="display:none;">See my guidance →</button>
+    </div>
+  </div>
+
+  <!-- STEP 4: LEGAL GUIDANCE -->
+  <div class="step-panel" id="panel4">
+    <div class="card">
+      <div class="card-title">📋 <span data-en="Your legal guidance" data-si="ඔබේ නීතිමය මග පෙන්වීම" data-ta="உங்கள் சட்ட வழிகாட்டல்">Your legal guidance</span></div>
+      <div class="card-subtitle" data-en="Based on what you described, here is the information that applies to your situation under Sri Lankan law." data-si="ශ්‍රී ලංකා නීතිය යටතේ ඔබේ තත්ත්වයට අදාළ තොරතුරු." data-ta="இலங்கை சட்டத்தின்கீழ் உங்கள் நிலைமைக்கு பொருந்தும் தகவல்.">Based on what you described, here is the information that applies to your situation under Sri Lankan law.</div>
+
+      <div class="ai-badge">🤖 AI Legal Guidance</div>
+      <div class="ai-response" id="ai-guidance">Loading your personalised guidance…</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-outline" onclick="goStep(3)">← Back</button>
+      <button class="btn btn-primary" onclick="goStep(5)">See who can help →</button>
+    </div>
+  </div>
+
+  <!-- STEP 5: NEXT STEPS + TOKEN -->
+  <div class="step-panel" id="panel5">
+
+    <!-- Token -->
+    <div class="token-display">
+      <div style="font-size:0.85rem;color:rgba(255,255,255,0.7);margin-bottom:6px;">Your confidential reference number</div>
+      <div class="token-number" id="token-number">MP-2026-XXXXXX</div>
+      <div class="token-note">Write this down. You can use it if you talk to a trusted adult or a lawyer.</div>
+    </div>
+
+    <!-- Next steps -->
+    <div class="card">
+      <div class="card-title">🤝 <span data-en="Who can help you" data-si="ඔබට සහාය දිය හැකි අය" data-ta="உங்களுக்கு உதவக்கூடியவர்கள்">Who can help you</span></div>
+      <div class="card-subtitle" data-en="These are the people and places that are safe to reach out to." data-si="ඔබ සම්බන්ධ කරගත හැකි ආරක්ෂිත පුද්ගලයන් සහ ස්ථාන." data-ta="தொடர்பு கொள்ள பாதுகாப்பான நபர்கள் மற்றும் இடங்கள்.">These are the people and places that are safe to reach out to.</div>
+      <ul class="next-step-list" id="next-steps-list">
+        <!-- Populated by JS -->
+      </ul>
+    </div>
+
+    <!-- Authorities -->
+    <div class="card">
+      <div class="card-title">📞 <span data-en="Official helplines" data-si="නිල සහාය රේඛා" data-ta="அதிகாரபூர்வ உதவி எண்கள்">Official helplines</span></div>
+      <div class="auth-grid">
+        <div class="auth-card" style="border-color:var(--red);">
+          <div class="auth-name">NCPA Child Helpline</div>
+          <div class="auth-tel"><a href="tel:1929">1929</a></div>
+          <div class="auth-note">24 hours · Confidential</div>
+        </div>
+        <div class="auth-card">
+          <div class="auth-name">Police Emergency</div>
+          <div class="auth-tel"><a href="tel:119">119</a></div>
+          <div class="auth-note">Immediate danger only</div>
+        </div>
+        <div class="auth-card">
+          <div class="auth-name">Women & Children</div>
+          <div class="auth-tel"><a href="tel:1938">1938</a></div>
+          <div class="auth-note">Ministry of Women & Child Affairs</div>
+        </div>
+        <div class="auth-card">
+          <div class="auth-name">Legal Aid Commission</div>
+          <div class="auth-tel"><a href="tel:0112433618">011 243 3618</a></div>
+          <div class="auth-note">Free legal help</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LexLK Free Consultation CTA -->
+    <div class="card" style="background:linear-gradient(135deg,#0D1B2A,#7C3AED);border:none;text-align:center;padding:32px 24px;">
+      <div style="font-size:2.5rem;margin-bottom:12px;">👨‍⚖️</div>
+      <div class="card-title" style="color:#fff;justify-content:center;" data-en="Want to Talk to a Real Lawyer?" data-si="සැබෑ නීතිඥයෙකු සමඟ කතා කිරීමට අවශ්‍යද?" data-ta="உண்மையான வழக்கறிஞரிடம் பேச விரும்புகிறீர்களா?">Want to Talk to a Real Lawyer?</div>
+      <p style="color:rgba(255,255,255,0.85);font-size:0.95rem;margin:10px 0 22px;line-height:1.6;" data-en="LexLK offers free legal consultations for children and families in Sri Lanka. A trusted adult can book on your behalf — completely free." data-si="LexLK ශ්‍රී ලංකාවේ ළමුන් සහ පවුල් සඳහා නොමිලේ නීති උපදේශනයක් ලබා දෙයි." data-ta="LexLK இலங்கையில் குழந்தைகள் மற்றும் குடும்பங்களுக்கு இலவச சட்ட ஆலோசனை வழங்குகிறது.">LexLK offers free legal consultations for children and families in Sri Lanka. A trusted adult can book on your behalf — completely free.</p>
+      <a href="https://lexlk.com" target="_blank" style="display:inline-block;background:#D4A843;color:#0D1B2A;padding:14px 36px;border-radius:99px;font-weight:900;font-size:0.95rem;text-decoration:none;">📅 Book a Free Consultation at LexLK</a>
+      <p style="color:rgba(255,255,255,0.45);font-size:0.78rem;margin-top:12px;">lexlk.com · +94 77 362 2211</p>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-gold" onclick="startOver()">Start a new question</button>
+      <a href="kids.html" class="btn btn-outline">Learn about your rights →</a>
+      <button class="btn btn-outline" onclick="printGuidance()">🖨 Print this guidance</button>
+    </div>
+  </div>
+
+</main>
+
+<!-- SAFE EXIT BAR -->
+<div class="safe-exit-bar">
+  <span>🔒 Your identity is protected by client confidentiality — nothing you share here can be used to identify you.</span>
+  <button class="safe-exit-btn" onclick="safeExit()">Quick Exit ✕</button>
+</div>
+
+<footer style="background:#0D1B2A;padding:20px 24px;text-align:center;font-size:0.82rem;color:rgba(255,255,255,0.45);">
+  <div style="display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:8px;">
+    <a href="about.html" style="color:rgba(255,255,255,0.6);text-decoration:none;">🏠 Platform Home</a>
+    <a href="index.html" style="color:rgba(255,255,255,0.6);text-decoration:none;">JusticeLK CMS</a>
+    <a href="kids.html" style="color:rgba(255,255,255,0.6);text-decoration:none;">LexLK Kids</a>
+    <a href="lawyer-registration.html" style="color:rgba(255,255,255,0.6);text-decoration:none;">Attorney Registration</a>
+  </div>
+  © 2026 LexLK Legal Services Platform · Protected by client confidentiality
+</footer>
+
+<script>
+// ── CONFIG ──
+const SHEETS_URL   = 'https://script.google.com/macros/s/AKfycbz20nAEAeocp8zd99cyGRtq6Ax2KjnNj_YxxJyLRocmP2M0S9PmoobvY4Vn61PXZ9Wi7g/exec';
+const SHEETS_SECRET = 'gamatausaviya2025';
+const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
+
+// State
+let currentStep = 1;
+let selectedCategory = null;
+let safetyStatus = null;
+let currentLang = 'en';
+let sessionToken = 'MP-' + new Date().getFullYear() + '-' + String(Math.floor(100000 + Math.random() * 900000));
+
+// ── LANGUAGE ──
+function setLang(lang, btn) {
+  currentLang = lang;
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  updateAllText();
+  updateCatText();
+}
+
+function updateAllText() {
+  document.querySelectorAll('[data-en]').forEach(el => {
+    const val = el.getAttribute('data-' + currentLang) || el.getAttribute('data-en');
+    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+      el.placeholder = val;
+    } else {
+      el.textContent = val;
+    }
+  });
+}
+
+function updateCatText() {
+  document.querySelectorAll('.cat-card').forEach(card => {
+    const title = card.getAttribute('data-' + currentLang + '-title') || card.getAttribute('data-en-title');
+    const desc  = card.getAttribute('data-' + currentLang + '-desc')  || card.getAttribute('data-en-desc');
+    card.querySelector('.cat-title').textContent = title;
+    card.querySelector('.cat-desc').textContent  = desc;
+  });
+}
+
+// ── NAVIGATION ──
+function goStep(n) {
+  if (n === 3) analyseStep3();
+  if (n === 4) loadGuidance();
+  if (n === 5) buildNextSteps();
+
+  document.querySelectorAll('.step-panel').forEach((p, i) => {
+    p.classList.toggle('active', i + 1 === n);
+  });
+
+  for (let i = 1; i <= 5; i++) {
+    const circle = document.getElementById('sc' + i);
+    const label  = document.getElementById('sl' + i);
+    circle.classList.remove('active', 'done');
+    label.classList.remove('active');
+    if (i < n) { circle.classList.add('done'); circle.textContent = '✓'; }
+    else if (i === n) { circle.classList.add('active'); circle.textContent = i; label.classList.add('active'); }
+    else { circle.textContent = i; }
+
+    const conn = document.getElementById('conn' + i);
+    if (conn) conn.classList.toggle('done', i < n);
+  }
+
+  currentStep = n;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── CATEGORY ──
+function selectCat(el, cat) {
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCategory = cat;
+  document.getElementById('step1-next').disabled = false;
+}
+
+// ── SAFETY ──
+function setSafe(val, btn) {
+  safetyStatus = val;
+  document.getElementById('safe-yes').style.outline = '';
+  document.getElementById('safe-no').style.outline = '';
+  btn.style.outline = '3px solid var(--teal)';
+  document.getElementById('step2-next').disabled = (document.getElementById('situation-text').value.trim().length < 20);
+
+  if (val === 'no') {
+    // Show emergency immediately
+    showEmergency();
+  }
+}
+
+function updateCount() {
+  const txt = document.getElementById('situation-text').value;
+  document.getElementById('char-count').textContent = txt.length;
+  if (safetyStatus) {
+    document.getElementById('step2-next').disabled = (txt.trim().length < 20);
+  }
+}
+
+// ── STEP 3: SAFETY ANALYSIS ──
+function analyseStep3() {
+  const situation = document.getElementById('situation-text').value;
+  const resultEl = document.getElementById('safety-result');
+  const nextBtn  = document.getElementById('step3-next');
+
+  // Determine risk level locally
+  const urgentKeywords = ['hitting', 'hurt', 'beating', 'rape', 'touch', 'scared', 'run away', 'dangerous', 'weapon', 'knife', 'bleeding', 'hospital', 'වේදනාව', 'ගැසීම', 'அடிக்கிறார்'];
+  const text = situation.toLowerCase();
+  const isUrgent = (safetyStatus === 'no') || urgentKeywords.some(k => text.includes(k)) || ['abuse_physical', 'abuse_sexual'].includes(selectedCategory);
+
+  if (isUrgent) {
+    resultEl.innerHTML = `
+      <div class="safety-card urgent" style="margin-bottom:14px;">
+        <div class="safety-title urgent-t">🚨 This sounds serious</div>
+        <p style="margin-top:8px;font-size:0.9rem;color:var(--text);line-height:1.6;">
+          What you described sounds like it could be dangerous. <strong>Please tell a trusted adult immediately</strong> — a parent you trust, a teacher, or a neighbour.
+          <br><br>If you are in immediate danger: <strong style="color:var(--red);">Call 1929 (NCPA) or 119 (Police)</strong>.
+        </p>
+      </div>
+      <div class="safety-card guidance" style="margin-bottom:14px;">
+        <div class="safety-title guidance-t">📋 We will also prepare legal guidance for you</div>
+        <p style="margin-top:8px;font-size:0.9rem;color:var(--text);line-height:1.6;">
+          On the next screen, you will see exactly what Sri Lankan law says about your situation and which authority should help you.
+        </p>
+      </div>`;
+  } else {
+    resultEl.innerHTML = `
+      <div class="safety-card safe" style="margin-bottom:14px;">
+        <div class="safety-title safe-t">✅ Thank you for sharing this with us</div>
+        <p style="margin-top:8px;font-size:0.9rem;color:var(--text);line-height:1.6;">
+          You are not in immediate danger right now, but that doesn't mean your problem is not important. Every child deserves to feel safe and treated fairly.
+        </p>
+      </div>
+      <div class="safety-card guidance">
+        <div class="safety-title guidance-t">📋 We have guidance ready for you</div>
+        <p style="margin-top:8px;font-size:0.9rem;color:var(--text);line-height:1.6;">
+          On the next screen, you will see what Sri Lankan law says about situations like yours and exactly what you or a trusted adult can do.
+        </p>
+      </div>`;
+  }
+
+  nextBtn.style.display = 'inline-block';
+}
+
+// ── STEP 4: AI GUIDANCE ──
+async function loadGuidance() {
+  const situation  = document.getElementById('situation-text').value;
+  const who        = document.getElementById('who-person').value;
+  const age        = document.getElementById('age-range').value;
+  const cat        = selectedCategory;
+  const guidanceEl = document.getElementById('ai-guidance');
+
+  guidanceEl.className = 'ai-response loading';
+  guidanceEl.textContent = '🤖 Preparing your personalised legal guidance…';
+
+  const catLabels = {
+    abuse_physical: 'physical abuse', abuse_verbal: 'verbal/emotional abuse',
+    abuse_sexual: 'inappropriate touching', school: 'school-related problem',
+    online: 'online safety / cyberbullying', family: 'family trouble',
+    rights: 'child rights question', other: 'other situation'
+  };
+
+  const prompt = `You are a compassionate child protection legal advisor for Sri Lanka. A child has come to you for help.
+
+Category: ${catLabels[cat] || cat}
+What they described: "${situation}"
+Who is involved: ${who || 'not specified'}
+Age group: ${age || 'not specified'}
+Language preference: ${currentLang === 'si' ? 'Sinhala' : currentLang === 'ta' ? 'Tamil' : 'English'}
+
+Provide:
+1. A warm, simple acknowledgment (2-3 sentences) — validating their feelings
+2. What Sri Lankan law says about this (Children and Young Persons Ordinance, Penal Code, Protection of Children Act, etc.) — in simple language a child can understand
+3. Exactly what they should do next (numbered steps, simple and clear)
+4. Who to tell (be specific: school counsellor, trusted teacher, Grama Niladhari, NCPA, parent, etc.)
+5. A closing reassurance
+
+IMPORTANT: Use ${currentLang === 'si' ? 'Sinhala' : currentLang === 'ta' ? 'Tamil' : 'English'} throughout. Write as if speaking directly to a child aged 10–17. Be warm, not scary. Keep it under 350 words. Do NOT use legal jargon. Do NOT ask for any identifying information.`;
+
+  try {
+    // Try Groq (requires key saved in localStorage as lexlk_groq_key)
+    const groqKey = localStorage.getItem('gu_groq_key') || '';
+    if (!groqKey) throw new Error('no key');
+    const resp = await fetch(GROQ_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + (localStorage.getItem('gu_groq_key') || '') },
+      body: JSON.stringify({
+        model: 'llama-3.3-70b-versatile',
+        messages: [{ role: 'user', content: prompt }],
+        max_tokens: 600, temperature: 0.7
+      })
+    });
+
+    if (resp.ok) {
+      const data = await resp.json();
+      guidanceEl.className = 'ai-response';
+      guidanceEl.textContent = data.choices[0].message.content;
+      return;
+    }
+  } catch(e) {}
+
+  // Fallback: offline canned guidance
+  const offlineGuidance = getOfflineGuidance(cat, currentLang);
+  guidanceEl.className = 'ai-response';
+  guidanceEl.textContent = offlineGuidance;
+}
+
+function getOfflineGuidance(cat, lang) {
+  const guides = {
+    abuse_physical: {
+      en: `You were very brave to share this. Being hit or physically hurt is NEVER okay, no matter what anyone says.
+
+In Sri Lanka, the Penal Code and the Children and Young Persons Ordinance protect you. Physical abuse of a child is illegal. Anyone who hurts a child can be reported to the police.
+
+What you can do:
+1. Tell a trusted adult TODAY — a teacher, a relative you trust, or a Grama Niladhari officer
+2. Call the NCPA Helpline: 1929 (free, confidential)
+3. If you have visible injuries, they can be documented at a hospital
+4. A Social Services Officer can visit your home to check on you
+
+You did not cause this. You deserve to be safe. Help is available.`,
+      si: `ඔබ ඉතා නිර්භීතව මෙය බෙදාගත්තා. ගැසීම හෝ ශාරීරිකව රිදවීම කිසි විටෙකත් නිවැරදි නොවේ.
+
+ශ්‍රී ලංකාවේ දණ්ඩ නීති සංග්‍රහය සහ ළමා හා තරුණ පුද්ගලයන් ආඥාපනත ඔබව ආරක්ෂා කරයි. ළමයෙකුට ශාරීරිකව හිංසා කිරීම නීතිවිරෝධී ය.
+
+ඔබ කළ යුතු දේ:
+1. අදම විශ්වාසදායක වැඩිහිටියෙකුට කියන්න — ගුරුවරයෙකු, ඥාතියෙකු හෝ ග්‍රාම නිලධාරියා
+2. NCPA හෝට් ලයින් අමතන්න: 1929
+3. ඔබට තුවාල ඇත්නම් රෝහලකට ගොස් වාර්තා කරන්න
+
+ඔබ මෙයට හේතු නොවීය. ඔබට ආරක්ෂාව ලැබිය යුතු ය.`,
+      ta: `நீங்கள் மிகவும் துணிவாக இதை பகிர்ந்தீர்கள். அடிக்கப்படுவது அல்லது காயப்படுத்தப்படுவது ஒருபோதும் சரியானதல்ல.
+
+இலங்கையில் தண்டனைச் சட்டம் மற்றும் குழந்தைகள் சட்டம் உங்களை பாதுகாக்கின்றன. குழந்தையை உடலளவில் துன்புறுத்துவது சட்டவிரோதம்.
+
+நீங்கள் செய்ய வேண்டியது:
+1. இன்றே நம்பகமான பெரியவரிடம் சொல்லுங்கள் — ஆசிரியர், உறவினர் அல்லது கிராம அலுவலர்
+2. NCPA உதவி எண்: 1929
+3. காயங்கள் இருந்தால் மருத்துவமனை சென்று பதிவு செய்யுங்கள்
+
+இது உங்கள் தவறல்ல. நீங்கள் பாதுகாப்பாக இருக்க வேண்டும்.`
+    },
+    school: {
+      en: `Thank you for telling us about this. Problems at school can feel very unfair, and your feelings are completely valid.
+
+Sri Lankan law gives you rights at school. The Education Ordinance protects students from unfair punishment. Schools cannot physically punish you or treat you in a way that humiliates you.
+
+What you can do:
+1. Write down what happened — date, what was said or done, witnesses
+2. Talk to your school counsellor or welfare officer
+3. If no help at school, your parents or guardian can report to the Zonal Director of Education
+4. Serious cases can be reported to the Human Rights Commission of Sri Lanka
+
+Every child has the right to learn in a safe environment. You can get help.`,
+      si: `පාසලේ ගැටලු ඉතා අසාධාරණ ලෙස දැනිය හැකි ය. ඔබේ හැඟීම් සම්පූර්ණයෙන් නිවැරදි ය.
+
+ශ්‍රී ලංකා අධ්‍යාපන ආඥාපනත ශිෂ්‍යයින් ආරක්ෂා කරයි. අසාධාරණ දඬුවම් සහ පහත් කරවන ලද සැලකීම නීතිවිරෝධී ය.
+
+ඔබ කළ යුතු දේ:
+1. සිදු වූ දේ ලියා ගන්න — දිනය, සිදු වූ දේ, සාක්ෂිකරුවන්
+2. පාසලේ සේවා නිලධාරීයා හෝ ශිෂ්‍ය සැල සේවකයාට කියන්න
+3. ප්‍රතිචාරයක් නැත්නම්, ජාතික මානව හිමිකම් කොමිෂමට වාර්තා කළ හැකි ය`,
+      ta: `பள்ளி பிரச்சனைகள் மிகவும் அநீதியாக தோன்றலாம். உங்கள் உணர்வுகள் முற்றிலும் சரியானவை.
+
+இலங்கை கல்வி சட்டம் மாணவர்களை பாதுகாக்கிறது. அநியாயமான தண்டனை மற்றும் இழிவுபடுத்தல் சட்டவிரோதம்.
+
+நீங்கள் செய்ய வேண்டியது:
+1. நடந்தவற்றை எழுதி வையுங்கள்
+2. பள்ளி ஆலோசகர் அல்லது நலன்புரி அலுவலரிடம் சொல்லுங்கள்
+3. உதவி கிடைக்கவில்லை என்றால் மனித உரிமை ஆணையத்தை தொடர்பு கொள்ளுங்கள்`
+    },
+    rights: {
+      en: `Great question! Every child in Sri Lanka has rights protected by both Sri Lankan law and the United Nations Convention on the Rights of the Child (UNCRC), which Sri Lanka signed.
+
+Your key rights:
+• The right to be safe from all forms of abuse and neglect
+• The right to go to school and receive education
+• The right to medical care
+• The right to be heard — your opinion matters
+• The right to be protected from child labour
+• The right to know your rights
+
+If any of these rights are being denied to you, the National Child Protection Authority (NCPA) and the Human Rights Commission can help.
+
+You can also learn more on the LexLK Kids page — created specially for children like you.`,
+      si: `ඉතා හොඳ ප්‍රශ්නයක්! ශ්‍රී ලංකාවේ සෑම ළමයෙකුටම UNCRC සහ ශ්‍රී ලංකා නීතිය යටතේ ආරක්ෂිත අයිතිවාසිකම් ඇත.
+
+ඔබේ ප්‍රධාන අයිතිවාසිකම්:
+• සෑම ආකාරයේ හිරිහැරවලින් ආරක්ෂා වීමේ අයිතිය
+• අධ්‍යාපනය ලැබීමේ අයිතිය
+• වෛද්‍ය ප්‍රතිකාර ලැබීමේ අයිතිය
+• ඔබේ අදහස් ප්‍රකාශ කිරීමේ අයිතිය
+• ළමා ශ්‍රමයෙන් ආරක්ෂා වීමේ අයිතිය`,
+      ta: `சிறந்த கேள்வி! இலங்கையில் ஒவ்வொரு குழந்தைக்கும் UNCRC மற்றும் இலங்கை சட்டங்களின் கீழ் உரிமைகள் உள்ளன.
+
+உங்கள் முக்கிய உரிமைகள்:
+• அனைத்து வகையான துன்புறுத்தலில் இருந்து பாதுகாப்பு
+• கல்வி பெறும் உரிமை
+• மருத்துவ சிகிச்சை பெறும் உரிமை
+• உங்கள் கருத்தை கூறும் உரிமை
+• குழந்தை தொழிலாளர்களாக பயன்படுத்தப்படாமல் பாதுகாப்பு`
+    }
+  };
+
+  const g = guides[cat] || guides['rights'];
+  return (g && g[lang]) || (g && g['en']) || 'Guidance is being prepared. Please call NCPA at 1929 for immediate help.';
+}
+
+// ── STEP 5: NEXT STEPS ──
+function buildNextSteps() {
+  document.getElementById('token-number').textContent = sessionToken;
+
+  const list = document.getElementById('next-steps-list');
+  const isUrgent = (safetyStatus === 'no') || ['abuse_physical', 'abuse_sexual'].includes(selectedCategory);
+
+  const steps = isUrgent ? [
+    { icon: '📞', title: 'Call NCPA immediately', detail: 'NCPA Hotline: 1929 — free, 24 hours, confidential' },
+    { icon: '🏥', title: 'Go to a safe place', detail: 'A trusted neighbour, teacher, or relative's home' },
+    { icon: '📝', title: 'Tell a trusted adult', detail: 'Show them this guidance and your reference number: ' + sessionToken },
+    { icon: '⚖️', title: 'Free legal help', detail: 'Legal Aid Commission: 011 243 3618 — they can help a guardian file a case' },
+  ] : [
+    { icon: '💬', title: 'Talk to a trusted adult', detail: 'A teacher, school counsellor, or family member you trust' },
+    { icon: '📝', title: 'Write down what happened', detail: 'Dates, what was said or done, any witnesses — keep it safe' },
+    { icon: '📞', title: 'NCPA Helpline if needed', detail: 'Call 1929 anytime — they are trained to help children' },
+    { icon: '⚖️', title: 'Ask for legal help', detail: 'The Legal Aid Commission provides free help: 011 243 3618' },
+    { icon: '📚', title: 'Learn more', detail: 'Visit LexLK Kids to learn about all your rights as a child' },
+  ];
+
+  list.innerHTML = steps.map(s => `
+    <li>
+      <div class="ns-icon">${s.icon}</div>
+      <div class="ns-text">
+        <strong>${s.title}</strong>
+        <span>${s.detail}</span>
+      </div>
+    </li>`).join('');
+
+  // Log anonymised case to Sheets (no identifying info)
+  logConfidentialCase();
+}
+
+async function logConfidentialCase() {
+  try {
+    const payload = {
+      action: 'saveCase',
+      secret: SHEETS_SECRET,
+      data: {
+        token: sessionToken,
+        client: 'Confidential Minor',
+        nic: 'PROTECTED',
+        mobile: 'PROTECTED',
+        district: 'Unknown',
+        caseType: 'Minor Protection: ' + (selectedCategory || 'unknown'),
+        status: 'MP-Guidance-Issued',
+        officer: 'Portal',
+        created: new Date().toISOString(),
+        court: 'NCPA / Child Protection',
+        route: 'Minor Protection Portal',
+        facts: '[Confidential — identity protected by client confidentiality]',
+        aiSummary: 'Category: ' + selectedCategory + ' | Safety: ' + safetyStatus,
+        petition: '',
+        lawyer: '',
+        folderUrl: ''
+      }
+    };
+    await fetch(SHEETS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload)
+    });
+  } catch(e) { /* silent */ }
+}
+
+// ── UTILITIES ──
+function showEmergency() { document.getElementById('emergency-modal').classList.add('show'); }
+function closeEmergency() { document.getElementById('emergency-modal').classList.remove('show'); }
+
+function safeExit() {
+  // Navigate to an innocuous page
+  window.location.replace('https://www.google.com/search?q=sri+lanka+weather');
+}
+
+function startOver() {
+  selectedCategory = null; safetyStatus = null;
+  sessionToken = 'MP-' + new Date().getFullYear() + '-' + String(Math.floor(100000 + Math.random() * 900000));
+  document.getElementById('situation-text').value = '';
+  document.getElementById('char-count').textContent = '0';
+  document.getElementById('step1-next').disabled = true;
+  document.getElementById('step2-next').disabled = true;
+  document.querySelectorAll('.cat-card').forEach(c => c.classList.remove('selected'));
+  goStep(1);
+}
+
+function printGuidance() {
+  window.print();
+}
+
+// Keyboard shortcut: hold Escape 2s to safe exit
+let escTimer;
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    escTimer = setTimeout(() => safeExit(), 2000);
+  }
+});
+document.addEventListener('keyup', e => { if (e.key === 'Escape') clearTimeout(escTimer); });
+</script>
+
+<script>
+function toggleHamMenu(){
+  const d=document.getElementById('ham-drawer');
+  d.classList.toggle('open');
+  document.body.style.overflow=d.classList.contains('open')?'hidden':'';
+}
+</script>
+</body>
+</html>
