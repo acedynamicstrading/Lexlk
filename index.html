@@ -1408,6 +1408,7 @@ function closeMobileMenu() {
   h.querySelectorAll('span').forEach(s => { s.style.transform = ''; s.style.opacity = ''; });
 }
 function showPage(n) {
+  if (n === 'lawyers' && !lawyersLoaded) { setTimeout(loadLawyersFromSheets, 100); }
   if (PROTECTED.includes(n) && !currentUser) {
     toast('Please sign in to access this feature.');
     return;
@@ -1714,27 +1715,68 @@ async function submitLawyerReview() {
 // ─────────────────────────────────────────────────────────────
 // LAWYERS PAGE
 // ─────────────────────────────────────────────────────────────
-const LAWYERS = [
-  { name: 'Priya Wijesekara', title: 'Attorney-at-Law, Notary Public', areas: ['civil', 'property'], tags: ['Civil Law', 'Property', 'District Court'], exp: '12 yrs', cases: '340+', rating: '4.9', lang: 'English, Sinhala' },
-  { name: 'Kasun Rajapaksa', title: 'Attorney-at-Law', areas: ['criminal', 'civil'], tags: ['Criminal Law', 'Civil Litigation', 'Court of Appeal'], exp: '8 yrs', cases: '210+', rating: '4.8', lang: 'English, Sinhala' },
-  { name: 'Nirosha Fernando', title: 'Attorney-at-Law, Notary Public', areas: ['family', 'civil'], tags: ['Family Law', 'Divorce', 'Child Custody'], exp: '15 yrs', cases: '480+', rating: '5.0', lang: 'English, Sinhala, Tamil' },
-  { name: 'Dinesh Perera', title: 'Senior Attorney-at-Law', areas: ['commercial', 'civil'], tags: ['Commercial Law', 'Contracts', 'Debt Recovery'], exp: '20 yrs', cases: '600+', rating: '4.9', lang: 'English, Sinhala' },
-  { name: 'Amara Jayawardena', title: 'Attorney-at-Law', areas: ['labour', 'civil', 'immigration'], tags: ['Labour Law', 'Employment', 'Immigration'], exp: '7 yrs', cases: '180+', rating: '4.7', lang: 'English, Sinhala' },
-  { name: 'Rohan Gunasekara', title: 'Attorney-at-Law, PC', areas: ['civil', 'criminal', 'property', 'immigration'], tags: ['Supreme Court', 'Court of Appeal', 'Foreign Nationals'], exp: '25 yrs', cases: '900+', rating: '5.0', lang: 'English, Sinhala, French' },
-];
+// ── LAWYER DIRECTORY — pulls from Justice LK Google Sheets ──
+const LAWYERS_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbz20nAEAeocp8zd99cyGRtq6Ax2KjnNj_YxxJyLRocmP2M0S9PmoobvY4Vn61PXZ9Wi7g/exec';
+let lawyersData = [];
+let lawyersFilter = 'all';
+let lawyersLoaded = false;
+
+async function loadLawyersFromSheets() {
+  const g = document.getElementById('lg');
+  g.innerHTML = '<div style="text-align:center;padding:2rem;color:var(--text4);font-size:0.85rem;">Loading attorneys…</div>';
+  try {
+    const res = await fetch(LAWYERS_SHEETS_URL + '?action=getLawyers', { method: 'GET' });
+    const d = await res.json();
+    if (d.ok && Array.isArray(d.lawyers) && d.lawyers.length > 0) {
+      lawyersData = d.lawyers.filter(l => l.status === 'Approved' || l.status === 'Verified' || l.status === 'Active');
+      lawyersLoaded = true;
+      renderLawyers(lawyersFilter);
+    } else {
+      showNoLawyers();
+    }
+  } catch(e) {
+    showNoLawyers();
+  }
+}
+
+function showNoLawyers() {
+  const g = document.getElementById('lg');
+  g.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:3rem 1.5rem;">
+    <div style="font-size:2.5rem;margin-bottom:1rem;">⚖️</div>
+    <div style="font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:0.5rem;">Attorney Registration Now Open</div>
+    <div style="font-size:0.85rem;color:var(--text4);line-height:1.7;max-width:400px;margin:0 auto 1.5rem;">
+      The LexLK attorney network is being established. Qualified Sri Lankan attorneys are invited to register and join the network.
+    </div>
+    <a href="https://acedynamicstrading.github.io/justicelk/lawyer-registration.html" target="_blank"
+       style="display:inline-block;background:var(--gold);color:#fff;text-decoration:none;padding:0.65rem 1.5rem;border-radius:6px;font-size:0.82rem;font-weight:600;letter-spacing:0.04em;">
+      Register as an Attorney →
+    </a>
+    <div style="margin-top:1.5rem;font-size:0.78rem;color:var(--text4);">
+      Meanwhile, book a free consultation and we will match you with a qualified attorney.
+    </div>
+    <button onclick="showPage('consult')" style="margin-top:0.75rem;background:none;border:1px solid var(--bg4);color:var(--text3);padding:0.5rem 1.2rem;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:0.78rem;cursor:pointer;">
+      📅 Book Free Consultation →
+    </button>
+  </div>`;
+}
 
 function renderLawyers(f = 'all') {
+  lawyersFilter = f;
+  if (!lawyersLoaded) { loadLawyersFromSheets(); return; }
   const g = document.getElementById('lg'); g.innerHTML = '';
-  LAWYERS.filter(l => f === 'all' || l.areas.includes(f)).forEach(l => {
-    const ini = l.name.split(' ').map(n => n[0]).join('');
-    const c = document.createElement('div'); c.className = 'lc';
-    c.innerHTML = `<div class="lc-top"><div class="lc-av">${ini}</div><div><div class="lc-name">${l.name}</div><div class="lc-title">${l.title}</div></div></div>
-    <div class="lc-tags">${l.tags.map(t => `<span class="lc-tag">${t}</span>`).join('')}</div>
-    <div class="lc-meta"><div class="lc-stat"><strong>${l.exp}</strong> exp</div><div class="lc-stat"><strong>${l.cases}</strong> cases</div><div class="lc-stat"><strong>★ ${l.rating}</strong></div></div>
-    <div style="font-size:0.65rem;color:var(--text4);margin-bottom:0.75rem;">🗣 ${l.lang}</div>
-    <button class="lc-book" onclick="bkLaw('${l.name}')">Book Free Consultation</button>
+  const filtered = lawyersData.filter(l => f === 'all' || (l.specialisations && l.specialisations.toLowerCase().includes(f)));
+  if (filtered.length === 0) { showNoLawyers(); return; }
+  filtered.forEach(l => {
+    const ini = (l.name||'?').split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
+    const tags = (l.specialisations||'').split(',').map(s => s.trim()).filter(Boolean).slice(0,3);
+    const el = document.createElement('div'); el.className = 'lc';
+    el.innerHTML = `<div class="lc-top"><div class="lc-av">${ini}</div><div><div class="lc-name">${l.name||'Attorney'}</div><div class="lc-title">${l.title||'Attorney-at-Law'}</div></div></div>
+    <div class="lc-tags">${tags.map(t => `<span class="lc-tag">${t}</span>`).join('')}</div>
+    <div class="lc-meta"><div class="lc-stat"><strong>${l.district||'—'}</strong> District</div><div class="lc-stat"><strong>${l.experience||'—'}</strong> exp</div></div>
+    <div style="font-size:0.65rem;color:var(--text4);margin-bottom:0.75rem;">🗣 ${l.languages||'English, Sinhala'}</div>
+    <button class="lc-book" onclick="bkLaw('${(l.name||'').replace(/'/g,"\'")}')">Book Free Consultation</button>
     <div class="lc-free">First 30 minutes — free</div>`;
-    g.appendChild(c);
+    g.appendChild(el);
   });
 }
 
