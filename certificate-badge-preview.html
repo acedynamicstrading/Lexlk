@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Justice Kids — Certificate & Badge Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: #0d0820; display: flex; flex-direction: column; align-items: center; padding: 30px 20px; font-family: 'Nunito', sans-serif; min-height: 100vh; }
+h1 { color: #D4A843; font-size: 1.3rem; margin-bottom: 30px; letter-spacing: 0.05em; }
+.previews { display: flex; flex-wrap: wrap; gap: 40px; justify-content: center; align-items: flex-start; margin-bottom: 30px; }
+.preview-block { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.preview-label { color: rgba(255,255,255,0.5); font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; }
+canvas { border-radius: 12px; box-shadow: 0 16px 48px rgba(0,0,0,0.6); max-width: 100%; }
+.btn { background: #D4A843; color: #0D1B2A; border: none; padding: 11px 28px; border-radius: 99px; font-size: 0.9rem; font-weight: 900; cursor: pointer; font-family: 'Nunito', sans-serif; margin-top: 4px; transition: opacity 0.2s; }
+.btn:hover { opacity: 0.85; }
+.name-section { background: rgba(255,255,255,0.05); border: 1px solid rgba(212,168,67,0.3); border-radius: 12px; padding: 20px 28px; margin-bottom: 28px; text-align: center; width: 100%; max-width: 420px; }
+.name-section label { color: #D4A843; font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 10px; }
+.name-section input { width: 100%; padding: 10px 16px; border-radius: 8px; border: 1px solid rgba(212,168,67,0.4); background: rgba(255,255,255,0.08); color: #fff; font-size: 1rem; font-family: 'Nunito', sans-serif; font-weight: 700; text-align: center; outline: none; }
+.name-section input::placeholder { color: rgba(255,255,255,0.3); font-weight: 400; }
+.name-section button { margin-top: 12px; }
+</style>
+</head>
+<body>
+
+<h1>🏆 Justice Kids — Perfect Score Rewards</h1>
+
+<div class="name-section">
+  <label>Enter a name to preview</label>
+  <input type="text" id="name-input" placeholder="e.g. Amaya Perera" value="Amaya Perera" oninput="redraw()"/>
+  <button class="btn" onclick="redraw()">Update Preview ✓</button>
+</div>
+
+<div class="previews">
+  <div class="preview-block">
+    <div class="preview-label">📜 Certificate — Large Download</div>
+    <canvas id="cert" width="700" height="900"></canvas>
+    <button class="btn" onclick="downloadCert()">⬇ Download Certificate</button>
+  </div>
+
+  <div class="preview-block">
+    <div class="preview-label">🏅 Badge — Share in Chats</div>
+    <canvas id="badge" width="512" height="512"></canvas>
+    <button class="btn" onclick="downloadBadge()">⬇ Download Badge</button>
+  </div>
+</div>
+
+<script>
+function getName() {
+  return document.getElementById('name-input').value.trim() || 'Rights Champion';
+}
+
+function drawCert(name) {
+  const canvas = document.getElementById('cert');
+  const ctx = canvas.getContext('2d');
+  const w = 700, h = 900;
+  ctx.clearRect(0, 0, w, h);
+
+  // Background
+  const bg = ctx.createLinearGradient(0, 0, 0, h);
+  bg.addColorStop(0, '#1a0a3e');
+  bg.addColorStop(0.5, '#0D1B2A');
+  bg.addColorStop(1, '#1a0a3e');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+
+  // Outer gold border
+  ctx.strokeStyle = '#D4A843';
+  ctx.lineWidth = 8;
+  ctx.strokeRect(16, 16, w-32, h-32);
+
+  // Inner border
+  ctx.strokeStyle = 'rgba(212,168,67,0.3)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(30, 30, w-60, h-60);
+
+  // Corner ornaments
+  const corners = [[50,50],[w-50,50],[50,h-50],[w-50,h-50]];
+  ctx.font = '28px serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  corners.forEach(([x,y]) => ctx.fillText('✦', x, y));
+
+  // Top sparkles
+  ctx.font = '22px serif';
+  ctx.fillText('✨', w/2-120, 75);
+  ctx.fillText('✨', w/2+120, 75);
+
+  // Header
+  ctx.fillStyle = '#D4A843';
+  ctx.font = 'bold 13px Nunito';
+  ctx.letterSpacing = '4px';
+  ctx.fillText('JUSTICE KIDS · SRI LANKA · யுக்தி கிட்ஸ் · යුක්තිය කිඩ්ස්', w/2, 72);
+
+  // Divider line
+  ctx.strokeStyle = 'rgba(212,168,67,0.5)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(60, 100); ctx.lineTo(640, 100); ctx.stroke();
+
+  // Trophy
+  ctx.font = '100px serif';
+  ctx.fillText('🏆', w/2, 210);
+
+  // Stars around trophy
+  ctx.font = '30px serif';
+  ctx.fillText('⭐', w/2-130, 175);
+  ctx.fillText('⭐', w/2+130, 175);
+  ctx.fillText('⭐', w/2-160, 230);
+  ctx.fillText('⭐', w/2+160, 230);
+
+  // CERTIFICATE OF
+  ctx.fillStyle = 'rgba(212,168,67,0.7)';
+  ctx.font = 'italic 15px Nunito';
+  ctx.letterSpacing = '3px';
+  ctx.fillText('CERTIFICATE OF', w/2, 295);
+
+  // ACHIEVEMENT
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 52px Playfair Display';
+  ctx.letterSpacing = '0px';
+  ctx.fillText('ACHIEVEMENT', w/2, 355);
+
+  // Decorative line
+  ctx.strokeStyle = '#D4A843';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(120, 378); ctx.lineTo(w/2-20, 378);
+  ctx.moveTo(w/2+20, 378); ctx.lineTo(580, 378);
+  ctx.stroke();
+  ctx.font = '16px serif'; ctx.fillStyle = '#D4A843';
+  ctx.fillText('⚖', w/2, 381);
+
+  // Awarded to
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '16px Nunito';
+  ctx.fillText('This certificate is proudly awarded to', w/2, 420);
+
+  // Name
+  ctx.fillStyle = '#D4A843';
+  ctx.font = 'bold italic 48px Playfair Display';
+  ctx.fillText(name, w/2, 480);
+
+  // Underline name
+  ctx.strokeStyle = 'rgba(212,168,67,0.4)';
+  ctx.lineWidth = 1;
+  const nameWidth = ctx.measureText(name).width;
+  ctx.beginPath();
+  ctx.moveTo(w/2 - nameWidth/2, 495);
+  ctx.lineTo(w/2 + nameWidth/2, 495);
+  ctx.stroke();
+
+  // For achieving
+  ctx.fillStyle = 'rgba(255,255,255,0.6)';
+  ctx.font = '16px Nunito';
+  ctx.fillText('for achieving a', w/2, 535);
+
+  // PERFECT SCORE
+  const scoreGrad = ctx.createLinearGradient(200, 0, 500, 0);
+  scoreGrad.addColorStop(0, '#D4A843');
+  scoreGrad.addColorStop(0.5, '#ffffff');
+  scoreGrad.addColorStop(1, '#D4A843');
+  ctx.fillStyle = scoreGrad;
+  ctx.font = 'bold 38px Nunito';
+  ctx.fillText('PERFECT SCORE — 6 / 6', w/2, 578);
+
+  // Quiz name
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.font = '15px Nunito';
+  ctx.fillText('on the Justice Kids Child Rights Quiz', w/2, 612);
+
+  // Emoji row
+  ctx.font = '32px serif';
+  ctx.fillText('🦸‍♀️  ⚖️  🌟  ✨  🎉  🇱🇰', w/2, 660);
+
+  // Bottom divider
+  ctx.strokeStyle = 'rgba(212,168,67,0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(60, 695); ctx.lineTo(640, 695); ctx.stroke();
+
+  // Share text
+  ctx.fillStyle = 'rgba(212,168,67,0.8)';
+  ctx.font = 'bold 13px Nunito';
+  ctx.fillText('Share your achievement:', w/2, 728);
+
+  ctx.fillStyle = '#ffffff';
+  ctx.font = '13px Nunito';
+  ctx.fillText('🏆⚖️✨ I\'m a Justice Kids Rights Champion! I scored 6/6! 🦸‍♀️🌟🇱🇰', w/2, 752);
+
+  // Date and URL
+  const today = new Date().toLocaleDateString('en-GB',{day:'2-digit',month:'long',year:'numeric'});
+  ctx.fillStyle = 'rgba(212,168,67,0.5)';
+  ctx.font = '12px Nunito';
+  ctx.fillText(today + '  ·  acedynamicstrading.github.io/justicekids', w/2, 800);
+
+  // Bottom seal
+  ctx.font = '14px Nunito';
+  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+  ctx.fillText('© 2026 Ace Dynamics Trading · Justice LK National Digital Justice Access Programme', w/2, 840);
+}
+
+function drawBadge(name) {
+  const canvas = document.getElementById('badge');
+  const ctx = canvas.getContext('2d');
+  const w = 512, h = 512;
+  ctx.clearRect(0, 0, w, h);
+
+  // Circular clip
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(w/2, h/2, w/2, 0, Math.PI*2);
+  ctx.clip();
+
+  // Background gradient
+  const bg = ctx.createRadialGradient(w/2, h/2-60, 20, w/2, h/2, 260);
+  bg.addColorStop(0, '#7C3AED');
+  bg.addColorStop(0.6, '#4a1b7a');
+  bg.addColorStop(1, '#0D1B2A');
+  ctx.fillStyle = bg;
+  ctx.fillRect(0, 0, w, h);
+
+  // Burst rays
+  ctx.strokeStyle = 'rgba(212,168,67,0.15)';
+  ctx.lineWidth = 2;
+  for (let i = 0; i < 16; i++) {
+    const angle = (i / 16) * Math.PI * 2;
+    ctx.beginPath();
+    ctx.moveTo(w/2 + Math.cos(angle)*110, h/2 + Math.sin(angle)*110);
+    ctx.lineTo(w/2 + Math.cos(angle)*255, h/2 + Math.sin(angle)*255);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // Gold ring
+  ctx.strokeStyle = '#D4A843';
+  ctx.lineWidth = 10;
+  ctx.beginPath();
+  ctx.arc(w/2, h/2, 246, 0, Math.PI*2);
+  ctx.stroke();
+
+  // Inner ring
+  ctx.strokeStyle = 'rgba(212,168,67,0.4)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.arc(w/2, h/2, 228, 0, Math.PI*2);
+  ctx.stroke();
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+
+  // TOP TEXT arc simulation
+  ctx.fillStyle = '#D4A843';
+  ctx.font = 'bold 15px Nunito';
+  const topText = '✦ JUSTICE KIDS · SRI LANKA ✦';
+  ctx.fillText(topText, w/2, 68);
+
+  // Trophy
+  ctx.font = '90px serif';
+  ctx.fillText('🏆', w/2, 185);
+
+  // RIGHTS
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 38px Nunito';
+  ctx.fillText('RIGHTS', w/2, 295);
+
+  // CHAMPION
+  const cGrad = ctx.createLinearGradient(150, 0, 362, 0);
+  cGrad.addColorStop(0, '#D4A843');
+  cGrad.addColorStop(0.5, '#fff8dc');
+  cGrad.addColorStop(1, '#D4A843');
+  ctx.fillStyle = cGrad;
+  ctx.font = 'bold 32px Nunito';
+  ctx.fillText('CHAMPION 🦸', w/2, 335);
+
+  // Name
+  ctx.fillStyle = 'rgba(255,255,255,0.9)';
+  ctx.font = 'bold italic 22px Playfair Display';
+  ctx.fillText(name, w/2, 378);
+
+  // Score
+  ctx.fillStyle = '#D4A843';
+  ctx.font = 'bold 18px Nunito';
+  ctx.fillText('⭐ 6 / 6 PERFECT SCORE ⭐', w/2, 416);
+
+  // Bottom
+  ctx.fillStyle = 'rgba(255,255,255,0.4)';
+  ctx.font = '12px Nunito';
+  ctx.fillText('justicekids.lk', w/2, 452);
+}
+
+function redraw() {
+  const name = getName();
+  drawCert(name);
+  drawBadge(name);
+}
+
+redraw();
+
+function downloadCert() {
+  const link = document.createElement('a');
+  link.download = 'JusticeKids-Certificate-' + getName().replace(/\s+/g,'_') + '.png';
+  link.href = document.getElementById('cert').toDataURL('image/png');
+  link.click();
+}
+
+function downloadBadge() {
+  const link = document.createElement('a');
+  link.download = 'JusticeKids-Badge-' + getName().replace(/\s+/g,'_') + '.png';
+  link.href = document.getElementById('badge').toDataURL('image/png');
+  link.click();
+}
+</script>
+</body>
+</html>

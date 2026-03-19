@@ -298,6 +298,7 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
 .lc-top{display:flex;gap:0.9rem;align-items:flex-start;margin-bottom:0.9rem;}
 .lc-av{width:46px;height:46px;border-radius:8px;flex-shrink:0;background:var(--gold-light);border:1px solid var(--gold-mid);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold);}
 .lc-name{font-size:0.9rem;font-weight:600;color:var(--ink);margin-bottom:0.18rem;}
+.pc-badge{display:inline-block;background:linear-gradient(135deg,#b8860b,#d4a843);color:#fff;font-size:0.58rem;font-weight:800;padding:2px 7px;border-radius:99px;letter-spacing:0.08em;margin-left:5px;vertical-align:middle;box-shadow:0 1px 4px rgba(180,135,11,0.4);}
 .lc-title{font-size:0.71rem;color:var(--text4);}
 .lc-tags{display:flex;flex-wrap:wrap;gap:0.35rem;margin-bottom:0.9rem;}
 .lc-tag{background:var(--bg3);border:1px solid var(--bg4);padding:0.18rem 0.5rem;border-radius:3px;font-size:0.63rem;color:var(--text4);}
@@ -751,7 +752,7 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
           </div>
         </div>
         <div class="footer-bottom">
-          <div class="footer-copy" id="footer-copy">© 2026 Ace Dynamics Trading — Sri Lanka. Justice LK · LexLK · Justice Kids are platforms developed and operated by Ace Dynamics Trading. Founders: Elmo Richard Pereira &amp; Rukshan. Unauthorised reproduction or redistribution is strictly prohibited.</div>
+          <div class="footer-copy" id="footer-copy">© 2026 Ace Dynamics Trading — Sri Lanka. Justice LK · LexLK · Justice Kids are platforms developed and operated by Ace Dynamics Trading. Founders: Elmo Richard Pereira &amp; Rukshan. Unauthorised reproduction or redistribution is strictly prohibited. &nbsp;·&nbsp; <a href="https://acedynamicstrading.github.io/justicelk/privacy-policy.html" target="_blank" style="color:#6a5830;text-decoration:underline;">Privacy Policy</a></div>
           <div class="footer-disc" id="footer-disc-text">LexLK provides AI-assisted legal information and facilitates access to independent Sri Lankan attorneys. Nothing on this platform constitutes legal advice. Users must independently verify all legal authorities. LexLK assumes no liability for reliance on platform content. Developed by Ace Dynamics Trading, Sri Lanka.</div>
         </div>
       </footer>
@@ -1757,7 +1758,8 @@ function renderLawyers(f = 'all') {
     const ini = (l.name||'?').split(' ').map(n => n[0]).join('').slice(0,2).toUpperCase();
     const tags = (l.specialisations||'').split(',').map(s => s.trim()).filter(Boolean).slice(0,3);
     const el = document.createElement('div'); el.className = 'lc';
-    el.innerHTML = `<div class="lc-top"><div class="lc-av">${ini}</div><div><div class="lc-name">${l.name||'Attorney'}</div><div class="lc-title">${l.title||'Attorney-at-Law'}</div></div></div>
+    const isPC = (l.title||'').includes('PC') || (l.name||'').includes(' PC') || (l.reg||'').toUpperCase().startsWith('PC/');
+    el.innerHTML = `<div class="lc-top"><div class="lc-av" style="${isPC ? 'background:linear-gradient(135deg,#b8860b,#d4a843);color:#fff;' : ''}">${ini}</div><div><div class="lc-name">${l.name||'Attorney'}${isPC ? '<span class="pc-badge">PC</span>' : ''}</div><div class="lc-title">${l.title||'Attorney-at-Law'}</div></div></div>
     <div class="lc-tags">${tags.map(t => `<span class="lc-tag">${t}</span>`).join('')}</div>
     <div class="lc-meta"><div class="lc-stat"><strong>${l.district||'—'}</strong> District</div><div class="lc-stat"><strong>${l.experience||'—'}</strong> exp</div></div>
     <div style="font-size:0.65rem;color:var(--text4);margin-bottom:0.75rem;">🗣 ${l.languages||'English, Sinhala'}</div>
