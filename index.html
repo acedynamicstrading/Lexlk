@@ -435,6 +435,25 @@ footer{background:#0d0b07;padding:2.5rem 3rem;color:#6a5830;}
 </style>
 </head>
 <body>
+<!-- GOOGLE TRANSLATE BAR -->
+<style>
+.g-translate-bar{background:#060e16;padding:7px 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(255,255,255,0.06);}
+.g-translate-bar-label{font-size:0.72rem;color:rgba(255,255,255,0.4);}
+#g-translate-el .goog-te-combo{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);color:#fff;padding:3px 10px;border-radius:6px;font-size:0.78rem;cursor:pointer;}
+#g-translate-el a{color:rgba(255,255,255,0.55)!important;font-size:0.75rem!important;}
+.goog-logo-link,.goog-te-banner-frame{display:none!important;}
+.goog-te-gadget{font-size:0!important;color:transparent!important;}
+body{top:0!important;}
+</style>
+<div class="g-translate-bar">
+  <span class="g-translate-bar-label">&#127760; Available in 30+ languages</span>
+  <div id="g-translate-el"></div>
+</div>
+<script>
+function googleTranslateElementInit(){try{new google.translate.TranslateElement({pageLanguage:"en",includedLanguages:"si,ta,fr,de,zh-CN,ja,ko,ar,ru,es,pt,it,nl,hi,ms,th,id,vi,tr,pl,uk,sv,da,fi,no,cs,sk,ro,bg,hr,el,he,hu",layout:google.translate.TranslateElement.InlineLayout.SIMPLE,autoDisplay:false},"g-translate-el");}catch(e){}}
+window.addEventListener("load",function(){var s=document.createElement("script");s.src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";s.onerror=function(){var el=document.getElementById("g-translate-el");if(el)el.innerHTML='<a href="https://translate.google.com/translate?sl=en&u='+encodeURIComponent(location.href)+'" target="_blank" style="color:rgba(255,255,255,0.5);font-size:0.75rem;text-decoration:none;">Translate this page</a>';};document.head.appendChild(s);});
+</script>
+
 
 <!-- DISCLAIMER -->
 <!-- ── AUTH SCREEN ──────────────────────────────────────────── -->
