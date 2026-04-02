@@ -534,7 +534,6 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
   'use strict';
 
   var WORKER_URL = 'https://lexlk.acedynamicstrading.workers.dev';
-  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxv__GJ2z0vkzd_0gPUJn5fogz3fCqjkbjnOu-b3I7qqTjjB3LL17A8g-WZsnfeIocP5A/exec';
   var docs = { bar: null, nic: null, photo: null };
 
   // Mobile menu
@@ -576,11 +575,11 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
     if (el) el.innerHTML = '';
   }
 
-  // Upload doc — direct to Apps Script, bypasses Worker size limits
+  // Upload doc
   async function uploadDoc(docData, filename, ref, name) {
-    var res = await fetch(APPS_SCRIPT_URL, {
+    var res = await fetch(WORKER_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'text/plain' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action:     'uploadLawyerDoc',
         filename:   filename,
@@ -685,6 +684,7 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
     document.getElementById('file-photo').addEventListener('change', function(){ handleDoc(this,'photo'); });
     document.getElementById('file-nic').addEventListener('change', function(){ handleDoc(this,'nic'); });
     document.getElementById('submit-btn').addEventListener('click', submitRegistration);
+    document.getElementById('btn-reset').addEventListener('click', resetForm);
   });
 })();
 </script>
