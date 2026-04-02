@@ -683,4 +683,9 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('file-bar').addEventListener('change', function(){ handleDoc(this,'bar'); });
     document.getElementById('file-nic').addEventListener('change', function(){ handleDoc(this,'nic'); });
-    document.getElementById('file-photo').addEventListener('change', function(){
+    document.getElementById('file-photo').addEventListener('change', function(){ handleDoc(this,'photo'); });
+    document.getElementById('submit-btn').addEventListener('click', submitRegistration);
+  });
+</script>
+</body>
+</html>
