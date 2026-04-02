@@ -929,4 +929,13 @@ function resetForm() {
   document.querySelectorAll('#spec-grid input[type=checkbox]').forEach(cb=>cb.checked=false);
   document.querySelectorAll('#courts-grid .court-cb').forEach(cb=>cb.checked=false);
   const defFee=document.querySelector('input[name="f-fee-radio"][value="Rs.10,000–20,000"]');
-  if(de
+  const defFee = document.querySelector('input[name="f-fee-radio"][value="Rs.10,000–20,000"]');
+  if (defFee) defFee.checked = true;
+  const defPlan = document.querySelector('input[name="f-plan-radio"][value="biannual"]');
+  if (defPlan) defPlan.checked = true;
+  docs.bar = null; docs.nic = null; docs.photo = null;
+  ['bar','nic','photo'].forEach(t => renderDocList(t));
+}
+</script>
+</body>
+</html>
