@@ -285,7 +285,7 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
       <div class="success-ref" id="success-ref-num"></div>
       <p class="success-desc">Your application has been received. Once approved, you will have access to <strong>both the LexLK Professional Platform and the Justice LK Case Management System</strong>. Our team will contact you within <strong>2 business days</strong>.</p>
       <div class="ns-list">
-        <div class="ns-item"><div class="ns-num">1</div><div class="ns-text">Watch for an email from <strong>justicelkcontact@gmail.com</strong> or a call from <strong>+94 77 362 2211</strong>.</div></div>
+        <div class="ns-item"><div class="ns-num">1</div><div class="ns-text">Watch for an email from <strong><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="3c56494f48555f5950575f5352485d5f487c5b515d5550125f5351">[email&#160;protected]</a></strong> or a call from <strong>+94 77 362 2211</strong>.</div></div>
         <div class="ns-item"><div class="ns-num">2</div><div class="ns-text">Prepare your original Bar Association certificate and NIC — you may be asked to verify in person.</div></div>
         <div class="ns-item"><div class="ns-num">3</div><div class="ns-text">Once approved, your profile goes live on both LexLK and Justice LK automatically.</div></div>
         <div class="ns-item"><div class="ns-num">4</div><div class="ns-text">Registration fee payment instructions will be shared after approval. No upfront payment required.</div></div>
@@ -529,11 +529,12 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
   </div>
 </footer>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 (function() {
   'use strict';
 
   var WORKER_URL = 'https://lexlk.acedynamicstrading.workers.dev';
+  var APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxmGcXs4McckDaEfArp16Jt1VHYgzFmyxEbF14azttGjO-TT91lKDO7UQ905Jyq4md-CQ/exec';
   var docs = { bar: null, nic: null, photo: null };
 
   // Mobile menu
@@ -575,12 +576,19 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
     if (el) el.innerHTML = '';
   }
 
-  // Upload doc
+  // Upload doc — goes directly to Apps Script (bypasses Worker subrequest size limits)
   async function uploadDoc(docData, filename, ref, name) {
-    var res = await fetch(WORKER_URL, {
+    var res = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action: 'uploadLawyerDoc', filename: filename, mimeType: docData.dataUrl.split(';')[0].replace('data:', ''), base64data: docData.dataUrl.split(',')[1], ref: ref, name: name })
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        action:     'uploadLawyerDoc',
+        filename:   filename,
+        mimeType:   docData.dataUrl.split(';')[0].replace('data:', ''),
+        base64data: docData.dataUrl.split(',')[1],
+        ref:        ref,
+        name:       name
+      })
     });
     var json = await res.json();
     if (!json.ok) throw new Error('Upload failed: ' + filename);
@@ -675,12 +683,4 @@ h1,h2,h3,h4 { font-family:'Cormorant Garamond',serif; }
   document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('file-bar').addEventListener('change', function(){ handleDoc(this,'bar'); });
     document.getElementById('file-nic').addEventListener('change', function(){ handleDoc(this,'nic'); });
-    document.getElementById('file-photo').addEventListener('change', function(){ handleDoc(this,'photo'); });
-    document.getElementById('submit-btn').addEventListener('click', submitRegistration);
-    document.getElementById('btn-reset').addEventListener('click', resetForm);
-  });
-
-})();
-</script>
-</body>
-</html>
+    document.getElementById('file-photo').addEventListener('change', function(){
